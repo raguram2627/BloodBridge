@@ -7,8 +7,11 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 require("dotenv").config();
 const Donor = require("./models/Donor");
+const EmergencyRequest =
+  require("./models/EmergencyRequest");
 
 const app = express();
+const axios = require("axios");
 
 app.use(cors());
 app.use(express.json());
@@ -26,11 +29,8 @@ app.get("/", (req, res) => {
 });
 
 app.post("/register", async (req, res) => {
-
     try {
-
         const donor = new Donor(req.body);
-
         await donor.save();
 
         res.json({
@@ -39,13 +39,17 @@ app.post("/register", async (req, res) => {
         });
 
     } catch(error) {
+        // Handle MongoDB duplicate key error
+        if (error.code === 11000) {
+            return res.status(409).json({
+                message: "Registration failed: A donor with this Email, Mobile, or ID already exists."
+            });
+        }
 
         res.status(500).json({
-            message: error.message
+            message: "An unexpected error occurred: " + error.message
         });
-
     }
-
 });
 
 app.get("/donors", async (req, res) => {
@@ -164,12 +168,22 @@ app.patch("/donors/:id/donate", async (req, res) => {
 
         const donor = await Donor.findById(req.params.id);
 
+        if (!donor) {
+            return res.status(404).json({
+                message: "Donor not found"
+            });
+        }
+
+        const donationDate = req.body.date
+            ? new Date(req.body.date)
+            : new Date();
+
         donor.donationHistory.push({
-            date: new Date(),
+            date: donationDate,
             hospital: req.body.hospital
         });
 
-        donor.lastDonationDate = new Date();
+        donor.lastDonationDate = donationDate;
 
         donor.available = false;
 
@@ -189,29 +203,374 @@ app.patch("/donors/:id/donate", async (req, res) => {
     }
 
 });
-
 app.get("/donors/frequent", async (req, res) => {
+  try {
+    const donors = await Donor.find();
 
+    const frequentDonors = donors
+      .filter(donor => donor.donationHistory.length > 0)
+      .sort(
+        (a, b) =>
+          b.donationHistory.length - a.donationHistory.length
+      );
+
+    res.json(frequentDonors);
+
+  } catch (error) {
+    res.status(500).json({
+      message: error.message
+    });
+  }
+});
+
+app.post(
+  "/emergency-request",
+  async (req, res) => {
+    console.log("Emergency request route hit!");
+    console.log("Request body:", req.body);
     try {
 
-        const donors = await Donor.find();
+      const request =
+        new EmergencyRequest({
+          bloodGroup:
+            req.body.bloodGroup,
+          hospital:
+            req.body.hospital,
+          unitsNeeded:
+            req.body.unitsNeeded,
+          adminPhone:
+            req.body.adminPhone,
+        });
 
-        const frequentDonors = donors.sort(
-            (a, b) => b.donationHistory.length - a.donationHistory.length
+      await request.save();
+      console.log("Request saved successfully");
+
+      const donors = await Donor.find();
+      const today = new Date();
+      const matchingDonors = donors.filter((d) => {
+        if (d.bloodGroup !== req.body.bloodGroup) {
+          return false;
+        }
+        if (!d.lastDonationDate) {
+          return true;
+        }
+        const lastDonation = new Date(d.lastDonationDate);
+        const daysSinceDonation = Math.floor(
+          (today - lastDonation) /
+          (1000 * 60 * 60 * 24)
         );
+        return daysSinceDonation >= 90;
+      });
 
-        res.json(frequentDonors);
+      console.log("Matching donors count:", matchingDonors.length);
+      console.log("About to send response with matchingCount");
+
+      const responseData = {
+        message:
+          "Emergency Request Created",
+
+        request,
+
+        matchingCount:
+          matchingDonors.length,
+
+        eligibleDonors:
+          matchingDonors,
+      };
+      
+      console.log("Response data:", JSON.stringify(responseData, null, 2));
+      res.json(responseData);
 
     } catch (error) {
 
-        res.status(500).json({
-            message: error.message
-        });
+      console.error("ERROR in emergency-request:", error);
+      res.status(500).json({
+        message: error.message,
+      });
 
     }
+  }
+);
 
+app.get(
+  "/emergency-request/:id",
+  async (req, res) => {
+    try {
+      const request =
+        await EmergencyRequest.findById(
+          req.params.id
+        );
+      res.json(request);
+    } catch (error) {
+      res.status(500).json({
+        message: error.message,
+      });
+    }
+  }
+);
+
+app.get(
+  "/emergency-request/active",
+  async (req, res) => {
+    try {
+      const requests = await EmergencyRequest.find({
+        status: "ACTIVE",
+      }).sort({
+        createdAt: -1,
+      });
+      res.json(requests);
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({
+        message: "Failed to load active requests",
+      });
+    }
+  }
+);
+
+app.get(
+  "/emergency",
+  async (req, res) => {
+    try {
+      const requests = await EmergencyRequest.find();
+      res.json(requests);
+    } catch (error) {
+      res.status(500).json({
+        message: error.message,
+      });
+    }
+  }
+);
+
+app.get(
+  "/emergency/:id",
+  async (req, res) => {
+    try {
+      const request =
+        await EmergencyRequest.findById(
+          req.params.id
+        );
+      res.json(request);
+    } catch (error) {
+      res.status(500).json({
+        message: error.message,
+      });
+    }
+  }
+);
+
+app.patch(
+  "/emergency-request/:id/willing",
+  async (req, res) => {
+    try {
+
+      const request =
+        await EmergencyRequest.findById(
+          req.params.id
+        );
+
+      request.willingDonors.push({
+        donorName:
+          req.body.donorName,
+        mobile:
+          req.body.mobile,
+        department:
+          req.body.department,
+        year:
+          req.body.year,
+        registerNumber:
+          req.body.registerNumber,
+      });
+
+      await request.save();
+
+      res.json({
+        message:
+          "Response Saved",
+      });
+
+    } catch (error) {
+
+      res.status(500).json({
+        message: error.message,
+      });
+
+    }
+  }
+);
+
+app.patch(
+  "/emergency-request/:id/unavailable",
+  async (req, res) => {
+    try {
+
+      const request =
+        await EmergencyRequest.findById(
+          req.params.id
+        );
+
+      request.unavailableDonors.push({
+        donorName:
+          req.body.donorName,
+        mobile:
+          req.body.mobile,
+        department:
+          req.body.department,
+        year:
+          req.body.year,
+        registerNumber:
+          req.body.registerNumber,
+      });
+
+      await request.save();
+
+      res.json({
+        message:
+          "Response Saved",
+      });
+
+    } catch (error) {
+
+      res.status(500).json({
+        message: error.message,
+      });
+
+    }
+  }
+);
+
+app.patch(
+  "/emergency-request/:id/close",
+  async (req, res) => {
+    try {
+      const request = await EmergencyRequest.findById(req.params.id);
+
+      if (!request) {
+        return res.status(404).json({
+          message: "Emergency request not found",
+        });
+      }
+
+      request.status = "CLOSED";
+      await request.save();
+
+      res.json({
+        message: "Request closed successfully",
+        request,
+      });
+    } catch (error) {
+      console.error("SERVER ERROR in close route:", error);
+      if (error.name === "CastError") {
+        return res.status(400).json({
+          message: "Invalid emergency request id",
+        });
+      }
+      res.status(500).json({
+        message: error.message,
+      });
+    }
+  }
+);
+
+app.patch(
+  "/emergency-request/close-all",
+  async (req, res) => {
+    try {
+      const result = await EmergencyRequest.updateMany(
+        { status: "ACTIVE" },
+        { $set: { status: "CLOSED" } }
+      );
+
+      res.json({
+        message: "All active requests closed successfully",
+        count: result.modifiedCount,
+      });
+    } catch (error) {
+      console.error("SERVER ERROR in close-all route:", error);
+      res.status(500).json({
+        message: error.message,
+      });
+    }
+  }
+);
+
+app.get(
+  "/emergency-stats",
+  async (req, res) => {
+    try {
+      const requests =
+        await EmergencyRequest.find();
+      const totalRequests =
+        requests.length;
+      const activeRequests =
+        requests.filter(
+          r => r.status === "ACTIVE"
+        ).length;
+      const closedRequests =
+        requests.filter(
+          r => r.status === "CLOSED"
+        ).length;
+      let willing = 0;
+      let unavailable = 0;
+      requests.forEach(r => {
+        willing +=
+          r.willingDonors?.length || 0;
+        unavailable +=
+          r.unavailableDonors?.length || 0;
+      });
+      res.json({
+        totalRequests,
+        activeRequests,
+        closedRequests,
+        willing,
+        unavailable,
+      });
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  }
+);
+
+app.get(  "/emergency-request/:id/responses",  async (req, res) => {    try {      const request =        await EmergencyRequest.findById(          req.params.id        );      res.json({        willingDonors:          request.willingDonors,        unavailableDonors:          request.unavailableDonors,      });    } catch (error) {      res.status(500).json({        message: error.message,      });    }  });
+
+
+app.post("/test-whatsapp", async (req, res) => {
+  try {
+    const { phone } = req.body;
+
+    const response = await axios.post(
+      `https://graph.facebook.com/v23.0/${process.env.PHONE_NUMBER_ID}/messages`,
+      {
+        messaging_product: "whatsapp",
+        to: phone,
+        type: "text",
+        text: {
+          body:
+            "🩸 BloodBridge Test\n\nCongratulations! Your WhatsApp integration is working successfully."
+        }
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.WHATSAPP_TOKEN}`,
+          "Content-Type": "application/json"
+        }
+      }
+    );
+
+    res.json(response.data);
+
+  } catch (error) {
+    console.log(
+      error.response?.data || error.message
+    );
+
+    res.status(500).json(
+      error.response?.data || {
+        error: error.message
+      }
+    );
+  }
 });
-
 app.listen(5000, () => {
     console.log("Server running on port 5000");
 });

@@ -1,0 +1,207 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+.chooseRolePage{
+
+    min-height:100vh;
+
+    background:
+    radial-gradient(circle at top left,#ffe9ec 0%,transparent 35%),
+    radial-gradient(circle at bottom right,#ffe5e8 0%,transparent 40%),
+    linear-gradient(135deg,#ffffff,#fff9f9,#fff4f5);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:40px;
+
+}
+
+.roleContainer{
+
+    width:100%;
+
+    max-width:1200px;
+
+    text-align:center;
+
+}
+
+.roleContainer h1{
+
+    color:#b00020;
+
+    font-size:58px;
+
+    margin-bottom:12px;
+
+}
+
+.roleContainer h2{
+
+    color:#d62839;
+
+    font-size:34px;
+
+    margin-bottom:20px;
+
+}
+
+.roleSubtitle{
+
+    max-width:720px;
+
+    margin:auto;
+
+    color:#666;
+
+    font-size:20px;
+
+    line-height:1.8;
+
+    margin-bottom:60px;
+
+}
+
+.roleCards{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:40px;
+
+    flex-wrap:wrap;
+
+}
+
+.roleCard{
+
+    width:420px;
+
+    background:white;
+
+    border-radius:24px;
+
+    padding:40px;
+
+    border:1px solid #f3dcdc;
+
+    cursor:pointer;
+
+    transition:.35s;
+
+    box-shadow:
+    0 12px 35px rgba(0,0,0,.08);
+
+}
+
+.roleCard:hover{
+
+    transform:
+    translateY(-12px)
+    scale(1.03);
+
+    box-shadow:
+    0 20px 50px rgba(220,20,60,.18);
+
+}
+
+.roleIcon{
+
+    font-size:75px;
+
+    margin-bottom:20px;
+
+}
+
+.roleCard h3{
+
+    color:#b00020;
+
+    font-size:30px;
+
+    margin-bottom:18px;
+
+}
+
+.roleCard p{
+
+    color:#666;
+
+    line-height:1.8;
+
+    font-size:18px;
+
+    min-height:110px;
+
+}
+
+.roleButton{
+
+    margin-top:25px;
+
+    width:220px;
+
+    padding:16px;
+
+    border:none;
+
+    border-radius:50px;
+
+    background:linear-gradient(90deg,#d90429,#ef233c);
+
+    color:white;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.roleButton:hover{
+
+    transform:scale(1.05);
+
+    box-shadow:
+    0 12px 30px rgba(217,4,41,.3);
+
+}
+
+@media(max-width:900px){
+
+.roleContainer h1{
+
+font-size:42px;
+
+}
+
+.roleContainer h2{
+
+font-size:28px;
+
+}
+
+.roleSubtitle{
+
+font-size:18px;
+
+}
+
+.roleCard{
+
+width:100%;
+
+}
+
+}

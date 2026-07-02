@@ -1,0 +1,245 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.registerPage {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: 
+    radial-gradient(circle at top left, #ffe9ec 0%, transparent 35%),
+    radial-gradient(circle at bottom right, #ffe5e8 0%, transparent 40%),
+    linear-gradient(135deg, #ffffff, #fff9f9, #fff4f5);
+  padding: 40px 20px;
+}
+
+.registerCard {
+  width: 100%;
+  max-width: 650px;
+  background: white;
+  padding: 45px;
+  border-radius: 24px;
+  border: 1px solid #f3dcdc;
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.06);
+}
+
+.registerCard h1 {
+  color: #b00020;
+  font-size: 36px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  text-align: center;
+  color: #666;
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 35px;
+}
+
+.section {
+  margin-bottom: 30px;
+}
+
+.section h3 {
+  color: #d62839;
+  font-size: 20px;
+  margin-bottom: 16px;
+  border-bottom: 2px solid #fff0f1;
+  padding-bottom: 6px;
+}
+
+.fieldLabel {
+  display: block;
+  font-size: 15px;
+  color: #555;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+input, select {
+  width: 100%;
+  padding: 14px 16px;
+  margin-bottom: 16px;
+  border: 1px solid #e1cbd0;
+  border-radius: 12px;
+  outline: none;
+  font-size: 16px;
+  color: #333;
+  background-color: #fff;
+  transition: 0.3s ease;
+}
+
+textarea {
+  width: 100%;
+  padding: 14px 16px;
+  margin-bottom: 16px;
+  border: 1px solid #e1cbd0;
+  border-radius: 12px;
+  outline: none;
+  font-size: 16px;
+  color: #333;
+  background-color: #fff;
+  transition: 0.3s ease;
+  min-height: 80px;
+  resize: vertical;
+  font-family: inherit;
+}
+
+input::placeholder, textarea::placeholder {
+  color: #aaa;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: #d62839;
+  box-shadow: 0 0 0 4px rgba(214, 40, 57, 0.12);
+}
+
+.datePickerContainer {
+  margin-top: 12px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.submitBtn {
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: 50px;
+  background: linear-gradient(90deg, #d90429, #ef233c);
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 8px 25px rgba(217, 4, 41, 0.2);
+}
+
+.submitBtn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(217, 4, 41, 0.35);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Success overlay */
+.successOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(43, 45, 66, 0.5);
+  backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 20px;
+  animation: fadeInOverlay 0.35s ease;
+}
+
+.successCard {
+  background: white;
+  border-radius: 28px;
+  padding: 48px 40px;
+  max-width: 480px;
+  width: 100%;
+  text-align: center;
+  border: 1px solid #f3dcdc;
+  box-shadow: 0 25px 60px rgba(176, 0, 32, 0.15);
+  animation: successPopIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.successIconRing {
+  width: 90px;
+  height: 90px;
+  margin: 0 auto 24px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #fff0f1, #ffe5e8);
+  border: 3px solid #fbc2c2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: pulseRing 2s ease-in-out infinite;
+}
+
+.successIcon {
+  font-size: 42px;
+  animation: heartbeat 1.2s ease-in-out infinite;
+}
+
+.successTitle {
+  color: #b00020;
+  font-size: 28px;
+  font-weight: 800;
+  margin-bottom: 14px;
+  letter-spacing: -0.3px;
+}
+
+.successSlogan {
+  color: #444;
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.successSubtext {
+  color: #888;
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 28px;
+}
+
+.successBtn {
+  padding: 14px 36px;
+  border: none;
+  border-radius: 50px;
+  background: linear-gradient(90deg, #b00020, #d62839);
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.25s ease;
+  box-shadow: 0 6px 20px rgba(176, 0, 32, 0.25);
+}
+
+.successBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(176, 0, 32, 0.35);
+}
+
+@keyframes fadeInOverlay {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes successPopIn {
+  from { opacity: 0; transform: scale(0.85) translateY(20px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes pulseRing {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(214, 40, 57, 0.15); }
+  50% { box-shadow: 0 0 0 12px rgba(214, 40, 57, 0); }
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  15% { transform: scale(1.15); }
+  30% { transform: scale(1); }
+  45% { transform: scale(1.1); }
+}
+
+@media (max-width: 600px) {
+  .registerCard {
+    padding: 25px;
+  }
+  .registerCard h1 {
+    font-size: 28px;
+  }
+}

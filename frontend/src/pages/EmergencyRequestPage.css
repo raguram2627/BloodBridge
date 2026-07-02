@@ -1,0 +1,256 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.emergencyPage {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #fff4f5, #ffffff, #fffcfc);
+  padding: 20px;
+}
+
+.emergencyCard {
+  width: 100%;
+  max-width: 520px;
+  background: white;
+  border: 1px solid #fbc2c2;
+  border-radius: 24px;
+  padding: 35px 30px;
+  box-shadow: 0 15px 40px rgba(217, 4, 41, 0.05);
+}
+
+/* Banner Flag State */
+.crisisBanner {
+  background: #fff0f1;
+  border: 1px solid #fbc2c2;
+  color: #d90429;
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: 1px;
+  padding: 8px 16px;
+  border-radius: 50px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 25px;
+}
+
+.pulseCircle {
+  width: 8px;
+  height: 8px;
+  background: #d90429;
+  border-radius: 50%;
+  animation: beaconPulse 1.5s infinite;
+}
+
+@keyframes beaconPulse {
+  0% { transform: scale(0.9); opacity: 1; box-shadow: 0 0 0 0 rgba(217, 4, 41, 0.7); }
+  70% { transform: scale(1.1); opacity: 0.8; box-shadow: 0 0 0 8px rgba(217, 4, 41, 0); }
+  100% { transform: scale(0.9); opacity: 1; box-shadow: 0 0 0 0 rgba(217, 4, 41, 0); }
+}
+
+/* High Visibility Group Metrics Indicator */
+.bloodGroupContainer {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.bloodLabel {
+  font-size: 11px;
+  font-weight: 700;
+  color: #666;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.bloodValue {
+  font-size: 64px;
+  font-weight: 900;
+  color: #b00020;
+  line-height: 1;
+}
+
+/* Core Informational Matrices block */
+.requestDataBlock {
+  background: #fafafa;
+  border-radius: 16px;
+  padding: 16px 20px;
+  border: 1px solid #eee;
+  margin-bottom: 30px;
+}
+
+.dataRowItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+}
+
+.dataRowItem:not(:last-child) {
+  border-bottom: 1px solid #eee;
+}
+
+.rowLabel {
+  font-size: 14px;
+  color: #666;
+  font-weight: 500;
+}
+
+.rowValue.highlight {
+  font-size: 15px;
+  color: #222;
+  font-weight: 700;
+}
+
+/* Profiles Search Widgets fields */
+.verificationSection h3 {
+  color: #333;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.fieldCaption {
+  font-size: 13px;
+  color: #777;
+  margin-bottom: 12px;
+}
+
+.searchBarInline {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+.emergencyInput {
+  flex: 1;
+  padding: 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  outline: none;
+  font-size: 15px;
+}
+
+.emergencyInput:focus {
+  border-color: #d62839;
+}
+
+.verifyBtn {
+  padding: 0 20px;
+  background: #333;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.verifyBtn:hover {
+  background: #111;
+}
+
+/* Ticket Element Container Overlay wrapper */
+.donorVerificationTicket {
+  background: #fdfdfd;
+  border: 1px solid #c3f2d7;
+  border-left: 4px solid #25d366;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 30px;
+}
+
+.ticketHeader {
+  font-size: 12px;
+  font-weight: 700;
+  color: #1ebe57;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.ticketGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  font-size: 14px;
+  color: #444;
+}
+
+.ticketGrid .fullWidth {
+  grid-column: span 2;
+  border-top: 1px dashed #e2e8f0;
+  padding-top: 6px;
+  margin-top: 4px;
+}
+
+/* Touchpoint control footprints */
+.triageActionFootprint {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.triageBtn {
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: 50px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s;
+}
+
+.triageBtn.willing {
+  background: linear-gradient(90deg, #d90429, #ef233c);
+  color: white;
+  box-shadow: 0 6px 20px rgba(217, 4, 41, 0.2);
+}
+
+.triageBtn.willing:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(217, 4, 41, 0.3);
+}
+
+.triageBtn.unavailable {
+  background: #f1f5f9;
+  color: #64748b;
+}
+
+.triageBtn.unavailable:hover {
+  background: #e2e8f0;
+  color: #475569;
+}
+
+/* Processing State Blocks Overrides template configurations */
+.stateContainer {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  background: #fffcfc;
+}
+
+.textCenter { text-align: center; max-width: 440px; margin: 0 auto; }
+.statusIcon { font-size: 64px; margin-bottom: 16px; }
+.statusHeading { font-size: 28px; font-weight: 800; color: #333; margin-bottom: 10px; }
+.statusHeading.success { color: #2e7d32; }
+.statusMessage { font-size: 15px; color: #666; line-height: 1.5; }
+
+.statusLoadingSpinner {
+  font-size: 36px;
+  animation: cycleSpin 1.5s linear infinite;
+  margin-bottom: 12px;
+}
+
+@keyframes cycleSpin { 100% { transform: rotate(360deg); } }
+.animateFadeIn { animation: fadeInAlpha 0.25s ease-out; }
+@keyframes fadeInAlpha { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }

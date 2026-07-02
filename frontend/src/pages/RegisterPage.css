@@ -1,0 +1,204 @@
+.registerPage {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background:
+    radial-gradient(circle at top left, #ffe9ec 0%, transparent 35%),
+    radial-gradient(circle at bottom right, #ffe5e8 0%, transparent 40%),
+    linear-gradient(135deg, #ffffff, #fff9f9, #fff4f5);
+  padding: 30px;
+}
+
+.registerCard {
+  width: 100%;
+  max-width: 650px;
+  background: white;
+  padding: 40px;
+  border-radius: 24px;
+  border: 1px solid #f3dcdc;
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.06);
+}
+
+.registerCard h1 {
+  color: #b00020;
+  font-size: 34px;
+  text-align: center;
+}
+
+.subtitle {
+  text-align: center;
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.section {
+  margin-bottom: 25px;
+}
+
+.section h3 {
+  color: #d62839;
+  margin-bottom: 12px;
+  border-bottom: 2px solid #fff0f1;
+  padding-bottom: 6px;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 12px;
+  border: 1px solid #e1cbd0;
+  border-radius: 12px;
+  outline: none;
+  transition: 0.3s;
+  font-size: 16px;
+  color: #333;
+}
+
+textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: #d62839;
+  box-shadow: 0 0 0 4px rgba(214, 40, 57, 0.12);
+}
+
+.submitBtn {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 50px;
+  background: linear-gradient(90deg, #d90429, #ef233c);
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 8px 25px rgba(217, 4, 41, 0.2);
+}
+
+.submitBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(217, 4, 41, 0.35);
+}
+
+/* Success overlay */
+.successOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(43, 45, 66, 0.5);
+  backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 20px;
+  animation: fadeInOverlay 0.35s ease;
+}
+
+.successCard {
+  background: white;
+  border-radius: 28px;
+  padding: 48px 40px;
+  max-width: 480px;
+  width: 100%;
+  text-align: center;
+  border: 1px solid #f3dcdc;
+  box-shadow: 0 25px 60px rgba(176, 0, 32, 0.15);
+  animation: successPopIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.successIconRing {
+  width: 90px;
+  height: 90px;
+  margin: 0 auto 24px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #fff0f1, #ffe5e8);
+  border: 3px solid #fbc2c2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: pulseRing 2s ease-in-out infinite;
+}
+
+.successIcon {
+  font-size: 42px;
+  animation: heartbeat 1.2s ease-in-out infinite;
+}
+
+.successTitle {
+  color: #b00020;
+  font-size: 28px;
+  font-weight: 800;
+  margin-bottom: 14px;
+  letter-spacing: -0.3px;
+}
+
+.successSlogan {
+  color: #444;
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.successSubtext {
+  color: #888;
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 28px;
+}
+
+.successBtn {
+  padding: 14px 36px;
+  border: none;
+  border-radius: 50px;
+  background: linear-gradient(90deg, #b00020, #d62839);
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.25s ease;
+  box-shadow: 0 6px 20px rgba(176, 0, 32, 0.25);
+}
+
+.successBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(176, 0, 32, 0.35);
+}
+
+@keyframes fadeInOverlay {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes successPopIn {
+  from { opacity: 0; transform: scale(0.85) translateY(20px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes pulseRing {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(214, 40, 57, 0.15); }
+  50% { box-shadow: 0 0 0 12px rgba(214, 40, 57, 0); }
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  15% { transform: scale(1.15); }
+  30% { transform: scale(1); }
+  45% { transform: scale(1.1); }
+}
+
+@media (max-width: 600px) {
+  .registerCard {
+    padding: 25px;
+  }
+  .successCard {
+    padding: 36px 24px;
+  }
+  .successTitle {
+    font-size: 24px;
+  }
+}
