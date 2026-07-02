@@ -14,7 +14,7 @@ function EmergencyRequestPage() {
   useEffect(() => {
     const loadRequest = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/emergency-request/${id}`);
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/emergency-request/${id}`);
         const data = await res.json();
         setRequest(data);
       } catch (error) {
@@ -32,7 +32,7 @@ function EmergencyRequestPage() {
       return;
     }
     try {
-      const res = await fetch("http://localhost:5000/donors");
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/donors`);
       const data = await res.json();
       const found = data.find((d) => d.registerNumber === registerNumber);
       if (!found) {
@@ -50,7 +50,7 @@ function EmergencyRequestPage() {
       alert("Please authenticate and fetch your profile details first.");
       return;
     }
-    await fetch(`http://localhost:5000/emergency-request/${id}/willing`, {
+    await fetch(`${import.meta.env.VITE_API_URL}/emergency-request/${id}/willing`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -71,7 +71,7 @@ function EmergencyRequestPage() {
       alert("Please authenticate and fetch your profile details first.");
       return;
     }
-    await fetch(`http://localhost:5000/emergency-request/${id}/unavailable`, {
+    await fetch(`${import.meta.env.VITE_API_URL}/emergency-request/${id}/unavailable`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

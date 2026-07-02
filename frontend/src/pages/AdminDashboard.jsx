@@ -75,7 +75,7 @@ function AdminDashboard() {
     setLoading(true);
     setError("");
     try {
-      const res = await fetch("http://localhost:5000/donors");
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/donors`);
       const data = await res.json();
       setDonors(data);
       setTotalDonors(data.length);
@@ -91,7 +91,7 @@ function AdminDashboard() {
 
   const syncEmergencyRequests = async () => {
     try {
-      const res = await fetch("http://localhost:5000/emergency-request/active"); 
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/emergency-request/active`);
       const data = await res.json();
       
       const mappedRequests = data.map((req) => {
@@ -230,7 +230,7 @@ function AdminDashboard() {
     }
 
     try {
-      const res = await fetch("http://localhost:5000/emergency-request", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/emergency-request`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -299,7 +299,7 @@ function AdminDashboard() {
   const handleRefreshResponses = async () => {
     if (!selectedRequestId) return;
     try {
-      const res = await fetch(`http://localhost:5000/emergency-request/${selectedRequestId}`);
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/emergency-request/${selectedRequestId}`);
       const data = await res.json();
       
       updateActiveRequest(selectedRequestId, {
@@ -326,12 +326,7 @@ function AdminDashboard() {
       "Are you sure you want to shut down this emergency dispatch line? Match stats and tracking entries for this blood type will be moved off the operational deck.",
       async () => {
         try {
-          const response = await fetch(`http://localhost:5000/emergency-request/${requestId}/close`, { method: "PATCH" });
-          const data = await response.json();
-
-          if (!response.ok) {
-            throw new Error(data.message || "Failed to close request");
-          }
+          const response = await fetch(`${import.meta.env.VITE_API_URL}/emergency-request/${requestId}/close`, { method: "PATCH" });
 
           showToast("Broadcast terminated and archived.", "success");
           
@@ -364,12 +359,7 @@ function AdminDashboard() {
       "This will close every live emergency request currently shown in the dashboard.",
       async () => {
         try {
-          const response = await fetch("http://localhost:5000/emergency-request/close-all", { method: "PATCH" });
-          const data = await response.json();
-
-          if (!response.ok) {
-            throw new Error(data.message || "Failed to close all requests");
-          }
+          const response = await fetch(`${import.meta.env.VITE_API_URL}/emergency-request/close-all`, { method: "PATCH" });
 
           setActiveRequests([]);
           setSelectedRequestId(null);
@@ -429,7 +419,7 @@ function AdminDashboard() {
       return;
     }
     try {
-      await fetch(`http://localhost:5000/donors/${donationDonor._id}/donate`, {
+      await fetch(`${import.meta.env.VITE_API_URL}/donors/${donationDonor._id}/donate`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ hospital, date: donationDate, units: donationUnits }),
@@ -449,7 +439,7 @@ function AdminDashboard() {
       return;
     }
     try {
-      await fetch(`http://localhost:5000/donors/${manualDonorFound._id}/donate`, {
+      await fetch(`${import.meta.env.VITE_API_URL}/donors/${manualDonorFound._id}/donate`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ hospital, date: donationDate, units: donationUnits }),
