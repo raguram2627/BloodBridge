@@ -3260,3 +3260,374 @@ body {
   grid-column: 1 / -1;
   justify-content: center;
 }
+
+
+
+
+/* STREAMING_CHUNK: Declaring root styles... */
+*,
+*::before,
+*::after {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+background-color: #fcf8f8;
+}
+
+.dashboardContainer {
+padding: 40px;
+max-width: 1600px;
+margin: 0 auto;
+background:
+radial-gradient(circle at top left, #ffe9ec 0%, transparent 25%),
+radial-gradient(circle at bottom right, #ffe5e8 0%, transparent 30%),
+linear-gradient(135deg, #fcf8f8, #ffffff, #fffcfc);
+min-height: 100vh;
+}
+
+.dashboardHeader {
+margin-bottom: 35px;
+border-bottom: 2px solid #f3dcdc;
+padding-bottom: 20px;
+}
+
+.dashboardHeader h1 {
+color: #b00020;
+font-size: 38px;
+font-weight: 800;
+letter-spacing: -0.5px;
+}
+
+.dashboardSubtitle {
+color: #666;
+font-size: 16px;
+margin-top: 5px;
+}
+
+/* STREAMING_CHUNK: Styling notification banners and tiles... */
+.loadingAlert {
+background: rgba(220, 20, 60, 0.05);
+border: 1px dashed #d62839;
+padding: 15px 20px;
+border-radius: 12px;
+color: #b00020;
+font-weight: 600;
+margin-bottom: 25px;
+display: flex;
+align-items: center;
+gap: 10px;
+}
+
+.spinner {
+display: inline-block;
+animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+100% { transform: rotate(360deg); }
+}
+
+.errorAlert {
+background: #fdf2f2;
+border-left: 5px solid #d62839;
+padding: 15px 20px;
+border-radius: 8px;
+color: #b00020;
+font-weight: 600;
+margin-bottom: 25px;
+}
+
+.metricsGrid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+gap: 25px;
+margin-bottom: 40px;
+}
+
+.metricTile {
+background: white;
+padding: 25px;
+border-radius: 20px;
+border: 1px solid #f3dcdc;
+box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03);
+display: flex;
+align-items: center;
+gap: 20px;
+transition: transform 0.3s ease;
+}
+
+.metricTile:hover {
+transform: translateY(-4px);
+}
+
+.metricTile.critical {
+background: linear-gradient(135deg, #fff5f5, #ffebe3);
+border-color: #fbc2c2;
+}
+
+.tileIcon {
+font-size: 40px;
+background: #fff0f2;
+padding: 12px;
+border-radius: 16px;
+display: block;
+}
+
+.metricTile.critical .tileIcon {
+background: #ffe3e3;
+}
+
+.tileData h3 {
+font-size: 32px;
+color: #b00020;
+font-weight: 800;
+line-height: 1.1;
+}
+
+.tileData p {
+color: #666;
+font-size: 14px;
+font-weight: 500;
+margin-top: 4px;
+}
+
+/* STREAMING_CHUNK: Setting up structural splits and control blocks... */
+.dashboardLayout {
+display: grid;
+grid-template-columns: 380px 1fr;
+gap: 35px;
+align-items: start;
+}
+
+@media (max-width: 1100px) {
+.dashboardLayout {
+grid-template-columns: 1fr;
+}
+}
+
+.controlPanel {
+display: flex;
+flex-direction: column;
+gap: 30px;
+}
+
+.controlBlock {
+background: white;
+padding: 30px;
+border-radius: 24px;
+border: 1px solid #f3dcdc;
+box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+}
+
+.controlBlock.emergencySection {
+background: #fffdfd;
+border: 2px solid #fbc2c2;
+box-shadow: 0 15px 35px rgba(176, 0, 32, 0.04);
+}
+
+.controlBlock h3 {
+color: #b00020;
+font-size: 18px;
+font-weight: 700;
+margin-bottom: 20px;
+text-transform: uppercase;
+letter-spacing: 0.5px;
+}
+
+.actionButtonGroup {
+display: flex;
+flex-direction: column;
+gap: 10px;
+}
+
+/* STREAMING_CHUNK: Styling layout buttons and inputs... */
+.panelBtn {
+width: 100%;
+padding: 14px 18px;
+border: 1px solid #f0d5d9;
+background: white;
+color: #444;
+text-align: left;
+font-size: 15px;
+font-weight: 600;
+border-radius: 12px;
+cursor: pointer;
+transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.panelBtn:hover {
+background: #fff0f1;
+color: #b00020;
+border-color: #fbc2c2;
+}
+
+.panelBtn:active {
+transform: scale(0.97);
+box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.03);
+}
+
+.panelBtn.active {
+background: linear-gradient(90deg, #b00020, #d62839);
+color: white;
+border-color: transparent;
+}
+
+.formSet {
+display: flex;
+flex-direction: column;
+gap: 12px;
+}
+
+.dashboardInput {
+width: 100%;
+padding: 12px 16px;
+border: 1px solid #e1cbd0;
+border-radius: 12px;
+outline: none;
+font-size: 15px;
+background: white;
+color: #333;
+transition: border 0.25s ease;
+}
+
+.dashboardInput:focus {
+border-color: #d62839;
+box-shadow: 0 0 0 3px rgba(214, 40, 57, 0.1);
+}
+
+.disabledInput {
+background: #f7eded;
+color: #b00020;
+font-weight: 600;
+cursor: copy;
+}
+
+.actionTriggerBtn {
+width: 100%;
+padding: 14px;
+border: none;
+border-radius: 12px;
+font-size: 16px;
+font-weight: 700;
+cursor: pointer;
+transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.actionTriggerBtn.emergency {
+background: linear-gradient(90deg, #d90429, #ef233c);
+color: white;
+box-shadow: 0 6px 20px rgba(217, 4, 41, 0.15);
+}
+
+.actionTriggerBtn.emergency:hover {
+transform: translateY(-2px);
+box-shadow: 0 8px 25px rgba(217, 4, 41, 0.3);
+}
+
+.actionTriggerBtn.emergency:active {
+transform: translateY(1px) scale(0.97);
+}
+
+/* STREAMING_CHUNK: Styling for blood group selector interaction... */
+.bloodGroupHeader {
+margin-bottom: 12px;
+}
+
+.bloodGroupHeader h4 {
+margin: 0 0 6px;
+font-size: 1rem;
+letter-spacing: 0.02em;
+}
+
+.bloodGroupHeader p {
+margin: 0;
+font-size: 0.88rem;
+color: #6b6b6b;
+}
+
+.bloodGroupSelector {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+gap: 14px;
+}
+
+.bloodGroupOption {
+position: relative;
+display: inline-flex;
+align-items: center;
+justify-content: center;
+gap: 10px;
+min-height: 54px;
+padding: 0 18px;
+border-radius: 999px;
+border: 1px solid transparent;
+background: #ffffff;
+color: #1f1f1f;
+font-size: 0.95rem;
+font-weight: 700;
+cursor: pointer;
+text-align: center;
+transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.18s ease, background-color 0.18s ease, color 0.18s ease;
+box-shadow: 0 4px 10px rgba(24, 24, 24, 0.05);
+border: none;
+}
+
+.bloodGroupOption:hover {
+transform: translateY(-3px) scale(1.01);
+box-shadow: 0 12px 26px rgba(193, 18, 31, 0.16);
+}
+
+.bloodGroupOption:active {
+transform: translateY(0) scale(0.97);
+}
+
+.bloodGroupOption.selected {
+background: #c1121f;
+color: #ffffff;
+box-shadow: 0 14px 32px rgba(193, 18, 31, 0.28);
+transform: scale(1.02);
+}
+
+.bloodGroupOption.selected .bloodGroupIcon {
+opacity: 0.95;
+}
+
+/* STREAMING_CHUNK: Finalizing layout overrides... */
+.eligibilityVerticalStack, .triageVerticalStack {
+display: flex !important;
+flex-direction: column !important;
+gap: 30px !important;
+width: 100% !important;
+}
+
+.availableColumn, .unavailableColumn, .triageSection {
+width: 100% !important;
+display: flex !important;
+flex-direction: column !important;
+}
+
+.cardActionBtn {
+padding: 11px 18px !important;
+border: 1px solid #fca9a9 !important;
+border-radius: 10px !important;
+font-size: 13px !important;
+font-weight: 700 !important;
+cursor: pointer !important;
+background: #fff0f1 !important;
+color: #b00020 !important;
+transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1) !important;
+display: inline-flex !important;
+align-items: center !important;
+gap: 6px !important;
+}
+
+.cardActionBtn:hover {
+background: #b00020 !important;
+color: white !important;
+border-color: transparent !important;
+transform: translateY(-1px) !important;
+}
