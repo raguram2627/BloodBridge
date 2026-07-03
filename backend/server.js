@@ -394,6 +394,8 @@ app.patch(
           req.body.year,
         registerNumber:
           req.body.registerNumber,
+        bloodGroup:
+          req.body.bloodGroup,
       });
 
       await request.save();
@@ -434,6 +436,8 @@ app.patch(
           req.body.year,
         registerNumber:
           req.body.registerNumber,
+        bloodGroup:
+          req.body.bloodGroup,
       });
 
       await request.save();

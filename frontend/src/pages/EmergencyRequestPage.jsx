@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "./EmergencyRequestPage.css";
 
+const ALL_BLOOD_GROUPS = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
+
 function EmergencyRequestPage() {
   const { id } = useParams();
 
@@ -9,6 +11,7 @@ function EmergencyRequestPage() {
   const [loading, setLoading] = useState(true);
   const [registerNumber, setRegisterNumber] = useState("");
   const [donor, setDonor] = useState(null);
+  const [selectedResponseBloodGroup, setSelectedResponseBloodGroup] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
@@ -17,6 +20,12 @@ function EmergencyRequestPage() {
         const res = await fetch(`${import.meta.env.VITE_API_URL}/emergency-request/${id}`);
         const data = await res.json();
         setRequest(data);
+        const groups = data?.bloodGroup === "ALL"
+          ? ALL_BLOOD_GROUPS
+          : data?.bloodGroup?.split(",").map((g) => g.trim()).filter(Boolean) || [];
+        if (groups.length === 1) {
+          setSelectedResponseBloodGroup(groups[0]);
+        }
       } catch (error) {
         console.log(error);
       }
@@ -25,6 +34,10 @@ function EmergencyRequestPage() {
 
     loadRequest();
   }, [id]);
+
+  const requestBloodGroups = request?.bloodGroup === "ALL"
+    ? ALL_BLOOD_GROUPS
+    : request?.bloodGroup?.split(",").map((g) => g.trim()).filter(Boolean) || [];
 
   const fetchDonor = async () => {
     if (!registerNumber) {
@@ -40,6 +53,9 @@ function EmergencyRequestPage() {
         return;
       }
       setDonor(found);
+      if (requestBloodGroups.includes(found.bloodGroup)) {
+        setSelectedResponseBloodGroup(found.bloodGroup);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -48,6 +64,14 @@ function EmergencyRequestPage() {
   const respondWilling = async () => {
     if (!donor) {
       alert("Please authenticate and fetch your profile details first.");
+      return;
+    }
+    if (!selectedResponseBloodGroup) {
+      alert("Please select your blood group from the required list before responding.");
+      return;
+    }
+    if (donor.bloodGroup !== selectedResponseBloodGroup) {
+      alert("Please select the blood group that matches your registered donor profile.");
       return;
     }
     await fetch(`${import.meta.env.VITE_API_URL}/emergency-request/${id}/willing`, {
@@ -61,6 +85,7 @@ function EmergencyRequestPage() {
         department: donor.department,
         year: donor.year,
         registerNumber: donor.registerNumber,
+        bloodGroup: selectedResponseBloodGroup,
       }),
     });
     setSubmitted(true);
@@ -69,6 +94,14 @@ function EmergencyRequestPage() {
   const respondUnavailable = async () => {
     if (!donor) {
       alert("Please authenticate and fetch your profile details first.");
+      return;
+    }
+    if (!selectedResponseBloodGroup) {
+      alert("Please select your blood group from the required list before responding.");
+      return;
+    }
+    if (donor.bloodGroup !== selectedResponseBloodGroup) {
+      alert("Please select the blood group that matches your registered donor profile.");
       return;
     }
     await fetch(`${import.meta.env.VITE_API_URL}/emergency-request/${id}/unavailable`, {
@@ -82,6 +115,7 @@ function EmergencyRequestPage() {
         department: donor.department,
         year: donor.year,
         registerNumber: donor.registerNumber,
+        bloodGroup: selectedResponseBloodGroup,
       }),
     });
     setSubmitted(true);
@@ -126,12 +160,14 @@ function EmergencyRequestPage() {
     );
   }
 
+  const requestBloodGroups = request?.bloodGroup === "ALL"
+    ? ALL_BLOOD_GROUPS
+    : request?.bloodGroup?.split(",").map((g) => g.trim()).filter(Boolean) || [];
+
   const bloodGroupDisplay =
     request.bloodGroup === "ALL"
       ? "ALL GROUPS"
-      : request.bloodGroup.includes(",")
-        ? request.bloodGroup.split(",").map((g) => g.trim()).join(" · ")
-        : request.bloodGroup;
+      : requestBloodGroups.join(" · ");
 
   return (
     <div className="emergencyPage">
@@ -175,6 +211,24 @@ function EmergencyRequestPage() {
             </button>
           </div>
         </div>
+
+        {donor && (
+          <div className="bloodGroupSelectSection">
+            <label className="selectLabel">🩸 Enter your blood group</label>
+            <select
+              className="bloodGroupSelect"
+              value={selectedResponseBloodGroup}
+              onChange={(e) => setSelectedResponseBloodGroup(e.target.value)}
+            >
+              <option value="">Select blood group</option>
+              {requestBloodGroups.map((group) => (
+                <option key={group} value={group}>
+                  {group}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
 
         {/* Dynamically Render Verified Individual Data Card */}
         {donor && (

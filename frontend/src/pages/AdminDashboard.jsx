@@ -53,6 +53,24 @@ const formatRequestBloodGroupLabel = (bloodGroup) => {
   return bloodGroup;
 };
 
+const parseBloodGroupList = (bloodGroupField) => {
+  if (!bloodGroupField || bloodGroupField === "ALL") {
+    return ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
+  }
+  return bloodGroupField
+    .split(",")
+    .map((g) => g.trim())
+    .filter(Boolean);
+};
+
+const groupResponseCounts = (responses = []) => {
+  return responses.reduce((acc, item) => {
+    const group = item?.bloodGroup || "UNKNOWN";
+    acc[group] = (acc[group] || 0) + 1;
+    return acc;
+  }, {});
+};
+
 function AdminDashboard() {
   const [donors, setDonors] = useState([]);
   const [results, setResults] = useState([]);
@@ -638,6 +656,56 @@ function AdminDashboard() {
           grid-template-columns: 380px 1fr;
           gap: 35px;
           align-items: start;
+        }
+
+        .bloodGroupResponseSummary {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+          gap: 12px;
+          margin-bottom: 24px;
+        }
+
+        .responseGroupBadge {
+          background: #fff5f7;
+          border: 1px solid rgba(193, 18, 31, 0.12);
+          border-radius: 18px;
+          padding: 14px 16px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 10px;
+        }
+
+        .groupLabel {
+          font-size: 0.95rem;
+          font-weight: 700;
+          color: #b00020;
+        }
+
+        .groupStats {
+          display: flex;
+          gap: 10px;
+          align-items: center;
+        }
+
+        .statItem {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          font-size: 0.85rem;
+          font-weight: 700;
+          padding: 6px 10px;
+          border-radius: 999px;
+        }
+
+        .statItem.willingCount {
+          background: rgba(34, 197, 94, 0.12);
+          color: #166534;
+        }
+
+        .statItem.unavailableCount {
+          background: rgba(185, 28, 28, 0.12);
+          color: #7f1d1d;
         }
 
         @media (max-width: 1100px) {
@@ -1746,6 +1814,22 @@ function AdminDashboard() {
                           <button className="panelBtn dynamicClickEffect" style={{ ...buttonMotionStyle, background: "#0056b3", color: "#fff", width: "auto" }} onClick={handleRefreshResponses}>🔄 Refresh</button>
                           <button className="panelBtn dynamicClickEffect" style={{ ...buttonMotionStyle, width: "auto" }} onClick={() => updateActiveRequest(currentRequest._id, { showLiveTriage: false })}>← Back</button>
                         </div>
+                      </div>
+
+                      <div className="bloodGroupResponseSummary">
+                        {(() => {
+                          const willingCounts = groupResponseCounts(currentRequest.willingDonors || []);
+                          const unavailableCounts = groupResponseCounts(currentRequest.unavailableDonors || []);
+                          return parseBloodGroupList(currentRequest.bloodGroup).map((group) => (
+                            <div key={group} className="responseGroupBadge">
+                              <span className="groupLabel">{group}</span>
+                              <div className="groupStats">
+                                <span className="statItem willingCount">✅ {willingCounts[group] || 0}</span>
+                                <span className="statItem unavailableCount">❌ {unavailableCounts[group] || 0}</span>
+                              </div>
+                            </div>
+                          ));
+                        })()}
                       </div>
 
                       {/* One by One layout for responses sequentially: Willing -> Declined -> Pending */}

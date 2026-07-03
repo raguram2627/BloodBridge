@@ -142,6 +142,36 @@
   font-size: 15px;
 }
 
+.bloodGroupSelectSection {
+  margin-bottom: 25px;
+}
+
+.selectLabel {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.bloodGroupSelect {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid #cbd5e1;
+  border-radius: 16px;
+  font-size: 15px;
+  color: #1f1f1f;
+  background: white;
+  appearance: none;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.bloodGroupSelect:focus {
+  border-color: #d90429;
+  box-shadow: 0 0 0 4px rgba(217, 4, 41, 0.08);
+}
+
 .emergencyInput:focus {
   border-color: #d62839;
 }

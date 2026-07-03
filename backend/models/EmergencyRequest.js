@@ -29,6 +29,7 @@ const emergencyRequestSchema =
     department: String,
     year: String,
     registerNumber: String,
+    bloodGroup: String,
     respondedAt: {
       type: Date,
       default: Date.now,
@@ -43,6 +44,7 @@ unavailableDonors: [
     department: String,
     year: String,
     registerNumber: String,
+    bloodGroup: String,
     respondedAt: {
       type: Date,
       default: Date.now,
