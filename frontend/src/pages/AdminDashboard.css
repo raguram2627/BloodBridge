@@ -3124,20 +3124,25 @@ body {
   font-weight: 700;
   cursor: pointer;
   text-align: center;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+  transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.18s ease, background-color 0.18s ease, color 0.18s ease;
   box-shadow: 0 4px 10px rgba(24, 24, 24, 0.05);
+  border: none;
 }
 
 .bloodGroupOption:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 24px rgba(193, 18, 31, 0.14);
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: 0 12px 26px rgba(193, 18, 31, 0.16);
+}
+
+.bloodGroupOption:active {
+  transform: translateY(0) scale(0.97);
 }
 
 .bloodGroupOption.selected {
   background: #c1121f;
   color: #ffffff;
-  box-shadow: 0 12px 28px rgba(193, 18, 31, 0.28);
-  transform: scale(1.03);
+  box-shadow: 0 14px 32px rgba(193, 18, 31, 0.28);
+  transform: scale(1.02);
 }
 
 .bloodGroupOption.selected .bloodGroupIcon {
@@ -3154,12 +3159,11 @@ body {
   align-items: center;
 }
 
-.bloodGroupOption input.bloodGroupInput {
-  position: absolute;
-  opacity: 0;
-  width: 1px;
-  height: 1px;
-  pointer-events: none;
+.bloodGroupOption:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
 .bloodGroupOption.allGroups {

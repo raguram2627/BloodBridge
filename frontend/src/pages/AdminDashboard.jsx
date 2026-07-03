@@ -1551,31 +1551,25 @@ function AdminDashboard() {
                 <p>Choose one or more blood groups to notify donors.</p>
               </div>
               <div className="bloodGroupSelector">
-                <label className={`bloodGroupOption allGroups ${allBloodGroupsSelected ? "selected" : ""}`}>
-                  <input
-                    type="checkbox"
-                    className="bloodGroupInput"
-                    checked={allBloodGroupsSelected}
-                    onChange={toggleAllBloodGroupsSelection}
-                  />
+                <button
+                  type="button"
+                  className={`bloodGroupOption allGroups ${allBloodGroupsSelected ? "selected" : ""}`}
+                  onClick={toggleAllBloodGroupsSelection}
+                >
                   <span className="bloodGroupIcon">🩸</span>
                   <span className="bloodGroupText">All Blood Groups</span>
-                </label>
+                </button>
                 {BLOOD_GROUPS.map((group) => (
-                  <label
+                  <button
                     key={group}
+                    type="button"
                     className={`bloodGroupOption ${!allBloodGroupsSelected && requestBloodGroups.includes(group) ? "selected" : ""}`}
+                    disabled={allBloodGroupsSelected}
+                    onClick={() => toggleBloodGroupSelection(group)}
                   >
-                    <input
-                      type="checkbox"
-                      className="bloodGroupInput"
-                      checked={!allBloodGroupsSelected && requestBloodGroups.includes(group)}
-                      disabled={allBloodGroupsSelected}
-                      onChange={() => toggleBloodGroupSelection(group)}
-                    />
                     <span className="bloodGroupIcon">🩸</span>
                     <span className="bloodGroupText">{group}</span>
-                  </label>
+                  </button>
                 ))}
               </div>
               <input placeholder="Hospital Name" value={requestHospital} onChange={(e) => setRequestHospital(e.target.value)} className="dashboardInput" />
