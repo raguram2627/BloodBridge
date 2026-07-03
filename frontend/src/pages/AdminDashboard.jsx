@@ -1712,7 +1712,7 @@ function AdminDashboard() {
                         </div>
                       </div>
 
-                      <div className="availabilityHeaderBar">
+                      <div className="availabilityHeaderBar premiumHeader">
                         <button
                           className={`sectionToggleBtn ${availabilityView === "available" ? "active" : ""}`}
                           onClick={() => setAvailabilityView("available")}
@@ -1726,83 +1726,88 @@ function AdminDashboard() {
                           Unavailable ({currentRequest.unavailableDonorsList?.length || 0})
                         </button>
                       </div>
-                      <div className="eligibilityVerticalStack" style={{ display: "flex", flexDirection: "column", gap: "25px" }}>
-                        <div className="availableColumn" style={{ display: availabilityView === "available" ? "flex" : "none" }}>
-                          <h3 style={{ borderBottom: "3px solid green", paddingBottom: "8px", marginBottom: "15px", color: "green" }}>
-                            Available Donors ({currentRequest.availableDonors?.length || 0})
-                          </h3>
-                          <div className="cardsContainer">
-                            {currentRequest.availableDonors?.map(d => (
-                              <div key={d._id} className="dataCard donorCard">
-                                <div className="donorCardTop">
-                                  <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
-                                    <h3 style={{ margin: 0, fontWeight: "700" }}>{d.name}</h3>
-                                    <span className="roleTag">{d.role}</span>
-                                    <span className="bloodTypeBadge">{d.bloodGroup}</span>
-                                  </div>
-                                </div>
 
-                                <div className="donorCardDetailsGrid alignedDetailsGrid">
-                                  <div className="detailsGridRow"><span className="detailsGridLabel">Department:</span> <span className="detailsGridValue">{d.department}</span></div>
-                                  <div className="detailsGridRow"><span className="detailsGridLabel">Year Level:</span> <span className="detailsGridValue">{d.year || "N/A"}</span></div>
-                                  <div className="detailsGridRow"><span className="detailsGridLabel">Mobile Terminal:</span> <span className="detailsGridValue">{d.mobile}</span></div>
-                                  <div className="detailsGridRow"><span className="detailsGridLabel">Register Number:</span> <span className="detailsGridValue">{d.registerNumber || "N/A"}</span></div>
-                                </div>
+                      {availabilityView === "available" ? (
+                        <div className="eligibilityVerticalStack">
+                          <div className="availableColumn">
+                            <h3 style={{ borderBottom: "3px solid green", paddingBottom: "8px", marginBottom: "15px", color: "green" }}>
+                              Available Donors ({currentRequest.availableDonors?.length || 0})
+                            </h3>
+                            <div className="cardsContainer">
+                              {currentRequest.availableDonors?.map(d => (
+                                <div key={d._id} className="dataCard donorCard">
+                                  <div className="donorCardTop">
+                                    <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
+                                      <h3 style={{ margin: 0, fontWeight: "700" }}>{d.name}</h3>
+                                      <span className="roleTag">{d.role}</span>
+                                      <span className="bloodTypeBadge">{d.bloodGroup}</span>
+                                    </div>
+                                  </div>
 
-                                <div className="cardActionRow">
-                                  <div className="actionBtnLeftGroup">
-                                    <button className="cardActionBtn" onClick={() => setDetailsDonor(d)}>📊 Details</button>
-                                    <a href={`tel:${d.mobile}`} className="commsLink"><button className="cardActionBtn">📞 Call</button></a>
-                                    <a href={`https://wa.me/91${d.mobile}`} target="_blank" rel="noreferrer" className="commsLink"><button className="cardActionBtn">📱 WhatsApp</button></a>
+                                  <div className="donorCardDetailsGrid alignedDetailsGrid">
+                                    <div className="detailsGridRow"><span className="detailsGridLabel">Department:</span> <span className="detailsGridValue">{d.department}</span></div>
+                                    <div className="detailsGridRow"><span className="detailsGridLabel">Year Level:</span> <span className="detailsGridValue">{d.year || "N/A"}</span></div>
+                                    <div className="detailsGridRow"><span className="detailsGridLabel">Mobile Terminal:</span> <span className="detailsGridValue">{d.mobile}</span></div>
+                                    <div className="detailsGridRow"><span className="detailsGridLabel">Register Number:</span> <span className="detailsGridValue">{d.registerNumber || "N/A"}</span></div>
                                   </div>
-                                  <div className="actionBtnRightGroup">
-                                    <button className="cardActionBtn actionBtnHistory" onClick={() => setSelectedDonor(d)}>📜 History</button>
+
+                                  <div className="cardActionRow">
+                                    <div className="actionBtnLeftGroup">
+                                      <button className="cardActionBtn" onClick={() => setDetailsDonor(d)}>📊 Details</button>
+                                      <a href={`tel:${d.mobile}`} className="commsLink"><button className="cardActionBtn">📞 Call</button></a>
+                                      <a href={`https://wa.me/91${d.mobile}`} target="_blank" rel="noreferrer" className="commsLink"><button className="cardActionBtn">📱 WhatsApp</button></a>
+                                    </div>
+                                    <div className="actionBtnRightGroup">
+                                      <button className="cardActionBtn actionBtnHistory" onClick={() => setSelectedDonor(d)}>📜 History</button>
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                            ))}
-                            {currentRequest.availableDonors?.length === 0 && <p className="neutralSubText">No available matching assets located.</p>}
+                              ))}
+                              {currentRequest.availableDonors?.length === 0 && <p className="neutralSubText">No available matching assets located.</p>}
+                            </div>
                           </div>
                         </div>
+                      ) : (
+                        <div className="eligibilityVerticalStack">
+                          <div className="unavailableColumn">
+                            <h3 style={{ borderBottom: "3px solid #b00020", paddingBottom: "8px", marginBottom: "15px", color: "#b00020" }}>
+                              Unavailable Donors ({currentRequest.unavailableDonorsList?.length || 0})
+                            </h3>
+                            <div className="cardsContainer">
+                              {currentRequest.unavailableDonorsList?.map(d => (
+                                <div key={d._id} className="dataCard donorCard" style={{ opacity: 0.85 }}>
+                                  <div className="donorCardTop">
+                                    <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
+                                      <h3 style={{ margin: 0, fontWeight: "700" }}>{d.name}</h3>
+                                      <span className="roleTag">{d.role}</span>
+                                      <span className="bloodTypeBadge">{d.bloodGroup}</span>
+                                    </div>
+                                  </div>
 
-                        <div className="unavailableColumn" style={{ display: availabilityView === "unavailable" ? "flex" : "none" }}>
-                          <h3 style={{ borderBottom: "3px solid #b00020", paddingBottom: "8px", marginBottom: "15px", color: "#b00020" }}>
-                            Unavailable Donors ({currentRequest.unavailableDonorsList?.length || 0})
-                          </h3>
-                          <div className="cardsContainer">
-                            {currentRequest.unavailableDonorsList?.map(d => (
-                              <div key={d._id} className="dataCard donorCard" style={{ opacity: 0.85 }}>
-                                <div className="donorCardTop">
-                                  <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
-                                    <h3 style={{ margin: 0, fontWeight: "700" }}>{d.name}</h3>
-                                    <span className="roleTag">{d.role}</span>
-                                    <span className="bloodTypeBadge">{d.bloodGroup}</span>
+                                  <div className="donorCardDetailsGrid alignedDetailsGrid">
+                                    <div className="detailsGridRow"><span className="detailsGridLabel">Department:</span> <span className="detailsGridValue">{d.department}</span></div>
+                                    <div className="detailsGridRow"><span className="detailsGridLabel">Year Level:</span> <span className="detailsGridValue">{d.year || "N/A"}</span></div>
+                                    <div className="detailsGridRow"><span className="detailsGridLabel">Mobile Terminal:</span> <span className="detailsGridValue">{d.mobile}</span></div>
+                                    <div className="detailsGridRow"><span className="detailsGridLabel">Register Number:</span> <span className="detailsGridValue">{d.registerNumber || "N/A"}</span></div>
+                                  </div>
+
+                                  <div className="cardActionRow">
+                                    <div className="actionBtnLeftGroup">
+                                      <button className="cardActionBtn" onClick={() => setDetailsDonor(d)}>📊 Details</button>
+                                      <a href={`tel:${d.mobile}`} className="commsLink"><button className="cardActionBtn">📞 Call</button></a>
+                                      <a href={`https://wa.me/91${d.mobile}`} target="_blank" rel="noreferrer" className="commsLink"><button className="cardActionBtn">📱 WhatsApp</button></a>
+                                    </div>
+                                    <div className="actionBtnRightGroup">
+                                      <button className="cardActionBtn actionBtnHistory" onClick={() => setSelectedDonor(d)}>📜 History</button>
+                                    </div>
                                   </div>
                                 </div>
-
-                                <div className="donorCardDetailsGrid alignedDetailsGrid">
-                                  <div className="detailsGridRow"><span className="detailsGridLabel">Department:</span> <span className="detailsGridValue">{d.department}</span></div>
-                                  <div className="detailsGridRow"><span className="detailsGridLabel">Year Level:</span> <span className="detailsGridValue">{d.year || "N/A"}</span></div>
-                                  <div className="detailsGridRow"><span className="detailsGridLabel">Mobile Terminal:</span> <span className="detailsGridValue">{d.mobile}</span></div>
-                                  <div className="detailsGridRow"><span className="detailsGridLabel">Register Number:</span> <span className="detailsGridValue">{d.registerNumber || "N/A"}</span></div>
-                                </div>
-
-                                <div className="cardActionRow">
-                                  <div className="actionBtnLeftGroup">
-                                    <button className="cardActionBtn" onClick={() => setDetailsDonor(d)}>📊 Details</button>
-                                    <a href={`tel:${d.mobile}`} className="commsLink"><button className="cardActionBtn">📞 Call</button></a>
-                                    <a href={`https://wa.me/91${d.mobile}`} target="_blank" rel="noreferrer" className="commsLink"><button className="cardActionBtn">📱 WhatsApp</button></a>
-                                  </div>
-                                  <div className="actionBtnRightGroup">
-                                    <button className="cardActionBtn actionBtnHistory" onClick={() => setSelectedDonor(d)}>📜 History</button>
-                                  </div>
-                                </div>
-                              </div>
-                            ))}
-                            {currentRequest.unavailableDonorsList?.length === 0 && <p className="neutralSubText">No matching locked assets.</p>}
+                              ))}
+                              {currentRequest.unavailableDonorsList?.length === 0 && <p className="neutralSubText">No matching locked assets.</p>}
+                            </div>
                           </div>
                         </div>
-                      </div>
+                      )}
 
                       <div style={{ display: "flex", flexWrap: "wrap", gap: "12px", marginTop: "30px" }}>
                         <button
@@ -1870,132 +1875,135 @@ function AdminDashboard() {
 
                       {/* One by One layout for responses sequentially: Willing -> Declined -> Pending */}
                       <div className="triageVerticalStack" style={{ display: "flex", flexDirection: "column", gap: "30px" }}>
-                        {/* Section 1: Willing */}
-                        <div className="triageSection" style={{ display: responseView === "willing" ? "flex" : "none" }}>
-                          <h4 style={{ color: "green", borderBottom: "2px solid green", paddingBottom: "6px", marginBottom: "15px" }}>
-                            ✅ Willing ({currentRequest.willingDonors?.length || 0})
-                          </h4>
-                          <div className="cardsContainer">
-                            {currentRequest.willingDonors?.map((w, i) => {
-                              const d = getDonorProfile(w.donorName, w.mobile);
-                              return (
-                                <div key={i} className="dataCard donorCard">
-                                  <div className="donorCardTop">
-                                    <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
-                                      <h3 style={{ margin: 0, fontWeight: "700" }}>{d.name}</h3>
-                                      <span className="roleTag">{d.role}</span>
-                                      <span className="bloodTypeBadge">{d.bloodGroup}</span>
+                        {responseView === "willing" && (
+                          <div className="triageSection">
+                            <h4 style={{ color: "green", borderBottom: "2px solid green", paddingBottom: "6px", marginBottom: "15px" }}>
+                              ✅ Willing ({currentRequest.willingDonors?.length || 0})
+                            </h4>
+                            <div className="cardsContainer">
+                              {currentRequest.willingDonors?.map((w, i) => {
+                                const d = getDonorProfile(w.donorName, w.mobile);
+                                return (
+                                  <div key={i} className="dataCard donorCard">
+                                    <div className="donorCardTop">
+                                      <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
+                                        <h3 style={{ margin: 0, fontWeight: "700" }}>{d.name}</h3>
+                                        <span className="roleTag">{d.role}</span>
+                                        <span className="bloodTypeBadge">{d.bloodGroup}</span>
+                                      </div>
                                     </div>
-                                  </div>
 
-                                  <div className="donorCardDetailsGrid alignedDetailsGrid">
-                                    <div className="detailsGridRow"><span className="detailsGridLabel">Department:</span> <span className="detailsGridValue">{d.department}</span></div>
-                                    <div className="detailsGridRow"><span className="detailsGridLabel">Year Level:</span> <span className="detailsGridValue">{d.year || "N/A"}</span></div>
-                                    <div className="detailsGridRow"><span className="detailsGridLabel">Mobile Terminal:</span> <span className="detailsGridValue">{d.mobile}</span></div>
-                                    <div className="detailsGridRow"><span className="detailsGridLabel">Register Number:</span> <span className="detailsGridValue">{d.registerNumber || "N/A"}</span></div>
-                                  </div>
+                                    <div className="donorCardDetailsGrid alignedDetailsGrid">
+                                      <div className="detailsGridRow"><span className="detailsGridLabel">Department:</span> <span className="detailsGridValue">{d.department}</span></div>
+                                      <div className="detailsGridRow"><span className="detailsGridLabel">Year Level:</span> <span className="detailsGridValue">{d.year || "N/A"}</span></div>
+                                      <div className="detailsGridRow"><span className="detailsGridLabel">Mobile Terminal:</span> <span className="detailsGridValue">{d.mobile}</span></div>
+                                      <div className="detailsGridRow"><span className="detailsGridLabel">Register Number:</span> <span className="detailsGridValue">{d.registerNumber || "N/A"}</span></div>
+                                    </div>
 
-                                  <div className="cardActionRow">
-                                    <div className="actionBtnLeftGroup">
-                                      <button className="cardActionBtn" onClick={() => setDetailsDonor(d)}>📊 Details</button>
-                                      <a href={`tel:${d.mobile}`} className="commsLink"><button className="cardActionBtn">📞 Call</button></a>
-                                      <a href={`https://wa.me/91${d.mobile}`} target="_blank" rel="noreferrer" className="commsLink"><button className="cardActionBtn">📱 WhatsApp</button></a>
-                                    </div>
-                                    <div className="actionBtnRightGroup">
-                                      <button className="cardActionBtn actionBtnRecord" onClick={() => setDonationDonor(d)}>➕ Log Donation</button>
+                                    <div className="cardActionRow">
+                                      <div className="actionBtnLeftGroup">
+                                        <button className="cardActionBtn" onClick={() => setDetailsDonor(d)}>📊 Details</button>
+                                        <a href={`tel:${d.mobile}`} className="commsLink"><button className="cardActionBtn">📞 Call</button></a>
+                                        <a href={`https://wa.me/91${d.mobile}`} target="_blank" rel="noreferrer" className="commsLink"><button className="cardActionBtn">📱 WhatsApp</button></a>
+                                      </div>
+                                      <div className="actionBtnRightGroup">
+                                        <button className="cardActionBtn actionBtnRecord" onClick={() => setDonationDonor(d)}>➕ Log Donation</button>
+                                      </div>
                                     </div>
                                   </div>
-                                </div>
-                              );
-                            })}
-                            {(!currentRequest.willingDonors || currentRequest.willingDonors.length === 0) && <p className="neutralSubText">No willing responses recorded yet.</p>}
+                                );
+                              })}
+                              {(!currentRequest.willingDonors || currentRequest.willingDonors.length === 0) && <p className="neutralSubText">No willing responses recorded yet.</p>}
+                            </div>
                           </div>
-                        </div>
+                        )}
 
-                        {/* Section 2: Declined */}
-                        <div className="triageSection" style={{ display: responseView === "declined" ? "flex" : "none" }}>
-                          <h4 style={{ color: "#b00020", borderBottom: "2px solid #b00020", paddingBottom: "6px", marginBottom: "15px" }}>
-                            ❌ Declined ({currentRequest.unavailableDonors?.length || 0})
-                          </h4>
-                          <div className="cardsContainer">
-                            {currentRequest.unavailableDonors?.map((un, i) => {
-                              const d = getDonorProfile(un.donorName, un.mobile);
-                              return (
-                                <div key={i} className="dataCard donorCard" style={{ opacity: 0.85 }}>
-                                  <div className="donorCardTop">
-                                    <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
-                                      <h3 style={{ margin: 0, fontWeight: "700" }}>{d.name}</h3>
-                                      <span className="roleTag">{d.role}</span>
-                                      <span className="bloodTypeBadge">{d.bloodGroup}</span>
+                        {responseView === "declined" && (
+                          <div className="triageSection">
+                            <h4 style={{ color: "#b00020", borderBottom: "2px solid #b00020", paddingBottom: "6px", marginBottom: "15px" }}>
+                              ❌ Declined ({currentRequest.unavailableDonors?.length || 0})
+                            </h4>
+                            <div className="cardsContainer">
+                              {currentRequest.unavailableDonors?.map((un, i) => {
+                                const d = getDonorProfile(un.donorName, un.mobile);
+                                return (
+                                  <div key={i} className="dataCard donorCard" style={{ opacity: 0.85 }}>
+                                    <div className="donorCardTop">
+                                      <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
+                                        <h3 style={{ margin: 0, fontWeight: "700" }}>{d.name}</h3>
+                                        <span className="roleTag">{d.role}</span>
+                                        <span className="bloodTypeBadge">{d.bloodGroup}</span>
+                                      </div>
+                                    </div>
+
+                                    <div className="donorCardDetailsGrid alignedDetailsGrid">
+                                      <div className="detailsGridRow"><span className="detailsGridLabel">Department:</span> <span className="detailsGridValue">{d.department}</span></div>
+                                      <div className="detailsGridRow"><span className="detailsGridLabel">Year Level:</span> <span className="detailsGridValue">{d.year || "N/A"}</span></div>
+                                      <div className="detailsGridRow"><span className="detailsGridLabel">Mobile Terminal:</span> <span className="detailsGridValue">{d.mobile}</span></div>
+                                      <div className="detailsGridRow"><span className="detailsGridLabel">Register Number:</span> <span className="detailsGridValue">{d.registerNumber || "N/A"}</span></div>
+                                    </div>
+
+                                    <div className="cardActionRow">
+                                      <div className="actionBtnLeftGroup">
+                                        <button className="cardActionBtn" onClick={() => setDetailsDonor(d)}>📊 Details</button>
+                                        <a href={`tel:${d.mobile}`} className="commsLink"><button className="cardActionBtn">📞 Call</button></a>
+                                        <a href={`https://wa.me/91${d.mobile}`} target="_blank" rel="noreferrer" className="commsLink"><button className="cardActionBtn">📱 WhatsApp</button></a>
+                                      </div>
+                                      <div className="actionBtnRightGroup">
+                                        <button className="cardActionBtn actionBtnHistory" onClick={() => setSelectedDonor(un)}>📜 History</button>
+                                      </div>
                                     </div>
                                   </div>
-
-                                  <div className="donorCardDetailsGrid alignedDetailsGrid">
-                                    <div className="detailsGridRow"><span className="detailsGridLabel">Department:</span> <span className="detailsGridValue">{d.department}</span></div>
-                                    <div className="detailsGridRow"><span className="detailsGridLabel">Year Level:</span> <span className="detailsGridValue">{d.year || "N/A"}</span></div>
-                                    <div className="detailsGridRow"><span className="detailsGridLabel">Mobile Terminal:</span> <span className="detailsGridValue">{d.mobile}</span></div>
-                                    <div className="detailsGridRow"><span className="detailsGridLabel">Register Number:</span> <span className="detailsGridValue">{d.registerNumber || "N/A"}</span></div>
-                                  </div>
-
-                                  <div className="cardActionRow">
-                                    <div className="actionBtnLeftGroup">
-                                      <button className="cardActionBtn" onClick={() => setDetailsDonor(d)}>📊 Details</button>
-                                      <a href={`tel:${d.mobile}`} className="commsLink"><button className="cardActionBtn">📞 Call</button></a>
-                                      <a href={`https://wa.me/91${d.mobile}`} target="_blank" rel="noreferrer" className="commsLink"><button className="cardActionBtn">📱 WhatsApp</button></a>
-                                    </div>
-                                    <div className="actionBtnRightGroup">
-                                      <button className="cardActionBtn actionBtnHistory" onClick={() => setSelectedDonor(un)}>📜 History</button>
-                                    </div>
-                                  </div>
-                                </div>
-                              );
-                            })}
-                            {(!currentRequest.unavailableDonors || currentRequest.unavailableDonors.length === 0) && <p className="neutralSubText">No decline responses logged.</p>}
+                                );
+                              })}
+                              {(!currentRequest.unavailableDonors || currentRequest.unavailableDonors.length === 0) && <p className="neutralSubText">No decline responses logged.</p>}
+                            </div>
                           </div>
-                        </div>
+                        )}
 
-                        {/* Section 3: Pending */}
-                        <div className="triageSection" style={{ display: responseView === "pending" ? "flex" : "none" }}>
-                          <h4 style={{ color: "#666", borderBottom: "2px solid #666", paddingBottom: "6px", marginBottom: "15px" }}>
-                            ⏳ Pending Contact ({
-                              Math.max(0, (currentRequest.availableDonors?.length || 0) - (currentRequest.willingDonors?.length || 0) - (currentRequest.unavailableDonors?.length || 0))
-                            })
-                          </h4>
-                          <div className="cardsContainer">
-                            {currentRequest.availableDonors
-                              ?.filter(d => !currentRequest.willingDonors?.some(w => w.mobile === d.mobile) && !currentRequest.unavailableDonors?.some(un => un.mobile === d.mobile))
-                              .map(d => (
-                                <div key={d._id} className="dataCard donorCard" style={{ opacity: 0.75 }}>
-                                  <div className="donorCardTop">
-                                    <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
-                                      <h3 style={{ margin: 0, fontWeight: "700" }}>{d.name}</h3>
-                                      <span className="roleTag">{d.role}</span>
-                                      <span className="bloodTypeBadge">{d.bloodGroup}</span>
+                        {responseView === "pending" && (
+                          <div className="triageSection">
+                            <h4 style={{ color: "#666", borderBottom: "2px solid #666", paddingBottom: "6px", marginBottom: "15px" }}>
+                              ⏳ Pending Contact ({
+                                Math.max(0, (currentRequest.availableDonors?.length || 0) - (currentRequest.willingDonors?.length || 0) - (currentRequest.unavailableDonors?.length || 0))
+                              })
+                            </h4>
+                            <div className="cardsContainer">
+                              {currentRequest.availableDonors
+                                ?.filter(d => !currentRequest.willingDonors?.some(w => w.mobile === d.mobile) && !currentRequest.unavailableDonors?.some(un => un.mobile === d.mobile))
+                                .map(d => (
+                                  <div key={d._id} className="dataCard donorCard" style={{ opacity: 0.75 }}>
+                                    <div className="donorCardTop">
+                                      <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
+                                        <h3 style={{ margin: 0, fontWeight: "700" }}>{d.name}</h3>
+                                        <span className="roleTag">{d.role}</span>
+                                        <span className="bloodTypeBadge">{d.bloodGroup}</span>
+                                      </div>
+                                    </div>
+
+                                    <div className="donorCardDetailsGrid alignedDetailsGrid">
+                                      <div className="detailsGridRow"><span className="detailsGridLabel">Department:</span> <span className="detailsGridValue">{d.department}</span></div>
+                                      <div className="detailsGridRow"><span className="detailsGridLabel">Year Level:</span> <span className="detailsGridValue">{d.year || "N/A"}</span></div>
+                                      <div className="detailsGridRow"><span className="detailsGridLabel">Mobile Terminal:</span> <span className="detailsGridValue">{d.mobile}</span></div>
+                                      <div className="detailsGridRow"><span className="detailsGridLabel">Register Number:</span> <span className="detailsGridValue">{d.registerNumber || "N/A"}</span></div>
+                                    </div>
+
+                                    <div className="cardActionRow">
+                                      <div className="actionBtnLeftGroup">
+                                        <button className="cardActionBtn" onClick={() => setDetailsDonor(d)}>📊 Details</button>
+                                        <a href={`tel:${d.mobile}`} className="commsLink"><button className="cardActionBtn">📞 Call</button></a>
+                                        <a href={`https://wa.me/91${d.mobile}`} target="_blank" rel="noreferrer" className="commsLink"><button className="cardActionBtn">📱 WhatsApp</button></a>
+                                      </div>
+                                      <div className="actionBtnRightGroup">
+                                        <button className="cardActionBtn actionBtnHistory" onClick={() => setSelectedDonor(d)}>📜 History</button>
+                                      </div>
                                     </div>
                                   </div>
-
-                                  <div className="donorCardDetailsGrid alignedDetailsGrid">
-                                    <div className="detailsGridRow"><span className="detailsGridLabel">Department:</span> <span className="detailsGridValue">{d.department}</span></div>
-                                    <div className="detailsGridRow"><span className="detailsGridLabel">Year Level:</span> <span className="detailsGridValue">{d.year || "N/A"}</span></div>
-                                    <div className="detailsGridRow"><span className="detailsGridLabel">Mobile Terminal:</span> <span className="detailsGridValue">{d.mobile}</span></div>
-                                    <div className="detailsGridRow"><span className="detailsGridLabel">Register Number:</span> <span className="detailsGridValue">{d.registerNumber || "N/A"}</span></div>
-                                  </div>
-
-                                  <div className="cardActionRow">
-                                    <div className="actionBtnLeftGroup">
-                                      <button className="cardActionBtn" onClick={() => setDetailsDonor(d)}>📊 Details</button>
-                                      <a href={`tel:${d.mobile}`} className="commsLink"><button className="cardActionBtn">📞 Call</button></a>
-                                      <a href={`https://wa.me/91${d.mobile}`} target="_blank" rel="noreferrer" className="commsLink"><button className="cardActionBtn">📱 WhatsApp</button></a>
-                                    </div>
-                                    <div className="actionBtnRightGroup">
-                                      <button className="cardActionBtn actionBtnHistory" onClick={() => setSelectedDonor(d)}>📜 History</button>
-                                    </div>
-                                  </div>
-                                </div>
-                              ))
-                            }
+                                ))
+                              }
+                            </div>
                           </div>
-                        </div>
+                        )}
                       </div>
 
                       <div style={{ display: "flex", flexWrap: "wrap", gap: "12px", marginTop: "40px" }}>
