@@ -112,6 +112,8 @@ function AdminDashboard() {
 
   const [activeRequests, setActiveRequests] = useState([]);
   const [selectedRequestId, setSelectedRequestId] = useState(null);
+  const [availabilityView, setAvailabilityView] = useState("available");
+  const [responseView, setResponseView] = useState("willing");
 
   const [toast, setToast] = useState({ show: false, message: "", type: "info" });
   const [confirmDialog, setConfirmDialog] = useState({ show: false, title: "", message: "", onConfirm: null });
@@ -1710,9 +1712,22 @@ function AdminDashboard() {
                         </div>
                       </div>
 
-                      {/* One by one available / unavailable stack strictly matching registered donor list visual styles */}
+                      <div className="availabilityHeaderBar">
+                        <button
+                          className={`sectionToggleBtn ${availabilityView === "available" ? "active" : ""}`}
+                          onClick={() => setAvailabilityView("available")}
+                        >
+                          Available ({currentRequest.availableDonors?.length || 0})
+                        </button>
+                        <button
+                          className={`sectionToggleBtn ${availabilityView === "unavailable" ? "active" : ""}`}
+                          onClick={() => setAvailabilityView("unavailable")}
+                        >
+                          Unavailable ({currentRequest.unavailableDonorsList?.length || 0})
+                        </button>
+                      </div>
                       <div className="eligibilityVerticalStack" style={{ display: "flex", flexDirection: "column", gap: "25px" }}>
-                        <div className="availableColumn">
+                        <div className="availableColumn" style={{ display: availabilityView === "available" ? "flex" : "none" }}>
                           <h3 style={{ borderBottom: "3px solid green", paddingBottom: "8px", marginBottom: "15px", color: "green" }}>
                             Available Donors ({currentRequest.availableDonors?.length || 0})
                           </h3>
@@ -1750,7 +1765,7 @@ function AdminDashboard() {
                           </div>
                         </div>
 
-                        <div className="unavailableColumn">
+                        <div className="unavailableColumn" style={{ display: availabilityView === "unavailable" ? "flex" : "none" }}>
                           <h3 style={{ borderBottom: "3px solid #b00020", paddingBottom: "8px", marginBottom: "15px", color: "#b00020" }}>
                             Unavailable Donors ({currentRequest.unavailableDonorsList?.length || 0})
                           </h3>
@@ -1832,10 +1847,31 @@ function AdminDashboard() {
                         })()}
                       </div>
 
+                      <div className="responseHeaderBar">
+                        <button
+                          className={`sectionToggleBtn ${responseView === "willing" ? "active" : ""}`}
+                          onClick={() => setResponseView("willing")}
+                        >
+                          ✅ Willing ({currentRequest.willingDonors?.length || 0})
+                        </button>
+                        <button
+                          className={`sectionToggleBtn ${responseView === "declined" ? "active" : ""}`}
+                          onClick={() => setResponseView("declined")}
+                        >
+                          ❌ Declined ({currentRequest.unavailableDonors?.length || 0})
+                        </button>
+                        <button
+                          className={`sectionToggleBtn ${responseView === "pending" ? "active" : ""}`}
+                          onClick={() => setResponseView("pending")}
+                        >
+                          ⏳ Pending Contact ({Math.max(0, (currentRequest.availableDonors?.length || 0) - (currentRequest.willingDonors?.length || 0) - (currentRequest.unavailableDonors?.length || 0))})
+                        </button>
+                      </div>
+
                       {/* One by One layout for responses sequentially: Willing -> Declined -> Pending */}
                       <div className="triageVerticalStack" style={{ display: "flex", flexDirection: "column", gap: "30px" }}>
                         {/* Section 1: Willing */}
-                        <div className="triageSection">
+                        <div className="triageSection" style={{ display: responseView === "willing" ? "flex" : "none" }}>
                           <h4 style={{ color: "green", borderBottom: "2px solid green", paddingBottom: "6px", marginBottom: "15px" }}>
                             ✅ Willing ({currentRequest.willingDonors?.length || 0})
                           </h4>
@@ -1877,7 +1913,7 @@ function AdminDashboard() {
                         </div>
 
                         {/* Section 2: Declined */}
-                        <div className="triageSection">
+                        <div className="triageSection" style={{ display: responseView === "declined" ? "flex" : "none" }}>
                           <h4 style={{ color: "#b00020", borderBottom: "2px solid #b00020", paddingBottom: "6px", marginBottom: "15px" }}>
                             ❌ Declined ({currentRequest.unavailableDonors?.length || 0})
                           </h4>
@@ -1919,7 +1955,7 @@ function AdminDashboard() {
                         </div>
 
                         {/* Section 3: Pending */}
-                        <div className="triageSection">
+                        <div className="triageSection" style={{ display: responseView === "pending" ? "flex" : "none" }}>
                           <h4 style={{ color: "#666", borderBottom: "2px solid #666", paddingBottom: "6px", marginBottom: "15px" }}>
                             ⏳ Pending Contact ({
                               Math.max(0, (currentRequest.availableDonors?.length || 0) - (currentRequest.willingDonors?.length || 0) - (currentRequest.unavailableDonors?.length || 0))
