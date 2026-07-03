@@ -1563,6 +1563,57 @@ function AdminDashboard() {
           grid-column: span 2;
           justify-content: center;
         }
+
+        .availabilityHeaderBar,
+        .responseHeaderBar {
+          display: flex;
+          gap: 12px;
+          flex-wrap: wrap;
+          margin-bottom: 22px;
+        }
+
+        .sectionToggleBtn {
+          flex: 1;
+          border: 1px solid #f0d5d9;
+          background: white;
+          color: #555;
+          border-radius: 12px;
+          padding: 14px 20px;
+          font-weight: 700;
+          font-size: 15px;
+          letter-spacing: 0.3px;
+          cursor: pointer;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+          transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 8px;
+        }
+
+        .sectionToggleBtn:hover {
+          background: #fff0f1;
+          color: #b00020;
+          border-color: #fbc2c2;
+          transform: translateY(-2px);
+          box-shadow: 0 8px 20px rgba(176, 0, 32, 0.08);
+        }
+
+        .sectionToggleBtn:active {
+          transform: translateY(1px) scale(0.97);
+          box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.03);
+        }
+
+        .sectionToggleBtn.active {
+          background: linear-gradient(135deg, #b00020, #d62839);
+          color: white;
+          border-color: transparent;
+          box-shadow: 0 4px 15px rgba(176, 0, 32, 0.15);
+        }
+
+        .sectionToggleBtn.active:active {
+          transform: scale(0.97);
+        }
       `}} />
 
       <div className="dashboardHeader">
