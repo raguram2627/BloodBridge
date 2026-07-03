@@ -10,6 +10,27 @@ const Donor = require("./models/Donor");
 const EmergencyRequest =
   require("./models/EmergencyRequest");
 
+const parseRequestBloodGroups = (bloodGroupField) => {
+  if (!bloodGroupField || bloodGroupField === "ALL") return null;
+  return bloodGroupField.split(",").map((g) => g.trim()).filter(Boolean);
+};
+
+const isDonorEligibleForEmergency = (donor, today) => {
+  const ninetyDaysAgo = new Date(today);
+  ninetyDaysAgo.setDate(ninetyDaysAgo.getDate() - 90);
+  ninetyDaysAgo.setHours(0, 0, 0, 0);
+
+  if (donor.donationHistory?.some((entry) => new Date(entry.date) >= ninetyDaysAgo)) {
+    return false;
+  }
+
+  if (donor.lastDonationDate && new Date(donor.lastDonationDate) >= ninetyDaysAgo) {
+    return false;
+  }
+
+  return true;
+};
+
 const app = express();
 const axios = require("axios");
 
@@ -247,19 +268,12 @@ app.post(
 
       const donors = await Donor.find();
       const today = new Date();
+      const requestedGroups = parseRequestBloodGroups(req.body.bloodGroup);
       const matchingDonors = donors.filter((d) => {
-        if (d.bloodGroup !== req.body.bloodGroup) {
+        if (requestedGroups && !requestedGroups.includes(d.bloodGroup)) {
           return false;
         }
-        if (!d.lastDonationDate) {
-          return true;
-        }
-        const lastDonation = new Date(d.lastDonationDate);
-        const daysSinceDonation = Math.floor(
-          (today - lastDonation) /
-          (1000 * 60 * 60 * 24)
-        );
-        return daysSinceDonation >= 90;
+        return isDonorEligibleForEmergency(d, today);
       });
 
       console.log("Matching donors count:", matchingDonors.length);

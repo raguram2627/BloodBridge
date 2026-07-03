@@ -126,6 +126,13 @@ function EmergencyRequestPage() {
     );
   }
 
+  const bloodGroupDisplay =
+    request.bloodGroup === "ALL"
+      ? "ALL GROUPS"
+      : request.bloodGroup.includes(",")
+        ? request.bloodGroup.split(",").map((g) => g.trim()).join(" · ")
+        : request.bloodGroup;
+
   return (
     <div className="emergencyPage">
       <div className="emergencyCard">
@@ -138,7 +145,7 @@ function EmergencyRequestPage() {
         {/* Essential Core Attributes */}
         <div className="bloodGroupContainer">
           <div className="bloodLabel">REQUIRED TYPE</div>
-          <div className="bloodValue">{request.bloodGroup}</div>
+          <div className={`bloodValue ${request.bloodGroup === "ALL" || request.bloodGroup.includes(",") ? "multiGroup" : ""}`}>{bloodGroupDisplay}</div>
         </div>
 
         <div className="requestDataBlock">

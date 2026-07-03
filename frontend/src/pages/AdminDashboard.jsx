@@ -1,5 +1,58 @@
 import { useState, useEffect } from "react";
 
+const BLOOD_GROUPS = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
+
+const getPublicRequestLink = (requestId) => {
+  const base = import.meta.env.VITE_PUBLIC_URL || window.location.origin;
+  return `${base}/request/${requestId}`;
+};
+
+const parseRequestBloodGroups = (bloodGroupField) => {
+  if (!bloodGroupField || bloodGroupField === "ALL") return "ALL";
+  return bloodGroupField.split(",").map((g) => g.trim()).filter(Boolean);
+};
+
+const donorMatchesRequestBloodGroup = (donorBloodGroup, requestBloodGroup) => {
+  const groups = parseRequestBloodGroups(requestBloodGroup);
+  if (groups === "ALL") return true;
+  return groups.includes(donorBloodGroup);
+};
+
+const isDonorUnavailableWithin90Days = (donor) => {
+  const ninetyDaysAgo = new Date();
+  ninetyDaysAgo.setDate(ninetyDaysAgo.getDate() - 90);
+  ninetyDaysAgo.setHours(0, 0, 0, 0);
+
+  if (donor.donationHistory?.some((h) => new Date(h.date) >= ninetyDaysAgo)) {
+    return true;
+  }
+  if (donor.lastDonationDate && new Date(donor.lastDonationDate) >= ninetyDaysAgo) {
+    return true;
+  }
+  return false;
+};
+
+const computeDonorPools = (donorsList, requestBloodGroup) => {
+  const targetedPool = donorsList.filter((d) =>
+    donorMatchesRequestBloodGroup(d.bloodGroup, requestBloodGroup)
+  );
+  const available = [];
+  const unavailable = [];
+  targetedPool.forEach((donor) => {
+    if (isDonorUnavailableWithin90Days(donor)) {
+      unavailable.push(donor);
+    } else {
+      available.push(donor);
+    }
+  });
+  return { available, unavailable };
+};
+
+const formatRequestBloodGroupLabel = (bloodGroup) => {
+  if (!bloodGroup || bloodGroup === "ALL") return "ALL GROUPS";
+  return bloodGroup;
+};
+
 function AdminDashboard() {
   const [donors, setDonors] = useState([]);
   const [results, setResults] = useState([]);
@@ -33,7 +86,8 @@ function AdminDashboard() {
   const [searchName, setSearchName] = useState("");
   const [searchRegNo, setSearchRegNo] = useState("");
 
-  const [requestBloodGroup, setRequestBloodGroup] = useState("");
+  const [requestBloodGroups, setRequestBloodGroups] = useState([]);
+  const [allBloodGroupsSelected, setAllBloodGroupsSelected] = useState(false);
   const [requestHospital, setRequestHospital] = useState("");
   const [requestUnits, setRequestUnits] = useState("");
   const [requestPhone, setRequestPhone] = useState("");
@@ -95,21 +149,7 @@ function AdminDashboard() {
       const data = await res.json();
       
       const mappedRequests = data.map((req) => {
-        const targetedPool = donors.filter(d => d.bloodGroup === req.bloodGroup);
-        const ninetyDaysAgo = new Date();
-        ninetyDaysAgo.setDate(ninetyDaysAgo.getDate() - 90);
-
-        const available = [];
-        const unavailable = [];
-
-        targetedPool.forEach(donor => {
-          const recent = donor.donationHistory?.some(h => new Date(h.date) >= ninetyDaysAgo);
-          if (recent) {
-            unavailable.push(donor);
-          } else {
-            available.push(donor);
-          }
-        });
+        const { available, unavailable } = computeDonorPools(donors, req.bloodGroup);
 
         return {
           ...req,
@@ -117,7 +157,7 @@ function AdminDashboard() {
           unavailableDonorsList: unavailable,
           isNotified: req.isNotified ?? true,
           showLiveTriage: req.showLiveTriage ?? false,
-          link: `http://localhost:5173/request/${req._id}`
+          link: getPublicRequestLink(req._id)
         };
       });
 
@@ -133,25 +173,12 @@ function AdminDashboard() {
         try {
           const parsed = JSON.parse(saved);
           const updated = parsed.map(req => {
-            const targetedPool = donors.filter(d => d.bloodGroup === req.bloodGroup);
-            const ninetyDaysAgo = new Date();
-            ninetyDaysAgo.setDate(ninetyDaysAgo.getDate() - 90);
-
-            const available = [];
-            const unavailable = [];
-
-            targetedPool.forEach(donor => {
-              const recent = donor.donationHistory?.some(h => new Date(h.date) >= ninetyDaysAgo);
-              if (recent) {
-                unavailable.push(donor);
-              } else {
-                available.push(donor);
-              }
-            });
+            const { available, unavailable } = computeDonorPools(donors, req.bloodGroup);
             return {
               ...req,
               availableDonors: available,
-              unavailableDonorsList: unavailable
+              unavailableDonorsList: unavailable,
+              link: getPublicRequestLink(req._id)
             };
           });
           setActiveRequests(updated);
@@ -223,8 +250,31 @@ function AdminDashboard() {
     });
   };
 
+  const toggleBloodGroupSelection = (group) => {
+    if (allBloodGroupsSelected) {
+      setAllBloodGroupsSelected(false);
+      setRequestBloodGroups([group]);
+      return;
+    }
+    setRequestBloodGroups((prev) =>
+      prev.includes(group) ? prev.filter((g) => g !== group) : [...prev, group]
+    );
+  };
+
+  const toggleAllBloodGroupsSelection = () => {
+    if (allBloodGroupsSelected) {
+      setAllBloodGroupsSelected(false);
+      setRequestBloodGroups([]);
+    } else {
+      setAllBloodGroupsSelected(true);
+      setRequestBloodGroups([]);
+    }
+  };
+
   const createEmergencyRequest = async () => {
-    if (!requestBloodGroup || !requestHospital || !requestUnits || !requestPhone) {
+    const bloodGroupPayload = allBloodGroupsSelected ? "ALL" : requestBloodGroups.join(", ");
+
+    if ((!allBloodGroupsSelected && requestBloodGroups.length === 0) || !requestHospital || !requestUnits || !requestPhone) {
       showToast("Please fill all dispatch parameters completely.", "error");
       return;
     }
@@ -234,7 +284,7 @@ function AdminDashboard() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          bloodGroup: requestBloodGroup,
+          bloodGroup: bloodGroupPayload,
           hospital: requestHospital,
           unitsNeeded: requestUnits,
           adminPhone: requestPhone,
@@ -242,28 +292,20 @@ function AdminDashboard() {
       });
 
       const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.message || "Failed to create emergency request");
+      }
+
       const newReq = data.request || data;
 
-      showToast(`Emergency alert successfully deployed for ${requestBloodGroup}!`, "success");
+      showToast(`Emergency alert successfully deployed for ${formatRequestBloodGroupLabel(bloodGroupPayload)}!`, "success");
       
-      setRequestBloodGroup("");
+      setRequestBloodGroups([]);
+      setAllBloodGroupsSelected(false);
       setRequestUnits("");
 
-      const targetedGroupPool = donors.filter(d => d.bloodGroup === newReq.bloodGroup);
-      const ninetyDaysAgo = new Date();
-      ninetyDaysAgo.setDate(ninetyDaysAgo.getDate() - 90);
-
-      const computedUnavailable = [];
-      const computedAvailable = [];
-
-      targetedGroupPool.forEach(donor => {
-        const recent = donor.donationHistory?.some(h => new Date(h.date) >= ninetyDaysAgo);
-        if (recent) {
-          computedUnavailable.push(donor);
-        } else {
-          computedAvailable.push(donor);
-        }
-      });
+      const { available: computedAvailable, unavailable: computedUnavailable } =
+        computeDonorPools(donors, newReq.bloodGroup);
 
       const processedNewRequest = {
         ...newReq,
@@ -273,7 +315,7 @@ function AdminDashboard() {
         showLiveTriage: false,
         willingDonors: [],
         unavailableDonors: [],
-        link: `http://localhost:5173/request/${newReq._id}`
+        link: getPublicRequestLink(newReq._id)
       };
 
       const updatedRequests = [...activeRequests, processedNewRequest];
@@ -327,6 +369,10 @@ function AdminDashboard() {
       async () => {
         try {
           const response = await fetch(`${import.meta.env.VITE_API_URL}/emergency-request/${requestId}/close`, { method: "PATCH" });
+          if (!response.ok) {
+            const errData = await response.json().catch(() => ({}));
+            throw new Error(errData.message || "Failed to close request");
+          }
 
           showToast("Broadcast terminated and archived.", "success");
           
@@ -334,12 +380,8 @@ function AdminDashboard() {
           setActiveRequests(filtered);
           localStorage.setItem("bloodbridge_active_requests", JSON.stringify(filtered));
 
-          if (filtered.length > 0) {
-            setSelectedRequestId(filtered[0]._id);
-          } else {
-            setSelectedRequestId(null);
-            setViewMode("history"); 
-          }
+          setSelectedRequestId(filtered.length > 0 ? filtered[0]._id : null);
+          setViewMode("all");
           loadAll();
         } catch (error) {
           showToast(error.message || "Failed to gracefully terminate broadcast route.", "error");
@@ -360,10 +402,15 @@ function AdminDashboard() {
       async () => {
         try {
           const response = await fetch(`${import.meta.env.VITE_API_URL}/emergency-request/close-all`, { method: "PATCH" });
+          if (!response.ok) {
+            const errData = await response.json().catch(() => ({}));
+            throw new Error(errData.message || "Failed to close all active requests");
+          }
+          const data = await response.json();
 
           setActiveRequests([]);
           setSelectedRequestId(null);
-          setViewMode("history");
+          setViewMode("all");
           localStorage.setItem("bloodbridge_active_requests", JSON.stringify([]));
           showToast(`${data.count || 0} active requests closed.`, "success");
           loadAll();
@@ -1406,6 +1453,46 @@ function AdminDashboard() {
           color: #B8860B;
           font-weight: 700;
         }
+
+        .bloodGroupSelector {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 8px;
+        }
+
+        .bloodGroupOption {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          padding: 10px 12px;
+          border: 1px solid #e1cbd0;
+          border-radius: 10px;
+          cursor: pointer;
+          font-size: 14px;
+          font-weight: 600;
+          background: white;
+          transition: border-color 0.2s ease, background-color 0.2s ease;
+        }
+
+        .bloodGroupOption:hover {
+          border-color: #fbc2c2;
+          background: #fff8f9;
+        }
+
+        .bloodGroupOption.selected {
+          border-color: #b00020;
+          background: #fff0f1;
+          color: #b00020;
+        }
+
+        .bloodGroupOption input {
+          accent-color: #b00020;
+        }
+
+        .bloodGroupOption.allGroups {
+          grid-column: span 2;
+          justify-content: center;
+        }
       `}} />
 
       <div className="dashboardHeader">
@@ -1459,13 +1546,31 @@ function AdminDashboard() {
           <div className="controlBlock emergencySection">
             <h3>🚨 Launch Emergency Broadcast</h3>
             <div className="formSet">
-              <select value={requestBloodGroup} onChange={(e) => setRequestBloodGroup(e.target.value)} className="dashboardInput textInputBold">
-                <option value="">Select Blood Group</option>
-                <option value="A+">A+</option><option value="A-">A-</option>
-                <option value="B+">B+</option><option value="B-">B-</option>
-                <option value="AB+">AB+</option><option value="AB-">AB-</option>
-                <option value="O+">O+</option><option value="O-">O-</option>
-              </select>
+              <label className="modalInputLabel">Select Blood Group(s)</label>
+              <div className="bloodGroupSelector">
+                <label className={`bloodGroupOption allGroups ${allBloodGroupsSelected ? "selected" : ""}`}>
+                  <input
+                    type="checkbox"
+                    checked={allBloodGroupsSelected}
+                    onChange={toggleAllBloodGroupsSelection}
+                  />
+                  All Blood Groups
+                </label>
+                {BLOOD_GROUPS.map((group) => (
+                  <label
+                    key={group}
+                    className={`bloodGroupOption ${!allBloodGroupsSelected && requestBloodGroups.includes(group) ? "selected" : ""}`}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={!allBloodGroupsSelected && requestBloodGroups.includes(group)}
+                      disabled={allBloodGroupsSelected}
+                      onChange={() => toggleBloodGroupSelection(group)}
+                    />
+                    {group}
+                  </label>
+                ))}
+              </div>
               <input placeholder="Hospital Name" value={requestHospital} onChange={(e) => setRequestHospital(e.target.value)} className="dashboardInput" />
               <input placeholder="Units Needed" value={requestUnits} onChange={(e) => setRequestUnits(e.target.value)} className="dashboardInput" />
               <input placeholder="Admin Mobile Number" value={requestPhone} onChange={(e) => setRequestPhone(e.target.value)} className="dashboardInput" />
@@ -1494,7 +1599,7 @@ function AdminDashboard() {
                     onClick={() => { setSelectedRequestId(req._id); }}
                     style={buttonMotionStyle}
                   >
-                    <span className="tabBloodDrop">🩸 {req.bloodGroup}</span>
+                    <span className="tabBloodDrop">🩸 {formatRequestBloodGroupLabel(req.bloodGroup)}</span>
                     <span className="tabHospitalLabel">{req.hospital}</span>
                   </button>
                 ))}
@@ -1614,11 +1719,28 @@ function AdminDashboard() {
                           </div>
                         </div>
                       </div>
+
+                      <div style={{ display: "flex", flexWrap: "wrap", gap: "12px", marginTop: "30px" }}>
+                        <button
+                          className="closeBroadcastBtn dynamicClickEffect"
+                          style={{ ...buttonMotionStyle, background: "#b00020", marginTop: 0 }}
+                          onClick={() => handleCloseBroadcastChannel(currentRequest._id)}
+                        >
+                          🔒 Close Request Thread
+                        </button>
+                        <button
+                          className="closeBroadcastBtn dynamicClickEffect"
+                          style={{ ...buttonMotionStyle, background: "#7b1fa2", marginTop: 0 }}
+                          onClick={handleCloseAllActiveRequests}
+                        >
+                          🧹 Close All Active Requests
+                        </button>
+                      </div>
                     </>
                   ) : (
                     <div className="liveTriageTrackingView">
                       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px", flexWrap: "wrap", gap: "10px" }}>
-                        <h3>📊 Triage Tracker: Request Group [{currentRequest.bloodGroup}]</h3>
+                        <h3>📊 Triage Tracker: Request Group [{formatRequestBloodGroupLabel(currentRequest.bloodGroup)}]</h3>
                         <div style={{ display: "flex", gap: "10px" }}>
                           <button className="panelBtn dynamicClickEffect" style={{ ...buttonMotionStyle, background: "#0056b3", color: "#fff", width: "auto" }} onClick={handleRefreshResponses}>🔄 Refresh</button>
                           <button className="panelBtn dynamicClickEffect" style={{ ...buttonMotionStyle, width: "auto" }} onClick={() => updateActiveRequest(currentRequest._id, { showLiveTriage: false })}>← Back</button>
@@ -2016,6 +2138,33 @@ function AdminDashboard() {
               <button className="closeModalBtn inlineBtn primaryBtn" onClick={recordDonation}>Save Donation Records</button>
             </div>
           </div>
+        </div>
+      )}
+
+      {confirmDialog.show && (
+        <div className="modalOverlay" onClick={() => setConfirmDialog({ show: false, title: "", message: "", onConfirm: null })}>
+          <div className="modalWindow confirmDialog" onClick={(e) => e.stopPropagation()}>
+            <h3 className="confirmTitle">{confirmDialog.title}</h3>
+            <p className="confirmMsg">{confirmDialog.message}</p>
+            <div className="modalWindowFooter" style={{ justifyContent: "center" }}>
+              <button
+                className="closeModalBtn inlineBtn secondaryBtn"
+                onClick={() => setConfirmDialog({ show: false, title: "", message: "", onConfirm: null })}
+              >
+                Cancel
+              </button>
+              <button className="closeModalBtn inlineBtn primaryBtn" onClick={confirmDialog.onConfirm}>
+                Confirm
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {toast.show && (
+        <div className={`toastBanner ${toast.type === "error" ? "error" : ""}`}>
+          <span className="toastIcon">{toast.type === "error" ? "⚠️" : "✅"}</span>
+          <span className="toastMessage">{toast.message}</span>
         </div>
       )}
     </div>

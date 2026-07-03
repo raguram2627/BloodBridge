@@ -3085,3 +3085,43 @@ body {
   max-width: 60%;
   word-break: break-word;
 }
+
+.bloodGroupSelector {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.bloodGroupOption {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border: 1px solid #e1cbd0;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  background: white;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.bloodGroupOption:hover {
+  border-color: #fbc2c2;
+  background: #fff8f9;
+}
+
+.bloodGroupOption.selected {
+  border-color: #b00020;
+  background: #fff0f1;
+  color: #b00020;
+}
+
+.bloodGroupOption input {
+  accent-color: #b00020;
+}
+
+.bloodGroupOption.allGroups {
+  grid-column: span 2;
+  justify-content: center;
+}
