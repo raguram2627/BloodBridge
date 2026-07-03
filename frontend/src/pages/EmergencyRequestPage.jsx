@@ -35,10 +35,6 @@ function EmergencyRequestPage() {
     loadRequest();
   }, [id]);
 
-  const requestBloodGroups = request?.bloodGroup === "ALL"
-    ? ALL_BLOOD_GROUPS
-    : request?.bloodGroup?.split(",").map((g) => g.trim()).filter(Boolean) || [];
-
   const fetchDonor = async () => {
     if (!registerNumber) {
       alert("Please enter your Register / Faculty Number");
@@ -53,7 +49,7 @@ function EmergencyRequestPage() {
         return;
       }
       setDonor(found);
-      if (requestBloodGroups.includes(found.bloodGroup)) {
+      if (requestBloodGroupOptions.includes(found.bloodGroup)) {
         setSelectedResponseBloodGroup(found.bloodGroup);
       }
     } catch (error) {
@@ -160,14 +156,14 @@ function EmergencyRequestPage() {
     );
   }
 
-  const requestBloodGroups = request?.bloodGroup === "ALL"
+  const requestBloodGroupOptions = request?.bloodGroup === "ALL"
     ? ALL_BLOOD_GROUPS
     : request?.bloodGroup?.split(",").map((g) => g.trim()).filter(Boolean) || [];
 
   const bloodGroupDisplay =
     request.bloodGroup === "ALL"
       ? "ALL GROUPS"
-      : requestBloodGroups.join(" · ");
+      : requestBloodGroupOptions.join(" · ");
 
   return (
     <div className="emergencyPage">
@@ -221,7 +217,7 @@ function EmergencyRequestPage() {
               onChange={(e) => setSelectedResponseBloodGroup(e.target.value)}
             >
               <option value="">Select blood group</option>
-              {requestBloodGroups.map((group) => (
+              {requestBloodGroupOptions.map((group) => (
                 <option key={group} value={group}>
                   {group}
                 </option>
