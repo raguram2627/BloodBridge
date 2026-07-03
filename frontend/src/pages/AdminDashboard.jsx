@@ -1546,15 +1546,20 @@ function AdminDashboard() {
           <div className="controlBlock emergencySection">
             <h3>🚨 Launch Emergency Broadcast</h3>
             <div className="formSet">
-              <label className="modalInputLabel">Select Blood Group(s)</label>
+              <div className="bloodGroupHeader">
+                <h4>🩸 Select Required Blood Groups</h4>
+                <p>Choose one or more blood groups to notify donors.</p>
+              </div>
               <div className="bloodGroupSelector">
                 <label className={`bloodGroupOption allGroups ${allBloodGroupsSelected ? "selected" : ""}`}>
                   <input
                     type="checkbox"
+                    className="bloodGroupInput"
                     checked={allBloodGroupsSelected}
                     onChange={toggleAllBloodGroupsSelection}
                   />
-                  All Blood Groups
+                  <span className="bloodGroupIcon">🩸</span>
+                  <span className="bloodGroupText">All Blood Groups</span>
                 </label>
                 {BLOOD_GROUPS.map((group) => (
                   <label
@@ -1563,11 +1568,13 @@ function AdminDashboard() {
                   >
                     <input
                       type="checkbox"
+                      className="bloodGroupInput"
                       checked={!allBloodGroupsSelected && requestBloodGroups.includes(group)}
                       disabled={allBloodGroupsSelected}
                       onChange={() => toggleBloodGroupSelection(group)}
                     />
-                    {group}
+                    <span className="bloodGroupIcon">🩸</span>
+                    <span className="bloodGroupText">{group}</span>
                   </label>
                 ))}
               </div>

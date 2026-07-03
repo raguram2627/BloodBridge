@@ -3086,117 +3086,83 @@ body {
   word-break: break-word;
 }
 
-.bloodGroupSelector {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
-}
-
-.bloodGroupOption {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 12px;
-  border: 1px solid #e1cbd0;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 600;
-  background: white;
-  transition: border-color 0.2s ease, background-color 0.2s ease;
-}
-
-.bloodGroupOption:hover {
-  border-color: #fbc2c2;
-  background: #fff8f9;
-}
-
-.bloodGroupOption.selected {
-  border-color: #b00020;
-  background: #fff0f1;
-  color: #b00020;
-}
-
-.bloodGroupOption input {
-  accent-color: #b00020;
-}
-
-.bloodGroupOption.allGroups {
-  grid-column: span 2;
-  justify-content: center;
-}
-/* Blood Group Selection Grid */
-.bloodGroupSelectorContainer {
-  margin: 20px 0;
-}
-
-.bloodGroupTitle {
-  font-size: 14px;
-  font-weight: 700;
-  color: #444;
-  margin-bottom: 15px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.bloodGroupGrid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
+.bloodGroupHeader {
   margin-bottom: 12px;
 }
 
-.bloodChip {
-  display: flex;
-  flex-direction: column;
+.bloodGroupHeader h4 {
+  margin: 0 0 6px;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+}
+
+.bloodGroupHeader p {
+  margin: 0;
+  font-size: 0.88rem;
+  color: #6b6b6b;
+}
+
+.bloodGroupSelector {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 14px;
+}
+
+.bloodGroupOption {
+  position: relative;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 55px;
-  background: white;
-  border: 2px solid #f3dcdc;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  gap: 10px;
+  min-height: 54px;
+  padding: 0 18px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background: #ffffff;
+  color: #1f1f1f;
+  font-size: 0.95rem;
   font-weight: 700;
-  color: #b00020;
-}
-
-.bloodChip:hover {
-  transform: translateY(-3px);
-  border-color: #b00020;
-  box-shadow: 0 6px 12px rgba(176, 0, 32, 0.1);
-}
-
-.bloodChip.active {
-  background: #c1121f;
-  color: white;
-  border-color: #c1121f;
-  box-shadow: 0 4px 15px rgba(193, 18, 31, 0.3);
-  transform: scale(1.05);
-}
-
-.bloodChipAll {
-  width: 100%;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #f8f9fa;
-  border: 2px solid #e9ecef;
-  border-radius: 12px;
   cursor: pointer;
-  font-weight: 800;
-  color: #444;
-  transition: all 0.2s;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+  box-shadow: 0 4px 10px rgba(24, 24, 24, 0.05);
 }
 
-.bloodChipAll.active {
-  background: #2b2d42;
-  color: white;
-  border-color: #2b2d42;
+.bloodGroupOption:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(193, 18, 31, 0.14);
 }
 
-@media (max-width: 600px) {
-  .bloodGroupGrid { grid-template-columns: repeat(2, 1fr); }
+.bloodGroupOption.selected {
+  background: #c1121f;
+  color: #ffffff;
+  box-shadow: 0 12px 28px rgba(193, 18, 31, 0.28);
+  transform: scale(1.03);
+}
+
+.bloodGroupOption.selected .bloodGroupIcon {
+  opacity: 0.95;
+}
+
+.bloodGroupOption .bloodGroupIcon {
+  display: inline-flex;
+  font-size: 1rem;
+}
+
+.bloodGroupOption .bloodGroupText {
+  display: inline-flex;
+  align-items: center;
+}
+
+.bloodGroupOption input.bloodGroupInput {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+}
+
+.bloodGroupOption.allGroups {
+  grid-column: 1 / -1;
+  justify-content: center;
 }
