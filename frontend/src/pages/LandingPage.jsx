@@ -136,7 +136,7 @@ function LandingPage({ setPage }) {
         <div className="heroContent">
           <div className="heroText">
             <div className="logo">🩸 BloodBridge</div>
-            <h1>Donate Blood.<br/><span className="highlight">Save Lives.</span></h1>
+            <h1>Donate Blood.<br/><span className="highlight">Save Lives Now!</span></h1>
             <p className="heroSubtitle">
               Connecting student and faculty blood donors with people in emergency situations. 
               Every donation can save up to 3 lives. Be the hero someone is praying for.
