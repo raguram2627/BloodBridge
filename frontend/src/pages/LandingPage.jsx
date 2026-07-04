@@ -14,6 +14,8 @@ function LandingPage({ setPage }) {
   const [activeRequests, setActiveRequests] = useState([]);
   const [currentSlide, setCurrentSlide] = useState(0);
   
+  const carouselSlides = [{ type: 'logo' }, ...activeRequests.map(r => ({ type: 'request', ...r }))];
+  
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [targetRequestId, setTargetRequestId] = useState(null);
 
@@ -28,13 +30,13 @@ function LandingPage({ setPage }) {
   }, []);
 
   useEffect(() => {
-    if (activeRequests.length > 1) {
+    if (carouselSlides.length > 1) {
       const timer = setInterval(() => {
-        setCurrentSlide((prev) => (prev + 1) % activeRequests.length);
-      }, 4000);
+        setCurrentSlide((prev) => (prev + 1) % carouselSlides.length);
+      }, 4500);
       return () => clearInterval(timer);
     }
-  }, [activeRequests]);
+  }, [activeRequests.length]);
 
   const fetchActiveRequests = async () => {
     try {
@@ -157,32 +159,29 @@ function LandingPage({ setPage }) {
               )}
             </div>
           </div>
-          <div className="heroImage">
-            <img src="/app_logo.png" alt="BloodBridge Logo" className="appLogoHero" />
-          </div>
-        </div>
-      </section>
-
-      {/* FLOATING ACTIVE REQUESTS */}
-      {activeRequests.length > 0 && (
-        <div className="activeRequestsTicker">
-          <div className="tickerLabel">🚨 LIVE EMERGENCIES</div>
-          <div className="tickerSlider">
-            {activeRequests.map((req, index) => (
-              <div 
-                key={req._id} 
-                className={`tickerCard ${index === currentSlide ? "active" : ""}`}
-                onClick={() => handleRequestClick(req._id)}
-              >
-                <div className="tickerContent">
-                  <strong>URGENT: {req.bloodGroup}</strong> needed at {req.hospital}
-                  <span className="tickerAction">Click to Respond →</span>
-                </div>
+          <div className="heroCarouselContainer">
+            {carouselSlides.map((slide, index) => (
+              <div key={index} className={`heroSlide ${index === currentSlide ? "active" : ""}`}>
+                {slide.type === 'logo' ? (
+                  <img src="/app_logo.png" alt="BloodBridge Logo" className="appLogoHero" />
+                ) : (
+                  <div className="heroEmergencyCard">
+                    <div className="urgentHeader">🚨 LIVE BLOOD REQUEST</div>
+                    <div className="reqDetails">
+                      <p><span>Blood Group</span> <strong>{slide.bloodGroup}</strong></p>
+                      <p><span>Hospital</span> <strong>{slide.hospital}</strong></p>
+                      <p><span>Units Needed</span> <strong>{slide.unitsNeeded}</strong></p>
+                    </div>
+                    <button className="respondNowBtn" onClick={() => handleRequestClick(slide._id)}>
+                      Respond Now
+                    </button>
+                  </div>
+                )}
               </div>
             ))}
           </div>
         </div>
-      )}
+      </section>
 
       {/* FEATURES SECTION */}
       <section id="features" className="featuresSection">

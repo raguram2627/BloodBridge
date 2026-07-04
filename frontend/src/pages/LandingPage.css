@@ -60,12 +60,13 @@ body {
   flex-direction: column;
   padding: 15px;
   z-index: 999;
-  animation: slideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-origin: top right;
+  animation: smoothDropdown 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-@keyframes slideIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
+@keyframes smoothDropdown {
+  0% { opacity: 0; transform: scaleY(0.5) translateY(-20px); }
+  100% { opacity: 1; transform: scaleY(1) translateY(0); }
 }
 
 .dropdownMenu button {
@@ -202,12 +203,36 @@ body {
   transform: translateY(1px);
 }
 
-.heroImage {
+/* HERO CAROUSEL */
+.heroCarouselContainer {
   flex: 1;
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
+  width: 100%;
+  height: 500px;
+}
+
+.heroSlide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transform: translateX(30px);
+  transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+  pointer-events: none;
+}
+
+.heroSlide.active {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
 }
 
 .appLogoHero {
@@ -217,6 +242,79 @@ body {
   box-shadow: 0 20px 50px rgba(0,0,0,0.15);
   animation: float 6s ease-in-out infinite;
   object-fit: contain;
+}
+
+.heroEmergencyCard {
+  background: white;
+  border-radius: 24px;
+  box-shadow: 0 15px 40px rgba(176, 0, 32, 0.15);
+  padding: 40px 30px;
+  width: 100%;
+  max-width: 450px;
+  text-align: center;
+  border: 1px solid #ffeff0;
+  border-top: 6px solid #b00020;
+}
+
+.urgentHeader {
+  font-size: 20px;
+  font-weight: 800;
+  color: #b00020;
+  margin-bottom: 25px;
+  letter-spacing: 1px;
+}
+
+.reqDetails {
+  text-align: left;
+  margin-bottom: 30px;
+}
+
+.reqDetails p {
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.reqDetails p:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.reqDetails p span {
+  color: #666;
+  font-weight: 500;
+}
+
+.reqDetails p strong {
+  color: #222;
+  font-weight: 700;
+}
+
+.respondNowBtn {
+  width: 100%;
+  background: linear-gradient(135deg, #b00020, #d62839);
+  color: white;
+  border: none;
+  padding: 16px;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(176, 0, 32, 0.25);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.respondNowBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(176, 0, 32, 0.35);
+}
+
+.respondNowBtn:active {
+  transform: translateY(1px);
 }
 
 @keyframes float {
@@ -234,8 +332,8 @@ body {
   .heroActions {
     justify-content: center;
   }
-  .heroImage {
-    width: 100%;
+  .heroCarouselContainer {
+    height: 350px;
     margin-bottom: 30px;
     margin-top: 20px;
   }
@@ -243,79 +341,6 @@ body {
     max-width: 250px;
   }
   .heroText h1 { font-size: 42px; margin-top: 20px; }
-}
-
-/* ACTIVE REQUESTS TICKER */
-.activeRequestsTicker {
-  display: flex;
-  align-items: center;
-  background: #111;
-  color: white;
-  padding: 15px 5%;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-}
-
-.tickerLabel {
-  background: #b00020;
-  padding: 8px 16px;
-  border-radius: 8px;
-  font-weight: 800;
-  font-size: 14px;
-  letter-spacing: 1px;
-  margin-right: 20px;
-  white-space: nowrap;
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0% { box-shadow: 0 0 0 0 rgba(176,0,32, 0.7); }
-  70% { box-shadow: 0 0 0 10px rgba(176,0,32, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(176,0,32, 0); }
-}
-
-.tickerSlider {
-  flex: 1;
-  position: relative;
-  height: 24px;
-}
-
-.tickerCard {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  cursor: pointer;
-}
-
-.tickerCard.active {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.tickerContent {
-  font-size: 16px;
-  font-weight: 500;
-}
-
-.tickerContent strong {
-  color: #ff4757;
-}
-
-.tickerAction {
-  margin-left: 20px;
-  color: #ff4757;
-  font-weight: 700;
-  font-size: 14px;
-  text-decoration: underline;
-}
-
-.tickerCard:hover .tickerAction {
-  color: white;
 }
 
 /* COMMON SECTION STYLES */
