@@ -158,30 +158,47 @@ function LandingPage({ setPage }) {
             </div>
           </div>
           <div className="heroImage">
-            <img src="/app_logo.png" alt="BloodBridge Logo" className="appLogoHero" />
+            <img src="/app_logo_transparent.png" alt="BloodBridge Logo" className="appLogoHero" />
           </div>
         </div>
       </section>
 
-      {/* FLOATING ACTIVE REQUESTS */}
+      {/* MASSIVE EMERGENCY SLIDER (JioHotstar Style) */}
       {activeRequests.length > 0 && (
-        <div className="activeRequestsTicker">
-          <div className="tickerLabel">🚨 LIVE EMERGENCIES</div>
-          <div className="tickerSlider">
+        <section className="massiveSliderSection">
+          <div className="massiveSliderWrapper">
             {activeRequests.map((req, index) => (
               <div 
-                key={req._id} 
-                className={`tickerCard ${index === currentSlide ? "active" : ""}`}
-                onClick={() => handleRequestClick(req._id)}
+                key={req._id}
+                className={`massiveSlide ${index === currentSlide ? "activeSlide" : ""}`}
               >
-                <div className="tickerContent">
-                  <strong>URGENT: {req.bloodGroup}</strong> needed at {req.hospital}
-                  <span className="tickerAction">Click to Respond →</span>
+                <div className="slideBackgroundOverlay"></div>
+                <div className="slideContent">
+                  <div className="slideBadge">🚨 LIVE EMERGENCY</div>
+                  <h1 className="slideTitle"><span className="highlightBlood">{req.bloodGroup}</span> BLOOD NEEDED</h1>
+                  <h3 className="slideHospital">📍 {req.hospital}</h3>
+                  <p className="slideDetails">Volume Required: <strong>{req.unitsNeeded} Units</strong></p>
+                  
+                  <div className="slideActions">
+                    <button className="respondNowBtn" onClick={() => handleRequestClick(req._id)}>
+                      Respond Now ➔
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}
           </div>
-        </div>
+          
+          <div className="sliderIndicators">
+            {activeRequests.map((_, index) => (
+              <div 
+                key={index} 
+                className={`indicatorDot ${index === currentSlide ? "activeDot" : ""}`}
+                onClick={() => setCurrentSlide(index)}
+              ></div>
+            ))}
+          </div>
+        </section>
       )}
 
       {/* FEATURES SECTION */}
