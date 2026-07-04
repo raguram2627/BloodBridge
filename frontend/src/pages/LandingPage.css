@@ -237,7 +237,7 @@ body {
 .heroImage {
   flex: 1;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
   position: relative;
 }
@@ -270,6 +270,7 @@ body {
     width: 100%;
     margin-bottom: 30px;
     margin-top: 20px;
+    justify-content: center;
   }
   .appLogoHero {
     max-width: 250px;
