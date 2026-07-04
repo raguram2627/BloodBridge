@@ -28,11 +28,10 @@ function LandingPage({ setPage }) {
   }, []);
 
   useEffect(() => {
-    const totalSlides = activeRequests.length + 1;
-    if (totalSlides > 1) {
+    if (activeRequests.length > 1) {
       const timer = setInterval(() => {
-        setCurrentSlide((prev) => (prev + 1) % totalSlides);
-      }, 5000);
+        setCurrentSlide((prev) => (prev + 1) % activeRequests.length);
+      }, 4000);
       return () => clearInterval(timer);
     }
   }, [activeRequests]);
@@ -130,7 +129,7 @@ function LandingPage({ setPage }) {
         </div>
       )}
 
-      {/* HERO SECTION WITH IMAGE SLIDER */}
+      {/* HERO SECTION */}
       <section className="heroSection">
         <div className="heroContent">
           <div className="heroText">
@@ -158,47 +157,32 @@ function LandingPage({ setPage }) {
               )}
             </div>
           </div>
-          
-          <div className="heroImage heroImageSliderContainer">
-            <div 
-              className="heroImageSliderTrack"
-              style={{ transform: `translateX(-${currentSlide * 100}%)` }}
-            >
-              {/* SLIDE 0: Logo */}
-              <div className="heroImageSlide">
-                <img src="/app_logo.png" alt="BloodBridge Logo" className="appLogoHero" />
-              </div>
-              
-              {/* SLIDES 1..N: Emergency Cards */}
-              {activeRequests.map((req, index) => (
-                <div key={req._id} className="heroImageSlide">
-                  <div className="miniEmergencyCard">
-                    <div className="miniBadge">🚨 EMERGENCY</div>
-                    <h2><span className="highlightBlood">{req.bloodGroup}</span> Needed</h2>
-                    <p className="miniHospital">📍 {req.hospital}</p>
-                    <p className="miniUnits"><strong>{req.unitsNeeded} Units Required</strong></p>
-                    <button className="respondNowBtnMini" onClick={() => handleRequestClick(req._id)}>
-                      Respond Now ➔
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-            
-            {activeRequests.length > 0 && (
-              <div className="miniSliderIndicators">
-                {[...Array(activeRequests.length + 1)].map((_, index) => (
-                  <div 
-                    key={index} 
-                    className={`miniIndicatorDot ${index === currentSlide ? "miniActiveDot" : ""}`}
-                    onClick={() => setCurrentSlide(index)}
-                  ></div>
-                ))}
-              </div>
-            )}
+          <div className="heroImage">
+            <img src="/app_logo.png" alt="BloodBridge Logo" className="appLogoHero" />
           </div>
         </div>
       </section>
+
+      {/* FLOATING ACTIVE REQUESTS */}
+      {activeRequests.length > 0 && (
+        <div className="activeRequestsTicker">
+          <div className="tickerLabel">🚨 LIVE EMERGENCIES</div>
+          <div className="tickerSlider">
+            {activeRequests.map((req, index) => (
+              <div 
+                key={req._id} 
+                className={`tickerCard ${index === currentSlide ? "active" : ""}`}
+                onClick={() => handleRequestClick(req._id)}
+              >
+                <div className="tickerContent">
+                  <strong>URGENT: {req.bloodGroup}</strong> needed at {req.hospital}
+                  <span className="tickerAction">Click to Respond →</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* FEATURES SECTION */}
       <section id="features" className="featuresSection">
