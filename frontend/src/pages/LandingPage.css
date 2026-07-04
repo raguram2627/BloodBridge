@@ -204,61 +204,19 @@ body {
 
 .heroImage {
   flex: 1;
-  height: 500px;
-  position: relative;
-  background: url('https://images.unsplash.com/photo-1615461066841-6116e61058f4?auto=format&fit=crop&q=80&w=800') center/cover no-repeat;
-  border-radius: 30px;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.1);
-}
-
-.heroImage::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(176,0,32,0.4), rgba(214,40,57,0.1));
-  border-radius: 30px;
-}
-
-.glassCard {
-  position: absolute;
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(10px);
-  padding: 15px 25px;
-  border-radius: 16px;
   display: flex;
+  justify-content: center;
   align-items: center;
-  gap: 15px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-  z-index: 2;
-  border: 1px solid rgba(255,255,255,0.5);
+  position: relative;
+}
+
+.appLogoHero {
+  width: 100%;
+  max-width: 450px;
+  border-radius: 30px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.15);
   animation: float 6s ease-in-out infinite;
-}
-
-.glassCard .icon {
-  font-size: 24px;
-}
-
-.glassCard h4 {
-  font-size: 20px;
-  font-weight: 800;
-  color: #222;
-}
-
-.glassCard p {
-  font-size: 14px;
-  color: #666;
-  font-weight: 600;
-}
-
-.float1 {
-  top: 40px;
-  left: -40px;
-}
-
-.float2 {
-  bottom: 40px;
-  right: -40px;
-  animation-delay: -3s;
+  object-fit: contain;
 }
 
 @keyframes float {
@@ -269,7 +227,7 @@ body {
 
 @media (max-width: 900px) {
   .heroContent {
-    flex-direction: column;
+    flex-direction: column-reverse;
     text-align: center;
     padding-top: 80px;
   }
@@ -278,12 +236,13 @@ body {
   }
   .heroImage {
     width: 100%;
-    height: 350px;
-    margin-top: 40px;
+    margin-bottom: 30px;
+    margin-top: 20px;
   }
-  .float1 { left: 10px; }
-  .float2 { right: 10px; }
-  .heroText h1 { font-size: 48px; }
+  .appLogoHero {
+    max-width: 250px;
+  }
+  .heroText h1 { font-size: 42px; margin-top: 20px; }
 }
 
 /* ACTIVE REQUESTS TICKER */

@@ -158,20 +158,7 @@ function LandingPage({ setPage }) {
             </div>
           </div>
           <div className="heroImage">
-            <div className="glassCard float1">
-              <span className="icon">❤️</span>
-              <div className="glassText">
-                <h4>1,200+</h4>
-                <p>Donors Registered</p>
-              </div>
-            </div>
-            <div className="glassCard float2">
-              <span className="icon">⚡</span>
-              <div className="glassText">
-                <h4>5 Mins</h4>
-                <p>Average Response Time</p>
-              </div>
-            </div>
+            <img src="/app_logo.png" alt="BloodBridge Logo" className="appLogoHero" />
           </div>
         </div>
       </section>
