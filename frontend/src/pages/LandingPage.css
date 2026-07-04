@@ -100,49 +100,18 @@ body {
   background: #ffebee;
 }
 
-/* MASSIVE UNIFIED SLIDER (JioHotstar Style) */
-.unifiedSlider {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  min-height: 600px;
-  overflow: hidden;
-  background: #000;
-}
-
-.horizontalTrack {
-  display: flex;
-  height: 100%;
-  width: 100%;
-  transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-.unifiedSlide {
-  min-width: 100%;
-  height: 100%;
-  position: relative;
+/* HERO SECTION */
+.heroSection {
+  min-height: 100vh;
   display: flex;
   align-items: center;
-}
-
-/* Slide 0: Default Hero Background */
-.heroSlideBg {
-  background: radial-gradient(circle at top left, #ffe9ec 0%, transparent 40%),
-              radial-gradient(circle at bottom right, #fff0f1 0%, transparent 40%),
-              #fcfcfc;
-  padding: 40px 10%;
   justify-content: center;
+  padding: 40px 10%;
+  background: radial-gradient(circle at top left, #ffe9ec 0%, transparent 40%),
+              radial-gradient(circle at bottom right, #fff0f1 0%, transparent 40%);
+  position: relative;
 }
 
-/* Slides 1..N: Emergency Background */
-.emergencySlideBg {
-  background: url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=1600') center/cover no-repeat;
-  padding: 0 10%;
-  align-items: flex-end;
-  padding-bottom: 80px;
-}
-
-/* Default Hero Content Styles */
 .heroContent {
   display: flex;
   align-items: center;
@@ -155,7 +124,6 @@ body {
 .heroText {
   flex: 1;
   max-width: 600px;
-  color: #333;
 }
 
 .logo {
@@ -237,7 +205,7 @@ body {
 .heroImage {
   flex: 1;
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
   position: relative;
 }
@@ -270,13 +238,11 @@ body {
     width: 100%;
     margin-bottom: 30px;
     margin-top: 20px;
-    justify-content: center;
   }
   .appLogoHero {
     max-width: 250px;
   }
   .heroText h1 { font-size: 42px; margin-top: 20px; }
-  .unifiedSlider { height: 120vh; }
 }
 
 /* ACTIVE REQUESTS TICKER */
