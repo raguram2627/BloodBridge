@@ -591,6 +591,35 @@ app.post("/test-whatsapp", async (req, res) => {
 });
 const PORT = process.env.PORT || 5000;
 
+
+app.post("/donor/login", async (req, res) => {
+  try {
+    const { registerNumber, mobile } = req.body;
+
+    const donor = await Donor.findOne({
+      registerNumber,
+      mobile,
+    });
+
+    if (!donor) {
+      return res.status(401).json({
+        success: false,
+        message: "Invalid Register Number or Mobile Number",
+      });
+    }
+
+    res.json({
+      success: true,
+      donor,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
+  }
+});
+
 app.listen(PORT, () => {
     console.log(`🚀 Server running on port ${PORT}`);
 });

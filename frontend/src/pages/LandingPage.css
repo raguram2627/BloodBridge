@@ -51,6 +51,126 @@ body{
     animation:move2 14s infinite alternate ease-in-out;
 }
 
+/* ================= MENU ================= */
+
+.menuIcon{
+
+    position:fixed;
+
+    top:25px;
+
+    right:25px;
+
+    width:55px;
+
+    height:55px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    border-radius:50%;
+
+    background:white;
+
+    color:#b00020;
+
+    font-size:30px;
+
+    cursor:pointer;
+
+    box-shadow:0 8px 25px rgba(0,0,0,.15);
+
+    z-index:1000;
+
+    transition:.3s;
+
+}
+
+.menuIcon:hover{
+
+    transform:scale(1.1);
+
+    background:#fff3f5;
+
+}
+
+.dropdownMenu{
+
+    position:fixed;
+
+    top:90px;
+
+    right:25px;
+
+    width:230px;
+
+    background:rgba(255,255,255,.95);
+
+    backdrop-filter:blur(10px);
+
+    border-radius:18px;
+
+    box-shadow:0 15px 40px rgba(0,0,0,.18);
+
+    overflow:hidden;
+
+    z-index:999;
+
+    animation:dropdown .25s ease;
+
+}
+
+.dropdownMenu button{
+
+    width:100%;
+
+    border:none;
+
+    background:none;
+
+    text-align:left;
+
+    padding:16px 20px;
+
+    cursor:pointer;
+
+    font-size:17px;
+
+    color:#444;
+
+    transition:.25s;
+
+}
+
+.dropdownMenu button:hover{
+
+    background:#fff1f3;
+
+    color:#b00020;
+
+    padding-left:28px;
+
+}
+
+.dropdownMenu hr{
+
+    border:none;
+
+    border-top:1px solid #eee;
+
+}
+
+.adminBtn{
+
+    color:#d90429 !important;
+
+    font-weight:bold;
+
+}
+
 .overlay{
     width:100%;
     padding:50px 20px;
@@ -310,6 +430,26 @@ to{transform:translate(-60px,-50px);}
 
 }
 
+@keyframes dropdown{
+
+from{
+
+opacity:0;
+
+transform:translateY(-10px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+}
+
 @media(max-width:900px){
 
 h1{
@@ -331,6 +471,22 @@ width:100%;
 .buttons{
 flex-direction:column;
 align-items:center;
+}
+
+.menuIcon{
+
+top:18px;
+
+right:18px;
+
+}
+
+.dropdownMenu{
+
+right:18px;
+
+width:210px;
+
 }
 
 }
