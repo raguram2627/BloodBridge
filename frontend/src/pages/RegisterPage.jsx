@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./RegisterPage.css";
 
-function RegisterPage() {
+function RegisterPage({ setPage }) {
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
   const [email, setEmail] = useState("");
@@ -88,6 +88,9 @@ function RegisterPage() {
         throw new Error("Registration failed");
       }
 
+      const responseData = await response.json();
+      localStorage.setItem("loggedInDonor", JSON.stringify(responseData.donor));
+
       resetForm();
       setShowSuccess(true);
     } catch (error) {
@@ -110,7 +113,10 @@ function RegisterPage() {
             <p className="successSubtext">
               Your registration helps save lives during emergencies. Every drop counts.
             </p>
-            <button className="successBtn" onClick={() => setShowSuccess(false)}>
+            <button className="successBtn" onClick={() => {
+              setShowSuccess(false);
+              setPage("myProfile");
+            }}>
               Continue →
             </button>
           </div>

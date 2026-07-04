@@ -12,6 +12,7 @@ import FacultyRegisterPage from "./pages/FacultyRegisterPage";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import EmergencyRequestPage from "./pages/EmergencyRequestPage";
+import MyProfilePage from "./pages/MyProfilePage";
 
 function App() {
   const [page, setPage] = useState("landing");
@@ -27,13 +28,15 @@ function App() {
             ) : page === "chooseRole" ? (
               <ChooseRolePage setPage={setPage} />
             ) : page === "studentRegister" ? (
-              <RegisterPage />
+              <RegisterPage setPage={setPage} />
             ) : page === "facultyRegister" ? (
-              <FacultyRegisterPage />
+              <FacultyRegisterPage setPage={setPage} />
             ) : page === "admin" ? (
               <AdminLogin setPage={setPage} />
             ) : page === "dashboard" ? (
               <AdminDashboard />
+            ) : page === "myProfile" ? (
+              <MyProfilePage setPage={setPage} />
             ) : (
               <LandingPage setPage={setPage} />
             )

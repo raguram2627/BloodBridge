@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./FacultyRegisterPage.css";
 
-function FacultyRegisterPage() {
+function FacultyRegisterPage({ setPage }) {
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
   const [email, setEmail] = useState("");
@@ -82,6 +82,9 @@ function FacultyRegisterPage() {
         throw new Error("Registration failed");
       }
 
+      const responseData = await response.json();
+      localStorage.setItem("loggedInDonor", JSON.stringify(responseData.donor));
+
       resetForm();
       setShowSuccess(true);
     } catch (error) {
@@ -105,7 +108,10 @@ function FacultyRegisterPage() {
             <p className="successSubtext">
               Your commitment strengthens our emergency response network. Together, we save lives.
             </p>
-            <button className="successBtn" onClick={() => setShowSuccess(false)}>
+            <button className="successBtn" onClick={() => {
+              setShowSuccess(false);
+              setPage("myProfile");
+            }}>
               Continue →
             </button>
           </div>

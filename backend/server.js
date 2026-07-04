@@ -224,6 +224,37 @@ app.patch("/donors/:id/donate", async (req, res) => {
     }
 
 });
+
+app.put("/donors/:id", async (req, res) => {
+    try {
+        const donor = await Donor.findByIdAndUpdate(
+            req.params.id,
+            { $set: req.body },
+            { new: true, runValidators: true }
+        );
+
+        if (!donor) {
+            return res.status(404).json({
+                message: "Donor not found"
+            });
+        }
+
+        res.json({
+            message: "Profile updated successfully",
+            donor
+        });
+    } catch (error) {
+        // Handle MongoDB duplicate key error for edits
+        if (error.code === 11000) {
+            return res.status(409).json({
+                message: "Update failed: A donor with this Email, Mobile, or ID already exists."
+            });
+        }
+        res.status(500).json({
+            message: error.message
+        });
+    }
+});
 app.get("/donors/frequent", async (req, res) => {
   try {
     const donors = await Donor.find();
