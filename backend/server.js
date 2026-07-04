@@ -338,23 +338,6 @@ app.post(
 );
 
 app.get(
-  "/emergency-request/:id",
-  async (req, res) => {
-    try {
-      const request =
-        await EmergencyRequest.findById(
-          req.params.id
-        );
-      res.json(request);
-    } catch (error) {
-      res.status(500).json({
-        message: error.message,
-      });
-    }
-  }
-);
-
-app.get(
   "/emergency-request/active",
   async (req, res) => {
     try {
@@ -368,6 +351,23 @@ app.get(
       console.log(error);
       res.status(500).json({
         message: "Failed to load active requests",
+      });
+    }
+  }
+);
+
+app.get(
+  "/emergency-request/:id",
+  async (req, res) => {
+    try {
+      const request =
+        await EmergencyRequest.findById(
+          req.params.id
+        );
+      res.json(request);
+    } catch (error) {
+      res.status(500).json({
+        message: error.message,
       });
     }
   }
