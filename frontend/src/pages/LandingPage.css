@@ -219,7 +219,7 @@ body {
   position: relative;
   width: 100%;
   max-width: 400px;
-  height: 400px;
+  aspect-ratio: 1 / 1;
   margin: 0 auto;
 }
 
@@ -410,27 +410,21 @@ body {
     justify-content: center;
   }
   .heroCarouselContainer {
-    height: 450px;
+    height: auto;
+    min-height: 400px;
     margin-bottom: 20px;
     margin-top: 20px;
   }
   .carouselWrapper {
     max-width: 320px;
-    height: 380px;
-  }
-  .leftArrow {
-    left: -15px;
-  }
-  .rightArrow {
-    right: -15px;
+    aspect-ratio: 1 / 1;
+    height: auto;
   }
   .carouselArrow {
-    width: 35px;
-    height: 35px;
-    font-size: 18px;
+    display: none;
   }
   .appLogoHero {
-    max-width: 250px;
+    max-width: 100%;
   }
   .heroEmergencyCard {
     padding: 25px 20px;

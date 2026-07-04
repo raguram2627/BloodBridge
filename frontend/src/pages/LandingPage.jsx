@@ -14,6 +14,9 @@ function LandingPage({ setPage }) {
   const [activeRequests, setActiveRequests] = useState([]);
   const [currentSlide, setCurrentSlide] = useState(0);
   
+  const [touchStart, setTouchStart] = useState(null);
+  const [touchEnd, setTouchEnd] = useState(null);
+  
   const carouselSlides = [{ type: 'logo' }, ...activeRequests.map(r => ({ type: 'request', ...r }))];
   
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -48,6 +51,29 @@ function LandingPage({ setPage }) {
 
   const goToSlide = (index) => {
     setCurrentSlide(index);
+  };
+
+  const onTouchStart = (e) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > 50;
+    const isRightSwipe = distance < -50;
+    
+    if (isLeftSwipe) {
+      nextSlide();
+    }
+    if (isRightSwipe) {
+      prevSlide();
+    }
   };
 
   const fetchActiveRequests = async () => {
@@ -172,7 +198,12 @@ function LandingPage({ setPage }) {
             </div>
           </div>
           <div className="heroCarouselContainer">
-            <div className="carouselWrapper">
+            <div 
+              className="carouselWrapper"
+              onTouchStart={onTouchStart}
+              onTouchMove={onTouchMove}
+              onTouchEnd={onTouchEnd}
+            >
               {carouselSlides.length > 1 && (
                 <>
                   <button className="carouselArrow leftArrow" onClick={prevSlide}>&#10094;</button>
