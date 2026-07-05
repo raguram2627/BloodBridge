@@ -477,19 +477,32 @@ body {
   .topNav {
     padding: 25px 5%;
   }
+  .heroSection {
+    padding: 100px 5% 60px 5%;
+  }
   .heroContent {
-    flex-direction: column-reverse;
+    flex-direction: column;
     text-align: center;
-    padding-top: 100px;
+    padding-top: 20px;
+  }
+  .heroText h1 {
+    font-size: 42px;
+    letter-spacing: -1px;
+    margin-bottom: 15px;
+  }
+  .heroSubtitle {
+    font-size: 16px;
+    margin-bottom: 25px;
   }
   .heroActions {
     justify-content: center;
+    margin-bottom: 40px;
   }
   .heroCarouselContainer {
     height: auto;
-    min-height: 400px;
+    min-height: auto;
     margin-bottom: 20px;
-    margin-top: 20px;
+    margin-top: 0;
   }
   .carouselWrapper {
     max-width: 320px;
