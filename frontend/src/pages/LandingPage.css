@@ -73,7 +73,7 @@ body {
   inset: 0;
   background: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(2px);
-  z-index: 998;
+  z-index: 1001;
   animation: fadeIn 0.3s ease forwards;
 }
 
@@ -92,8 +92,8 @@ body {
   box-shadow: -4px 0 30px rgba(176, 0, 32, 0.1);
   display: flex;
   flex-direction: column;
-  padding: 100px 25px 30px 25px;
-  z-index: 999;
+  padding: 80px 25px 30px 25px;
+  z-index: 1002;
   animation: slideInSidebar 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
@@ -102,14 +102,39 @@ body {
   100% { transform: translateX(0); }
 }
 
+.dropdownHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
 .dropdownHeader h2 {
   font-size: 14px;
   text-transform: uppercase;
   color: #b00020;
   letter-spacing: 2px;
-  margin-bottom: 20px;
   font-weight: 800;
   opacity: 0.7;
+}
+
+.closeMenuBtn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #555;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  transition: all 0.2s;
+  border-radius: 50%;
+}
+
+.closeMenuBtn:hover {
+  background: #f0f0f0;
+  color: #b00020;
 }
 
 .navBtn {
@@ -157,11 +182,11 @@ body {
 
 /* HERO SECTION */
 .heroSection {
-  min-height: 100vh;
+  min-height: auto;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 40px 10%;
+  padding: 130px 10% 80px 10%;
   background: radial-gradient(circle at top left, #ffe9ec 0%, transparent 40%),
               radial-gradient(circle at bottom right, #fff0f1 0%, transparent 40%);
   position: relative;

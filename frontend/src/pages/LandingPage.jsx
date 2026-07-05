@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { FiHome, FiStar, FiBarChart2, FiInfo, FiLock, FiZap, FiHeart, FiShield, FiActivity, FiAward } from "react-icons/fi";
+import { FiHome, FiStar, FiBarChart2, FiInfo, FiLock, FiZap, FiHeart, FiShield, FiActivity, FiAward, FiX } from "react-icons/fi";
 import { FaRegHospital } from "react-icons/fa";
 import "./LandingPage.css";
 
@@ -174,6 +174,9 @@ function LandingPage({ setPage }) {
           <div className="dropdownMenu">
           <div className="dropdownHeader">
             <h2>Menu</h2>
+            <button className="closeMenuBtn" onClick={() => setMenuOpen(false)}>
+              <FiX />
+            </button>
           </div>
           <button className="navBtn" onClick={() => { setMenuOpen(false); window.scrollTo(0,0); }}><FiHome className="navIcon" /> Home</button>
           <button className="navBtn" onClick={() => scrollToSection("features")}><FiStar className="navIcon" /> Features</button>
