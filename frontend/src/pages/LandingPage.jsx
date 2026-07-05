@@ -222,12 +222,6 @@ function LandingPage({ setPage }) {
               onTouchMove={onTouchMove}
               onTouchEnd={onTouchEnd}
             >
-              {carouselSlides.length > 1 && (
-                <>
-                  <button className="carouselArrow leftArrow" onClick={prevSlide}>&#10094;</button>
-                  <button className="carouselArrow rightArrow" onClick={nextSlide}>&#10095;</button>
-                </>
-              )}
               {carouselSlides.map((slide, index) => (
                 <div key={index} className={`heroSlide ${index === currentSlide ? "active" : ""}`}>
                   {slide.type === 'logo' ? (
@@ -251,14 +245,18 @@ function LandingPage({ setPage }) {
               ))}
             </div>
             {carouselSlides.length > 1 && (
-              <div className="carouselDots">
-                {carouselSlides.map((_, idx) => (
-                  <span 
-                    key={idx} 
-                    className={`dot ${idx === currentSlide ? "active" : ""}`}
-                    onClick={() => goToSlide(idx)}
-                  ></span>
-                ))}
+              <div className="carouselControls">
+                <button className="carouselArrow bottomArrow" onClick={prevSlide}>&#10094;</button>
+                <div className="carouselDots">
+                  {carouselSlides.map((_, idx) => (
+                    <span 
+                      key={idx} 
+                      className={`dot ${idx === currentSlide ? "active" : ""}`}
+                      onClick={() => goToSlide(idx)}
+                    ></span>
+                  ))}
+                </div>
+                <button className="carouselArrow bottomArrow" onClick={nextSlide}>&#10095;</button>
               </div>
             )}
           </div>
