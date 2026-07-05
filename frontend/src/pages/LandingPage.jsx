@@ -153,15 +153,25 @@ function LandingPage({ setPage }) {
 
   return (
     <div className="landingPageWrapper">
-      {/* HAMBURGER MENU */}
-      <div className="menuIcon" onClick={() => setMenuOpen(!menuOpen)}>
-        <div className={`bar ${menuOpen ? "open1" : ""}`}></div>
-        <div className={`bar ${menuOpen ? "open2" : ""}`}></div>
-        <div className={`bar ${menuOpen ? "open3" : ""}`}></div>
+      {/* TOP NAV & HAMBURGER MENU */}
+      <div className="topNav">
+        <div className="navLogo">
+          <img src="/app_logo.png" alt="BloodBridge" className="navLogoImg" />
+          <span>BloodBridge</span>
+        </div>
+        {!menuOpen && (
+          <div className="menuIcon" onClick={() => setMenuOpen(true)}>
+            <div className="bar"></div>
+            <div className="bar"></div>
+            <div className="bar"></div>
+          </div>
+        )}
       </div>
 
       {menuOpen && (
-        <div className="dropdownMenu">
+        <>
+          <div className="sidebarOverlay" onClick={() => setMenuOpen(false)}></div>
+          <div className="dropdownMenu">
           <div className="dropdownHeader">
             <h2>Menu</h2>
           </div>
@@ -172,14 +182,14 @@ function LandingPage({ setPage }) {
           <hr />
           <button className="navBtn adminBtn" onClick={() => setPage("admin")}><FiLock className="navIcon" /> Admin Login</button>
         </div>
+        </>
       )}
 
       {/* HERO SECTION */}
       <section className="heroSection">
         <div className="heroContent">
           <div className="heroText">
-            <div className="logo">🩸 BloodBridge</div>
-            <h1>Donate Blood.<br/><span className="highlight">Save Lives Now!</span></h1>
+            <h1>Donate Blood.<br/><span className="highlight">Save Lives!</span></h1>
             <p className="heroSubtitle">
               Connecting student and faculty blood donors with people in emergency situations. 
               Every donation can save up to 3 lives. Be the hero someone is praying for.

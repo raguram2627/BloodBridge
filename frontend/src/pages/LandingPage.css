@@ -15,21 +15,27 @@ body {
   overflow-x: hidden;
 }
 
-/* HAMBURGER MENU */
-.menuIcon {
-  position: fixed;
-  top: 30px;
-  left: 30px;
+/* HAMBURGER & TOP NAV */
+.topNav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 30px 10%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   z-index: 1000;
+}
+
+.menuIcon {
   cursor: pointer;
   display: flex;
   flex-direction: column;
   gap: 6px;
-  background: white;
-  padding: 12px;
-  border-radius: 50%;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  transition: all 0.3s ease;
+  padding: 5px;
+  transition: all 0.2s ease;
+  z-index: 1000;
 }
 
 .menuIcon:hover {
@@ -37,35 +43,62 @@ body {
 }
 
 .bar {
-  width: 24px;
+  width: 26px;
   height: 3px;
-  background-color: #b00020;
+  background-color: #222;
   border-radius: 3px;
   transition: 0.3s;
 }
 
-.open1 { transform: rotate(-45deg) translate(-6px, 6px); }
-.open2 { opacity: 0; }
-.open3 { transform: rotate(45deg) translate(-6px, -6px); }
+.navLogo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 24px;
+  font-weight: 800;
+  color: #b00020;
+  letter-spacing: -0.5px;
+}
+
+.navLogoImg {
+  width: 35px;
+  height: 35px;
+  border-radius: 8px;
+  object-fit: cover;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.sidebarOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(2px);
+  z-index: 998;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
 
 .dropdownMenu {
   position: fixed;
   top: 0;
-  left: 0;
+  right: 0;
   height: 100vh;
   width: 280px;
   background: linear-gradient(180deg, #ffffff 0%, #fffafa 100%);
-  box-shadow: 4px 0 30px rgba(176, 0, 32, 0.1);
+  box-shadow: -4px 0 30px rgba(176, 0, 32, 0.1);
   display: flex;
   flex-direction: column;
   padding: 100px 25px 30px 25px;
   z-index: 999;
-  border-radius: 0 20px 20px 0;
   animation: slideInSidebar 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 @keyframes slideInSidebar {
-  0% { transform: translateX(-100%); }
+  0% { transform: translateX(100%); }
   100% { transform: translateX(0); }
 }
 
@@ -146,14 +179,7 @@ body {
 .heroText {
   flex: 1;
   max-width: 600px;
-}
-
-.logo {
-  font-size: 24px;
-  font-weight: 800;
-  color: #b00020;
-  margin-bottom: 20px;
-  letter-spacing: -0.5px;
+  margin-top: 30px; /* added some margin since logo was removed */
 }
 
 .heroText h1 {
@@ -284,10 +310,11 @@ body {
 }
 
 .heroEmergencyCard {
-  background: white;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
   box-shadow: 0 20px 50px rgba(176, 0, 32, 0.15);
   padding: 40px 30px;
-  border: 1px solid #ffeff0;
+  border: 1px solid rgba(255, 255, 255, 0.5);
   border-top: 6px solid #b00020;
   display: flex;
   flex-direction: column;
@@ -422,10 +449,13 @@ body {
 }
 
 @media (max-width: 900px) {
+  .topNav {
+    padding: 25px 5%;
+  }
   .heroContent {
     flex-direction: column-reverse;
     text-align: center;
-    padding-top: 80px;
+    padding-top: 100px;
   }
   .heroActions {
     justify-content: center;
