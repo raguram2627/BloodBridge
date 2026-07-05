@@ -54,11 +54,11 @@ body {
   left: 0;
   height: 100vh;
   width: 280px;
-  background: white;
-  box-shadow: 4px 0 30px rgba(0,0,0,0.15);
+  background: linear-gradient(180deg, #ffffff 0%, #fffafa 100%);
+  box-shadow: 4px 0 30px rgba(176, 0, 32, 0.1);
   display: flex;
   flex-direction: column;
-  padding: 100px 20px 20px 20px;
+  padding: 100px 25px 30px 25px;
   z-index: 999;
   border-radius: 0 20px 20px 0;
   animation: slideInSidebar 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -69,28 +69,49 @@ body {
   100% { transform: translateX(0); }
 }
 
-.dropdownMenu button {
+.dropdownHeader h2 {
+  font-size: 14px;
+  text-transform: uppercase;
+  color: #b00020;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+  font-weight: 800;
+  opacity: 0.7;
+}
+
+.navBtn {
   background: none;
   border: none;
-  padding: 12px 15px;
+  padding: 14px 18px;
   text-align: left;
   font-size: 16px;
   font-weight: 600;
   color: #444;
-  border-radius: 10px;
+  border-radius: 12px;
   cursor: pointer;
-  transition: background 0.2s, color 0.2s;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
 }
 
-.dropdownMenu button:hover {
-  background: #fff0f1;
+.navBtn:hover {
+  background: white;
+  box-shadow: 0 4px 15px rgba(176,0,32,0.08);
+  color: #b00020;
+  transform: translateX(5px);
+}
+
+.navIcon {
+  font-size: 20px;
   color: #b00020;
 }
 
 .dropdownMenu hr {
   border: none;
-  border-top: 1px solid #eee;
-  margin: 10px 0;
+  border-top: 1px solid #ffe3e5;
+  margin: 15px 0;
 }
 
 .dropdownMenu .adminBtn {
@@ -98,7 +119,7 @@ body {
 }
 
 .dropdownMenu .adminBtn:hover {
-  background: #ffebee;
+  background: #fff0f1;
 }
 
 /* HERO SECTION */
@@ -481,9 +502,26 @@ body {
   border-color: #fff0f1;
 }
 
+.featureIconBox {
+  width: 70px;
+  height: 70px;
+  background: #fff0f1;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 20px auto;
+  box-shadow: 0 4px 15px rgba(176,0,32,0.1);
+  transition: transform 0.3s;
+}
+
+.featureItem:hover .featureIconBox {
+  transform: scale(1.1);
+}
+
 .featureIcon {
-  font-size: 40px;
-  margin-bottom: 20px;
+  font-size: 32px;
+  color: #b00020;
 }
 
 .featureItem h3 {
@@ -628,6 +666,32 @@ body {
 .footer p {
   color: #888;
   font-size: 14px;
+}
+
+.creatorBadge {
+  margin-top: 20px;
+  font-size: 14px;
+  color: #777;
+  font-weight: 500;
+  display: inline-block;
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid #eaeaea;
+  border-radius: 30px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+  cursor: default;
+}
+
+.creatorName {
+  font-weight: 800;
+  color: #b00020;
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 0.5px;
+  transition: text-shadow 0.3s;
+}
+
+.creatorBadge:hover .creatorName {
+  text-shadow: 0 0 10px rgba(176, 0, 32, 0.4);
 }
 
 /* POPUPS */

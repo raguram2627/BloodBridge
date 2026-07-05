@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { FiHome, FiStar, FiBarChart2, FiInfo, FiLock, FiZap, FiHeart, FiShield, FiActivity, FiAward } from "react-icons/fi";
+import { FaRegHospital } from "react-icons/fa";
 import "./LandingPage.css";
 
 function LandingPage({ setPage }) {
@@ -160,12 +162,15 @@ function LandingPage({ setPage }) {
 
       {menuOpen && (
         <div className="dropdownMenu">
-          <button onClick={() => { setMenuOpen(false); window.scrollTo(0,0); }}>🏠 Home</button>
-          <button onClick={() => scrollToSection("features")}>⭐ Features</button>
-          <button onClick={() => scrollToSection("statistics")}>📊 Statistics</button>
-          <button onClick={() => scrollToSection("about")}>ℹ About</button>
+          <div className="dropdownHeader">
+            <h2>Menu</h2>
+          </div>
+          <button className="navBtn" onClick={() => { setMenuOpen(false); window.scrollTo(0,0); }}><FiHome className="navIcon" /> Home</button>
+          <button className="navBtn" onClick={() => scrollToSection("features")}><FiStar className="navIcon" /> Features</button>
+          <button className="navBtn" onClick={() => scrollToSection("statistics")}><FiBarChart2 className="navIcon" /> Statistics</button>
+          <button className="navBtn" onClick={() => scrollToSection("about")}><FiInfo className="navIcon" /> About</button>
           <hr />
-          <button className="adminBtn" onClick={() => setPage("admin")}>🔒 Admin Login</button>
+          <button className="navBtn adminBtn" onClick={() => setPage("admin")}><FiLock className="navIcon" /> Admin Login</button>
         </div>
       )}
 
@@ -252,32 +257,32 @@ function LandingPage({ setPage }) {
         <h2 className="sectionTitle">Why BloodBridge?</h2>
         <div className="featuresGrid">
           <div className="featureItem">
-            <div className="featureIcon">⚡</div>
+            <div className="featureIconBox"><FiZap className="featureIcon" /></div>
             <h3>Fast Search</h3>
             <p>Find available donors within seconds using our optimized algorithm.</p>
           </div>
           <div className="featureItem">
-            <div className="featureIcon">❤️</div>
+            <div className="featureIconBox"><FiHeart className="featureIcon" /></div>
             <h3>Emergency Support</h3>
             <p>Instantly broadcast requests to eligible donors in the network.</p>
           </div>
           <div className="featureItem">
-            <div className="featureIcon">🏥</div>
+            <div className="featureIconBox"><FaRegHospital className="featureIcon" /></div>
             <h3>College Network</h3>
             <p>Students and faculty united for a noble cause to support local hospitals.</p>
           </div>
           <div className="featureItem">
-            <div className="featureIcon">🔒</div>
+            <div className="featureIconBox"><FiShield className="featureIcon" /></div>
             <h3>Secure Profiles</h3>
             <p>Your data is protected. Only authorized admins can request blood.</p>
           </div>
           <div className="featureItem">
-            <div className="featureIcon">📊</div>
+            <div className="featureIconBox"><FiActivity className="featureIcon" /></div>
             <h3>Live Tracking</h3>
             <p>Monitor emergency request responses in real-time from the dashboard.</p>
           </div>
           <div className="featureItem">
-            <div className="featureIcon">🏆</div>
+            <div className="featureIconBox"><FiAward className="featureIcon" /></div>
             <h3>Donor Recognition</h3>
             <p>Top donors are recognized for their life-saving contributions.</p>
           </div>
@@ -312,15 +317,15 @@ function LandingPage({ setPage }) {
       <section id="statistics" className="statsSection">
         <div className="statsContainer">
           <div className="statBox">
-            <h2>3,500+</h2>
+            <h2>500+</h2>
             <p>Lives Impacted</p>
           </div>
           <div className="statBox">
-            <h2>800+</h2>
+            <h2>150+</h2>
             <p>Successful Requests</p>
           </div>
           <div className="statBox">
-            <h2>20+</h2>
+            <h2>5+</h2>
             <p>Partner Hospitals</p>
           </div>
         </div>
@@ -343,6 +348,9 @@ function LandingPage({ setPage }) {
       <footer className="footer">
         <div className="footerLogo">🩸 BloodBridge</div>
         <p>© 2026 BloodBridge Initiative. All rights reserved.</p>
+        <div className="creatorBadge">
+          Designed & Developed by <span className="creatorName">Raguram</span>
+        </div>
       </footer>
 
       {/* POPUPS */}
