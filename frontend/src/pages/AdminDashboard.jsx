@@ -714,23 +714,64 @@ function AdminDashboard() {
           color: #7f1d1d;
         }
 
+        
         .dataStreamPanel {
+          min-height: 0;
+          display: flex;
+          flex-direction: column;
+          background: white;
+          border-radius: 24px;
+          border: 1px solid #f3dcdc;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+          padding: 30px;
+        }
+
+        .emergencyConsoleWorkspace {
+          flex: 1 1 0;
           min-height: 0;
           display: flex;
           flex-direction: column;
         }
 
+        .activeTrackContentArea {
+          flex: 1 1 0;
+          min-height: 0;
+          display: flex;
+          flex-direction: column;
+        }
+
+        .triageVerticalStack, .triageSection {
+          flex: 1 1 0;
+          min-height: 0;
+          display: flex;
+          flex-direction: column;
+        }
+        
+        .availableColumn, .unavailableColumn {
+          flex: 1 1 0;
+          min-height: 0;
+          display: flex;
+          flex-direction: column;
+        }
+
+
         .horizontalSearchBlock {
           position: sticky;
-          top: 0;
+          top: 60px; /* Adjust for title */
           z-index: 10;
+          background: rgba(255, 255, 255, 0.95);
+          backdrop-filter: blur(8px);
+          padding-bottom: 10px;
         }
         
         .panelSectionTitle {
           position: sticky;
-          top: 0;
+          top: -30px; /* Offset the 30px padding of parent */
           z-index: 10;
-          background: #fcf8f8;
+          background: rgba(255, 255, 255, 0.95);
+          backdrop-filter: blur(8px);
+          margin-top: -30px;
+          padding-top: 30px;
           padding-top: 10px;
           padding-bottom: 10px;
         }
@@ -747,7 +788,7 @@ function AdminDashboard() {
         }
 
         .cardsContainer::-webkit-scrollbar-track {
-          background: #fcf8f8;
+          background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(8px);
           border-radius: 10px;
         }
 
