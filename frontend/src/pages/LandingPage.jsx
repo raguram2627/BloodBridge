@@ -4,7 +4,7 @@ import { FiHome, FiStar, FiBarChart2, FiInfo, FiLock, FiZap, FiHeart, FiShield, 
 import { FaRegHospital } from "react-icons/fa";
 import "./LandingPage.css";
 
-function LandingPage({ setPage }) {
+function LandingPage() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
@@ -101,7 +101,7 @@ function LandingPage({ setPage }) {
         return;
       }
       setShowSignup(false);
-      setPage("chooseRole");
+      navigate("/choose-role");
     } catch (err) {
       console.error(err);
     }
@@ -123,7 +123,7 @@ function LandingPage({ setPage }) {
         if (targetRequestId) {
           navigate(`/request/${targetRequestId}`);
         } else {
-          setPage("myProfile");
+          navigate("/profile");
         }
       } else {
         alert("Invalid credentials");
@@ -183,7 +183,7 @@ function LandingPage({ setPage }) {
           <button className="navBtn" onClick={() => scrollToSection("statistics")}><FiBarChart2 className="navIcon" /> Statistics</button>
           <button className="navBtn" onClick={() => scrollToSection("about")}><FiInfo className="navIcon" /> About</button>
           <hr />
-          <button className="navBtn adminBtn" onClick={() => setPage("admin")}><FiLock className="navIcon" /> Admin Login</button>
+          <button className="navBtn adminBtn" onClick={() => navigate("/admin-login")}><FiLock className="navIcon" /> Admin Login</button>
         </div>
         </>
       )}
@@ -206,7 +206,7 @@ function LandingPage({ setPage }) {
                 </>
               ) : (
                 <>
-                  <button className="primaryHeroBtn" onClick={() => setPage("myProfile")}>Visit My Profile</button>
+                  <button className="primaryHeroBtn" onClick={() => navigate("/profile")}>Visit My Profile</button>
                   <button className="secondaryHeroBtn" onClick={() => {
                     localStorage.removeItem("loggedInDonor");
                     setIsLoggedIn(false);

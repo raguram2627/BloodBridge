@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./FacultyRegisterPage.css";
 
-function FacultyRegisterPage({ setPage }) {
+function FacultyRegisterPage() {
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
   const [email, setEmail] = useState("");
@@ -110,7 +112,7 @@ function FacultyRegisterPage({ setPage }) {
             </p>
             <button className="successBtn" onClick={() => {
               setShowSuccess(false);
-              setPage("myProfile");
+              navigate("/profile");
             }}>
               Continue →
             </button>

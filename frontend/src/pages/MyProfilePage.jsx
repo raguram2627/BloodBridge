@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./MyProfilePage.css";
 
-function MyProfilePage({ setPage }) {
+function MyProfilePage() {
+  const navigate = useNavigate();
   const [donor, setDonor] = useState(null);
   const [formData, setFormData] = useState({});
 
@@ -12,9 +14,9 @@ function MyProfilePage({ setPage }) {
       setDonor(parsedDonor);
       setFormData(parsedDonor);
     } else {
-      setPage("landing");
+      navigate("/");
     }
-  }, [setPage]);
+  }, [navigate]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -44,7 +46,7 @@ function MyProfilePage({ setPage }) {
 
   const handleLogout = () => {
     localStorage.removeItem("loggedInDonor");
-    setPage("landing");
+    navigate("/");
   };
 
   if (!donor) return <div>Loading...</div>;
@@ -53,7 +55,7 @@ function MyProfilePage({ setPage }) {
     <div className="profilePage">
       <div className="profileContainer">
         <div className="profileHeader">
-          <button className="backHomeBtn" onClick={() => setPage("landing")}>← Home</button>
+          <button className="backHomeBtn" onClick={() => navigate("/")}>← Home</button>
           <h1>My Profile</h1>
           <p>Update your details below to stay ready for emergencies</p>
           <button className="logoutBtn" onClick={handleLogout}>Logout</button>

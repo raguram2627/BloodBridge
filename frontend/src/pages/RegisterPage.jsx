@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./RegisterPage.css";
 
-function RegisterPage({ setPage }) {
+function RegisterPage() {
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
   const [email, setEmail] = useState("");
@@ -115,7 +117,7 @@ function RegisterPage({ setPage }) {
             </p>
             <button className="successBtn" onClick={() => {
               setShowSuccess(false);
-              setPage("myProfile");
+              navigate("/profile");
             }}>
               Continue →
             </button>

@@ -1,6 +1,8 @@
+import { useNavigate } from "react-router-dom";
 import "./ChooseRolePage.css";
 
-function ChooseRolePage({ setPage }) {
+function ChooseRolePage() {
+  const navigate = useNavigate();
   return (
     <div className="chooseRolePage">
       <div className="roleContainer">
@@ -19,7 +21,7 @@ function ChooseRolePage({ setPage }) {
 
           <div
             className="roleCard"
-            onClick={() => setPage("studentRegister")}
+            onClick={() => navigate("/register-student")}
           >
             <div className="roleIcon">
               🎓
@@ -39,7 +41,7 @@ function ChooseRolePage({ setPage }) {
 
           <div
             className="roleCard"
-            onClick={() => setPage("facultyRegister")}
+            onClick={() => navigate("/register-faculty")}
           >
             <div className="roleIcon">
               👨‍🏫

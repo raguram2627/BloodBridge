@@ -1,13 +1,15 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./AdminLogin.css";
 
-function AdminLogin({ setPage }) {
+function AdminLogin() {
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const handleLogin = () => {
     if (username === "admin" && password === "admin123") {
-      setPage("dashboard");
+      navigate("/admin-dashboard");
     } else {
       alert("Invalid Credentials");
     }
