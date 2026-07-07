@@ -715,8 +715,30 @@ function AdminDashboard() {
         }
 
         .dataStreamPanel {
-          max-height: calc(100vh - 220px);
+          min-height: 0;
+          display: flex;
+          flex-direction: column;
+        }
+
+        .horizontalSearchBlock {
+          position: sticky;
+          top: 0;
+          z-index: 10;
+        }
+        
+        .panelSectionTitle {
+          position: sticky;
+          top: 0;
+          z-index: 10;
+          background: #fcf8f8;
+          padding-top: 10px;
+          padding-bottom: 10px;
+        }
+
+        .cardsContainer {
           overflow-y: auto;
+          flex: 1 1 0;
+          min-height: 0;
           padding-right: 15px;
         }
 
@@ -742,7 +764,7 @@ function AdminDashboard() {
           .dashboardLayout {
             grid-template-columns: 1fr;
           }
-          .dataStreamPanel {
+          .cardsContainer {
              max-height: 85vh;
           }
         }
