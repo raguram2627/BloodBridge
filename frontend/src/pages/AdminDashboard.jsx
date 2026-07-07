@@ -2179,7 +2179,7 @@ function AdminDashboard() {
               ) : (
                 <>
                   <div className="panelSectionTitle">
-                    <h2>{viewMode === "frequent" ? "<FiAward className="dashboardIcon" /> Frequent Donors" : "<FiGrid className="dashboardIcon" /> Registered Donors List"}</h2>
+                    <h2>{viewMode === "frequent" ? <><FiAward className="dashboardIcon" /> Frequent Donors</> : <><FiGrid className="dashboardIcon" /> Registered Donors List</>}</h2>
                     {viewMode === "frequent" && (
                       <p className="resultsCounter">Ranked by total donations — highest first</p>
                     )}
@@ -2250,7 +2250,7 @@ function AdminDashboard() {
                 <input type="text" placeholder="e.g. 312224104001" value={manualRegNo} onChange={(e) => setManualRegNo(e.target.value)} className="dashboardInput textInputBold" />
                 {manualRegNo.trim() && (
                   <div className={`realtimeVerifyFeedback ${manualDonorFound ? "matched" : "failed"}`}>
-                    {manualDonorFound ? `<FiCheckCircle className="dashboardIcon" /> Found Asset: ${manualDonorFound.name} (${manualDonorFound.bloodGroup})` : "<FiXCircle className="dashboardIcon" /> No identity found matching this input"}
+                    {manualDonorFound ? <><FiCheckCircle className="dashboardIcon" /> Found Asset: {manualDonorFound.name} ({manualDonorFound.bloodGroup})</> : <><FiXCircle className="dashboardIcon" /> No identity found matching this input</>}
                   </div>
                 )}
               </div>
