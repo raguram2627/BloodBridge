@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import { FiUsers, FiAward, FiActivity, FiFileText, FiShield, FiAlertCircle, FiDroplet, FiPhone, FiCheckCircle, FiXCircle, FiGrid, FiLock, FiX, FiRefreshCw, FiMessageCircle, FiTrendingUp, FiSearch, FiInfo } from "react-icons/fi";
+import { FaGraduationCap, FaChalkboardTeacher } from "react-icons/fa";
 
 const BLOOD_GROUPS = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
 
@@ -124,7 +126,7 @@ function AdminDashboard() {
     outline: "none"
   };
 
-  const MEDAL_EMOJIS = ["🥇", "🥈", "🥉"];
+  const MEDAL_EMOJIS = [<FiAward style={{color: "#FFD700"}} />, <FiAward style={{color: "#C0C0C0"}} />, <FiAward style={{color: "#CD7F32"}} />];
 
   const showToast = (message, type = "success") => {
     setToast({ show: true, message, type });
@@ -554,6 +556,7 @@ function AdminDashboard() {
           padding-bottom: 20px;
         }
 
+        .dashboardIcon { display: inline-block; vertical-align: middle; margin-right: 6px; }
         .dashboardHeader h1 {
           color: #b00020;
           font-size: 38px;
@@ -710,9 +713,36 @@ function AdminDashboard() {
           color: #7f1d1d;
         }
 
+        .dataStreamPanel {
+          max-height: calc(100vh - 220px);
+          overflow-y: auto;
+          padding-right: 15px;
+        }
+
+        .dataStreamPanel::-webkit-scrollbar {
+          width: 8px;
+        }
+
+        .dataStreamPanel::-webkit-scrollbar-track {
+          background: #fcf8f8;
+          border-radius: 10px;
+        }
+
+        .dataStreamPanel::-webkit-scrollbar-thumb {
+          background: #f0d5d9;
+          border-radius: 10px;
+        }
+
+        .dataStreamPanel::-webkit-scrollbar-thumb:hover {
+          background: #b00020;
+        }
+
         @media (max-width: 1100px) {
           .dashboardLayout {
             grid-template-columns: 1fr;
+          }
+          .dataStreamPanel {
+             max-height: 85vh;
           }
         }
 
@@ -1617,24 +1647,24 @@ function AdminDashboard() {
       `}} />
 
       <div className="dashboardHeader">
-        <h1>🩸 BloodBridge Command Center</h1>
+        <h1><FiDroplet className="dashboardIcon" /> BloodBridge Command Center</h1>
         <p className="dashboardSubtitle">Real-time metrics, donor tracking, and live emergency network map</p>
       </div>
 
-      {loading && <div className="loadingAlert"><span className="spinner">🔄</span> Updating database records...</div>}
-      {error && <div className="errorAlert">⚠️ System Error: {error}</div>}
+      {loading && <div className="loadingAlert"><span className="spinner"><FiRefreshCw className="dashboardIcon" /></span> Updating database records...</div>}
+      {error && <div className="errorAlert"><FiAlertCircle className="dashboardIcon" /> System Error: {error}</div>}
 
       <div className="metricsGrid">
         <div className="metricTile">
-          <span className="tileIcon">👥</span>
+          <span className="tileIcon"><FiUsers className="dashboardIcon" /></span>
           <div className="tileData"><h3>{totalDonors}</h3><p>Total Registered</p></div>
         </div>
         <div className="metricTile">
-          <span className="tileIcon">🎓</span>
+          <span className="tileIcon"><FaGraduationCap className="dashboardIcon" /></span>
           <div className="tileData"><h3>{studentCount}</h3><p>Students</p></div>
         </div>
         <div className="metricTile">
-          <span className="tileIcon">👨‍🏫</span>
+          <span className="tileIcon"><FaChalkboardTeacher className="dashboardIcon" /></span>
           <div className="tileData"><h3>{facultyCount}</h3><p>Faculty & Staff</p></div>
         </div>
         
@@ -1643,7 +1673,7 @@ function AdminDashboard() {
           onClick={() => { if (activeRequests.length > 0) setViewMode("emergency_console"); }}
           style={{ cursor: activeRequests.length > 0 ? "pointer" : "default", ...buttonMotionStyle }}
         >
-          <span className="tileIcon">🚨</span>
+          <span className="tileIcon"><FiAlertCircle className="dashboardIcon" /></span>
           <div className="tileData">
             <h3>{activeRequests.length}</h3>
             <p>{activeRequests.length === 1 ? "Active Live Request" : "Active Live Requests"}</p>
@@ -1656,19 +1686,19 @@ function AdminDashboard() {
           <div className="controlBlock">
             <h3>Navigation & Filters</h3>
             <div className="actionButtonGroup">
-              <button className={`panelBtn ${viewMode === "all" ? "active" : ""}`} onClick={() => setViewMode("all")}>📋 View All Donors</button>
-              <button className={`panelBtn ${viewMode === "student" ? "active" : ""}`} onClick={() => setViewMode("student")}>🎓 Filter Students</button>
-              <button className={`panelBtn ${viewMode === "faculty" ? "active" : ""}`} onClick={() => setViewMode("faculty")}>👨‍🏫 Filter Faculty</button>
-              <button className={`panelBtn ${viewMode === "frequent" ? "active" : ""}`} onClick={() => setViewMode("frequent")}>🏆 Frequent Donors</button>
-              <button className={`panelBtn ${viewMode === "history" ? "active" : ""}`} onClick={() => setViewMode("history")}>📜 Donation History Log</button>
+              <button className={`panelBtn ${viewMode === "all" ? "active" : ""}`} onClick={() => setViewMode("all")}><FiGrid className="dashboardIcon" /> View All Donors</button>
+              <button className={`panelBtn ${viewMode === "student" ? "active" : ""}`} onClick={() => setViewMode("student")}><FaGraduationCap className="dashboardIcon" /> Filter Students</button>
+              <button className={`panelBtn ${viewMode === "faculty" ? "active" : ""}`} onClick={() => setViewMode("faculty")}><FaChalkboardTeacher className="dashboardIcon" /> Filter Faculty</button>
+              <button className={`panelBtn ${viewMode === "frequent" ? "active" : ""}`} onClick={() => setViewMode("frequent")}><FiAward className="dashboardIcon" /> Frequent Donors</button>
+              <button className={`panelBtn ${viewMode === "history" ? "active" : ""}`} onClick={() => setViewMode("history")}><FiFileText className="dashboardIcon" /> Donation History Log</button>
             </div>
           </div>
 
           <div className="controlBlock emergencySection">
-            <h3>🚨 Launch Emergency Broadcast</h3>
+            <h3><FiAlertCircle className="dashboardIcon" /> Launch Emergency Broadcast</h3>
             <div className="formSet">
               <div className="bloodGroupHeader">
-                <h4>🩸 Select Required Blood Groups</h4>
+                <h4><FiDroplet className="dashboardIcon" /> Select Required Blood Groups</h4>
                 <p>Choose one or more blood groups to notify donors.</p>
               </div>
               <div className="bloodGroupSelector">
@@ -1677,7 +1707,7 @@ function AdminDashboard() {
                   className={`bloodGroupOption allGroups ${allBloodGroupsSelected ? "selected" : ""}`}
                   onClick={toggleAllBloodGroupsSelection}
                 >
-                  <span className="bloodGroupIcon">🩸</span>
+                  <span className="bloodGroupIcon"><FiDroplet className="dashboardIcon" /></span>
                   <span className="bloodGroupText">All Blood Groups</span>
                 </button>
                 {BLOOD_GROUPS.map((group) => (
@@ -1688,7 +1718,7 @@ function AdminDashboard() {
                     disabled={allBloodGroupsSelected}
                     onClick={() => toggleBloodGroupSelection(group)}
                   >
-                    <span className="bloodGroupIcon">🩸</span>
+                    <span className="bloodGroupIcon"><FiDroplet className="dashboardIcon" /></span>
                     <span className="bloodGroupText">{group}</span>
                   </button>
                 ))}
@@ -1708,7 +1738,7 @@ function AdminDashboard() {
           {viewMode === "emergency_console" ? (
             <div className="emergencyConsoleWorkspace">
               <div className="panelSectionTitle">
-                <h2>🚨 Concurrent Emergency Operations</h2>
+                <h2><FiAlertCircle className="dashboardIcon" /> Concurrent Emergency Operations</h2>
                 <p>Track multiple active broadcast streams contextually without closing or locking background operations.</p>
               </div>
 
@@ -1721,7 +1751,7 @@ function AdminDashboard() {
                     onClick={() => { setSelectedRequestId(req._id); }}
                     style={buttonMotionStyle}
                   >
-                    <span className="tabBloodDrop">🩸 {formatRequestBloodGroupLabel(req.bloodGroup)}</span>
+                    <span className="tabBloodDrop"><FiDroplet className="dashboardIcon" /> {formatRequestBloodGroupLabel(req.bloodGroup)}</span>
                     <span className="tabHospitalLabel">{req.hospital}</span>
                   </button>
                 ))}
@@ -1744,7 +1774,7 @@ function AdminDashboard() {
                               style={{ width: "auto", padding: "12px 20px" }}
                               onClick={() => handleNotifyDonors(currentRequest._id)}
                             >
-                              📢 Notify Donors
+                              <FiActivity className="dashboardIcon" /> Notify Donors
                             </button>
 
                             {currentRequest.isNotified && (
@@ -1804,12 +1834,12 @@ function AdminDashboard() {
 
                                   <div className="cardActionRow">
                                     <div className="actionBtnLeftGroup">
-                                      <button className="cardActionBtn" onClick={() => setDetailsDonor(d)}>📊 Details</button>
-                                      <a href={`tel:${d.mobile}`} className="commsLink"><button className="cardActionBtn">📞 Call</button></a>
-                                      <a href={`https://wa.me/91${d.mobile}`} target="_blank" rel="noreferrer" className="commsLink"><button className="cardActionBtn">📱 WhatsApp</button></a>
+                                      <button className="cardActionBtn" onClick={() => setDetailsDonor(d)}><FiTrendingUp className="dashboardIcon" /> Details</button>
+                                      <a href={`tel:${d.mobile}`} className="commsLink"><button className="cardActionBtn"><FiPhone className="dashboardIcon" /> Call</button></a>
+                                      <a href={`https://wa.me/91${d.mobile}`} target="_blank" rel="noreferrer" className="commsLink"><button className="cardActionBtn"><FiMessageCircle className="dashboardIcon" /> WhatsApp</button></a>
                                     </div>
                                     <div className="actionBtnRightGroup">
-                                      <button className="cardActionBtn actionBtnHistory" onClick={() => setSelectedDonor(d)}>📜 History</button>
+                                      <button className="cardActionBtn actionBtnHistory" onClick={() => setSelectedDonor(d)}><FiFileText className="dashboardIcon" /> History</button>
                                     </div>
                                   </div>
                                 </div>
@@ -1844,12 +1874,12 @@ function AdminDashboard() {
 
                                   <div className="cardActionRow">
                                     <div className="actionBtnLeftGroup">
-                                      <button className="cardActionBtn" onClick={() => setDetailsDonor(d)}>📊 Details</button>
-                                      <a href={`tel:${d.mobile}`} className="commsLink"><button className="cardActionBtn">📞 Call</button></a>
-                                      <a href={`https://wa.me/91${d.mobile}`} target="_blank" rel="noreferrer" className="commsLink"><button className="cardActionBtn">📱 WhatsApp</button></a>
+                                      <button className="cardActionBtn" onClick={() => setDetailsDonor(d)}><FiTrendingUp className="dashboardIcon" /> Details</button>
+                                      <a href={`tel:${d.mobile}`} className="commsLink"><button className="cardActionBtn"><FiPhone className="dashboardIcon" /> Call</button></a>
+                                      <a href={`https://wa.me/91${d.mobile}`} target="_blank" rel="noreferrer" className="commsLink"><button className="cardActionBtn"><FiMessageCircle className="dashboardIcon" /> WhatsApp</button></a>
                                     </div>
                                     <div className="actionBtnRightGroup">
-                                      <button className="cardActionBtn actionBtnHistory" onClick={() => setSelectedDonor(d)}>📜 History</button>
+                                      <button className="cardActionBtn actionBtnHistory" onClick={() => setSelectedDonor(d)}><FiFileText className="dashboardIcon" /> History</button>
                                     </div>
                                   </div>
                                 </div>
@@ -1866,23 +1896,23 @@ function AdminDashboard() {
                           style={{ ...buttonMotionStyle, background: "#b00020", marginTop: 0 }}
                           onClick={() => handleCloseBroadcastChannel(currentRequest._id)}
                         >
-                          🔒 Close Request Thread
+                          <FiLock className="dashboardIcon" /> Close Request Thread
                         </button>
                         <button
                           className="closeBroadcastBtn dynamicClickEffect"
                           style={{ ...buttonMotionStyle, background: "#7b1fa2", marginTop: 0 }}
                           onClick={handleCloseAllActiveRequests}
                         >
-                          🧹 Close All Active Requests
+                          <FiXCircle className="dashboardIcon" /> Close All Active Requests
                         </button>
                       </div>
                     </>
                   ) : (
                     <div className="liveTriageTrackingView">
                       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px", flexWrap: "wrap", gap: "10px" }}>
-                        <h3>📊 Triage Tracker: Request Group [{formatRequestBloodGroupLabel(currentRequest.bloodGroup)}]</h3>
+                        <h3><FiTrendingUp className="dashboardIcon" /> Triage Tracker: Request Group [{formatRequestBloodGroupLabel(currentRequest.bloodGroup)}]</h3>
                         <div style={{ display: "flex", gap: "10px" }}>
-                          <button className="panelBtn dynamicClickEffect" style={{ ...buttonMotionStyle, background: "#0056b3", color: "#fff", width: "auto" }} onClick={handleRefreshResponses}>🔄 Refresh</button>
+                          <button className="panelBtn dynamicClickEffect" style={{ ...buttonMotionStyle, background: "#0056b3", color: "#fff", width: "auto" }} onClick={handleRefreshResponses}><FiRefreshCw className="dashboardIcon" /> Refresh</button>
                           <button className="panelBtn dynamicClickEffect" style={{ ...buttonMotionStyle, width: "auto" }} onClick={() => updateActiveRequest(currentRequest._id, { showLiveTriage: false })}>← Back</button>
                         </div>
                       </div>
@@ -1895,8 +1925,8 @@ function AdminDashboard() {
                             <div key={group} className="responseGroupBadge">
                               <span className="groupLabel">{group}</span>
                               <div className="groupStats">
-                                <span className="statItem willingCount">✅ {willingCounts[group] || 0}</span>
-                                <span className="statItem unavailableCount">❌ {unavailableCounts[group] || 0}</span>
+                                <span className="statItem willingCount"><FiCheckCircle className="dashboardIcon" /> {willingCounts[group] || 0}</span>
+                                <span className="statItem unavailableCount"><FiXCircle className="dashboardIcon" /> {unavailableCounts[group] || 0}</span>
                               </div>
                             </div>
                           ));
@@ -1908,13 +1938,13 @@ function AdminDashboard() {
                           className={`sectionToggleBtn ${responseView === "willing" ? "active" : ""}`}
                           onClick={() => setResponseView("willing")}
                         >
-                          ✅ Willing ({currentRequest.willingDonors?.length || 0})
+                          <FiCheckCircle className="dashboardIcon" /> Willing ({currentRequest.willingDonors?.length || 0})
                         </button>
                         <button
                           className={`sectionToggleBtn ${responseView === "declined" ? "active" : ""}`}
                           onClick={() => setResponseView("declined")}
                         >
-                          ❌ Declined ({currentRequest.unavailableDonors?.length || 0})
+                          <FiXCircle className="dashboardIcon" /> Declined ({currentRequest.unavailableDonors?.length || 0})
                         </button>
                         <button
                           className={`sectionToggleBtn ${responseView === "pending" ? "active" : ""}`}
@@ -1929,7 +1959,7 @@ function AdminDashboard() {
                         {responseView === "willing" && (
                           <div className="triageSection">
                             <h4 style={{ color: "green", borderBottom: "2px solid green", paddingBottom: "6px", marginBottom: "15px" }}>
-                              ✅ Willing ({currentRequest.willingDonors?.length || 0})
+                              <FiCheckCircle className="dashboardIcon" /> Willing ({currentRequest.willingDonors?.length || 0})
                             </h4>
                             <div className="cardsContainer">
                               {currentRequest.willingDonors?.map((w, i) => {
@@ -1953,9 +1983,9 @@ function AdminDashboard() {
 
                                     <div className="cardActionRow">
                                       <div className="actionBtnLeftGroup">
-                                        <button className="cardActionBtn" onClick={() => setDetailsDonor(d)}>📊 Details</button>
-                                        <a href={`tel:${d.mobile}`} className="commsLink"><button className="cardActionBtn">📞 Call</button></a>
-                                        <a href={`https://wa.me/91${d.mobile}`} target="_blank" rel="noreferrer" className="commsLink"><button className="cardActionBtn">📱 WhatsApp</button></a>
+                                        <button className="cardActionBtn" onClick={() => setDetailsDonor(d)}><FiTrendingUp className="dashboardIcon" /> Details</button>
+                                        <a href={`tel:${d.mobile}`} className="commsLink"><button className="cardActionBtn"><FiPhone className="dashboardIcon" /> Call</button></a>
+                                        <a href={`https://wa.me/91${d.mobile}`} target="_blank" rel="noreferrer" className="commsLink"><button className="cardActionBtn"><FiMessageCircle className="dashboardIcon" /> WhatsApp</button></a>
                                       </div>
                                       <div className="actionBtnRightGroup">
                                         <button className="cardActionBtn actionBtnRecord" onClick={() => setDonationDonor(d)}>➕ Log Donation</button>
@@ -1972,7 +2002,7 @@ function AdminDashboard() {
                         {responseView === "declined" && (
                           <div className="triageSection">
                             <h4 style={{ color: "#b00020", borderBottom: "2px solid #b00020", paddingBottom: "6px", marginBottom: "15px" }}>
-                              ❌ Declined ({currentRequest.unavailableDonors?.length || 0})
+                              <FiXCircle className="dashboardIcon" /> Declined ({currentRequest.unavailableDonors?.length || 0})
                             </h4>
                             <div className="cardsContainer">
                               {currentRequest.unavailableDonors?.map((un, i) => {
@@ -1996,12 +2026,12 @@ function AdminDashboard() {
 
                                     <div className="cardActionRow">
                                       <div className="actionBtnLeftGroup">
-                                        <button className="cardActionBtn" onClick={() => setDetailsDonor(d)}>📊 Details</button>
-                                        <a href={`tel:${d.mobile}`} className="commsLink"><button className="cardActionBtn">📞 Call</button></a>
-                                        <a href={`https://wa.me/91${d.mobile}`} target="_blank" rel="noreferrer" className="commsLink"><button className="cardActionBtn">📱 WhatsApp</button></a>
+                                        <button className="cardActionBtn" onClick={() => setDetailsDonor(d)}><FiTrendingUp className="dashboardIcon" /> Details</button>
+                                        <a href={`tel:${d.mobile}`} className="commsLink"><button className="cardActionBtn"><FiPhone className="dashboardIcon" /> Call</button></a>
+                                        <a href={`https://wa.me/91${d.mobile}`} target="_blank" rel="noreferrer" className="commsLink"><button className="cardActionBtn"><FiMessageCircle className="dashboardIcon" /> WhatsApp</button></a>
                                       </div>
                                       <div className="actionBtnRightGroup">
-                                        <button className="cardActionBtn actionBtnHistory" onClick={() => setSelectedDonor(un)}>📜 History</button>
+                                        <button className="cardActionBtn actionBtnHistory" onClick={() => setSelectedDonor(un)}><FiFileText className="dashboardIcon" /> History</button>
                                       </div>
                                     </div>
                                   </div>
@@ -2041,12 +2071,12 @@ function AdminDashboard() {
 
                                     <div className="cardActionRow">
                                       <div className="actionBtnLeftGroup">
-                                        <button className="cardActionBtn" onClick={() => setDetailsDonor(d)}>📊 Details</button>
-                                        <a href={`tel:${d.mobile}`} className="commsLink"><button className="cardActionBtn">📞 Call</button></a>
-                                        <a href={`https://wa.me/91${d.mobile}`} target="_blank" rel="noreferrer" className="commsLink"><button className="cardActionBtn">📱 WhatsApp</button></a>
+                                        <button className="cardActionBtn" onClick={() => setDetailsDonor(d)}><FiTrendingUp className="dashboardIcon" /> Details</button>
+                                        <a href={`tel:${d.mobile}`} className="commsLink"><button className="cardActionBtn"><FiPhone className="dashboardIcon" /> Call</button></a>
+                                        <a href={`https://wa.me/91${d.mobile}`} target="_blank" rel="noreferrer" className="commsLink"><button className="cardActionBtn"><FiMessageCircle className="dashboardIcon" /> WhatsApp</button></a>
                                       </div>
                                       <div className="actionBtnRightGroup">
-                                        <button className="cardActionBtn actionBtnHistory" onClick={() => setSelectedDonor(d)}>📜 History</button>
+                                        <button className="cardActionBtn actionBtnHistory" onClick={() => setSelectedDonor(d)}><FiFileText className="dashboardIcon" /> History</button>
                                       </div>
                                     </div>
                                   </div>
@@ -2063,14 +2093,14 @@ function AdminDashboard() {
                           style={{ ...buttonMotionStyle, background: "#b00020" }}
                           onClick={() => handleCloseBroadcastChannel(currentRequest._id)}
                         >
-                          🔒 Close Request Thread
+                          <FiLock className="dashboardIcon" /> Close Request Thread
                         </button>
                         <button
                           className="closeBroadcastBtn dynamicClickEffect"
                           style={{ ...buttonMotionStyle, background: "#7b1fa2" }}
                           onClick={handleCloseAllActiveRequests}
                         >
-                          🧹 Close All Active Requests
+                          <FiXCircle className="dashboardIcon" /> Close All Active Requests
                         </button>
                       </div>
                     </div>
@@ -2121,7 +2151,7 @@ function AdminDashboard() {
                 <>
                   <div className="panelSectionTitle historySectionTitle">
                     <div>
-                      <h2>📜 Master Donation History Logbook</h2>
+                      <h2><FiFileText className="dashboardIcon" /> Master Donation History Logbook</h2>
                       <p>Complete historical listing of all blood donations recorded</p>
                     </div>
                     <button className="globalLogDonationBtn dynamicClickEffect" onClick={() => setShowGlobalLogger(true)}>
@@ -2149,7 +2179,7 @@ function AdminDashboard() {
               ) : (
                 <>
                   <div className="panelSectionTitle">
-                    <h2>{viewMode === "frequent" ? "🏆 Frequent Donors" : "📋 Registered Donors List"}</h2>
+                    <h2>{viewMode === "frequent" ? "<FiAward className="dashboardIcon" /> Frequent Donors" : "<FiGrid className="dashboardIcon" /> Registered Donors List"}</h2>
                     {viewMode === "frequent" && (
                       <p className="resultsCounter">Ranked by total donations — highest first</p>
                     )}
@@ -2187,12 +2217,12 @@ function AdminDashboard() {
 
                         <div className="cardActionRow">
                           <div className="actionBtnLeftGroup">
-                            <button className="cardActionBtn" onClick={() => setDetailsDonor(d)}>📊 Details</button>
-                            <a href={`tel:${d.mobile}`} className="commsLink"><button className="cardActionBtn">📞 Call</button></a>
-                            <a href={`https://wa.me/91${d.mobile}`} target="_blank" rel="noreferrer" className="commsLink"><button className="cardActionBtn">📱 WhatsApp</button></a>
+                            <button className="cardActionBtn" onClick={() => setDetailsDonor(d)}><FiTrendingUp className="dashboardIcon" /> Details</button>
+                            <a href={`tel:${d.mobile}`} className="commsLink"><button className="cardActionBtn"><FiPhone className="dashboardIcon" /> Call</button></a>
+                            <a href={`https://wa.me/91${d.mobile}`} target="_blank" rel="noreferrer" className="commsLink"><button className="cardActionBtn"><FiMessageCircle className="dashboardIcon" /> WhatsApp</button></a>
                           </div>
                           <div className="actionBtnRightGroup">
-                            <button className="cardActionBtn actionBtnHistory" onClick={() => setSelectedDonor(d)}>📜 History</button>
+                            <button className="cardActionBtn actionBtnHistory" onClick={() => setSelectedDonor(d)}><FiFileText className="dashboardIcon" /> History</button>
                             <button className="cardActionBtn actionBtnRecord" onClick={() => setDonationDonor(d)}>➕ Log Donation</button>
                           </div>
                         </div>
@@ -2220,7 +2250,7 @@ function AdminDashboard() {
                 <input type="text" placeholder="e.g. 312224104001" value={manualRegNo} onChange={(e) => setManualRegNo(e.target.value)} className="dashboardInput textInputBold" />
                 {manualRegNo.trim() && (
                   <div className={`realtimeVerifyFeedback ${manualDonorFound ? "matched" : "failed"}`}>
-                    {manualDonorFound ? `✅ Found Asset: ${manualDonorFound.name} (${manualDonorFound.bloodGroup})` : "❌ No identity found matching this input"}
+                    {manualDonorFound ? `<FiCheckCircle className="dashboardIcon" /> Found Asset: ${manualDonorFound.name} (${manualDonorFound.bloodGroup})` : "<FiXCircle className="dashboardIcon" /> No identity found matching this input"}
                   </div>
                 )}
               </div>
@@ -2289,7 +2319,7 @@ function AdminDashboard() {
               <div className="historyTimeline professionalTimeline">
                 {selectedDonor.donationHistory?.map((h, i) => (
                   <div key={i} className="timelineNode professionalNode">
-                    <p className="nodeDate">📅 {new Date(h.date).toDateString()} — 🩸 {h.units || "N/A"} Units</p>
+                    <p className="nodeDate">📅 {new Date(h.date).toDateString()} — <FiDroplet className="dashboardIcon" /> {h.units || "N/A"} Units</p>
                     <p className="timelineDesc">🏥 <strong>Location:</strong> {h.hospital}</p>
                   </div>
                 ))}
