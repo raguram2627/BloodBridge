@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import { FiUsers, FiAward, FiActivity, FiFileText, FiShield, FiAlertCircle, FiDroplet, FiPhone, FiCheckCircle, FiXCircle, FiGrid, FiLock, FiX, FiRefreshCw, FiMessageCircle, FiTrendingUp, FiSearch, FiInfo } from "react-icons/fi";
+import { FiUsers, FiAward, FiActivity, FiFileText, FiShield, FiAlertCircle, FiPhone, FiCheckCircle, FiXCircle, FiGrid, FiLock, FiX, FiRefreshCw, FiMessageCircle, FiTrendingUp, FiSearch, FiInfo } from "react-icons/fi";
 import { FaGraduationCap, FaChalkboardTeacher } from "react-icons/fa";
+import { MdBloodtype, MdOutlineSensors } from "react-icons/md";
 
 const BLOOD_GROUPS = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
 
@@ -1647,7 +1648,7 @@ function AdminDashboard() {
       `}} />
 
       <div className="dashboardHeader">
-        <h1><FiDroplet className="dashboardIcon" /> BloodBridge Command Center</h1>
+        <h1><MdBloodtype className="dashboardIcon" /> BloodBridge Command Center</h1>
         <p className="dashboardSubtitle">Real-time metrics, donor tracking, and live emergency network map</p>
       </div>
 
@@ -1698,7 +1699,7 @@ function AdminDashboard() {
             <h3><FiAlertCircle className="dashboardIcon" /> Launch Emergency Broadcast</h3>
             <div className="formSet">
               <div className="bloodGroupHeader">
-                <h4><FiDroplet className="dashboardIcon" /> Select Required Blood Groups</h4>
+                <h4><MdBloodtype className="dashboardIcon" /> Select Required Blood Groups</h4>
                 <p>Choose one or more blood groups to notify donors.</p>
               </div>
               <div className="bloodGroupSelector">
@@ -1707,7 +1708,7 @@ function AdminDashboard() {
                   className={`bloodGroupOption allGroups ${allBloodGroupsSelected ? "selected" : ""}`}
                   onClick={toggleAllBloodGroupsSelection}
                 >
-                  <span className="bloodGroupIcon"><FiDroplet className="dashboardIcon" /></span>
+                  <span className="bloodGroupIcon"><MdBloodtype className="dashboardIcon" /></span>
                   <span className="bloodGroupText">All Blood Groups</span>
                 </button>
                 {BLOOD_GROUPS.map((group) => (
@@ -1718,7 +1719,7 @@ function AdminDashboard() {
                     disabled={allBloodGroupsSelected}
                     onClick={() => toggleBloodGroupSelection(group)}
                   >
-                    <span className="bloodGroupIcon"><FiDroplet className="dashboardIcon" /></span>
+                    <span className="bloodGroupIcon"><MdBloodtype className="dashboardIcon" /></span>
                     <span className="bloodGroupText">{group}</span>
                   </button>
                 ))}
@@ -1751,7 +1752,7 @@ function AdminDashboard() {
                     onClick={() => { setSelectedRequestId(req._id); }}
                     style={buttonMotionStyle}
                   >
-                    <span className="tabBloodDrop"><FiDroplet className="dashboardIcon" /> {formatRequestBloodGroupLabel(req.bloodGroup)}</span>
+                    <span className="tabBloodDrop"><MdBloodtype className="dashboardIcon" /> {formatRequestBloodGroupLabel(req.bloodGroup)}</span>
                     <span className="tabHospitalLabel">{req.hospital}</span>
                   </button>
                 ))}
@@ -2319,7 +2320,7 @@ function AdminDashboard() {
               <div className="historyTimeline professionalTimeline">
                 {selectedDonor.donationHistory?.map((h, i) => (
                   <div key={i} className="timelineNode professionalNode">
-                    <p className="nodeDate">📅 {new Date(h.date).toDateString()} — <FiDroplet className="dashboardIcon" /> {h.units || "N/A"} Units</p>
+                    <p className="nodeDate">📅 {new Date(h.date).toDateString()} — <MdBloodtype className="dashboardIcon" /> {h.units || "N/A"} Units</p>
                     <p className="timelineDesc">🏥 <strong>Location:</strong> {h.hospital}</p>
                   </div>
                 ))}
