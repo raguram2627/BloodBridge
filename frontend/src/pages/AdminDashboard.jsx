@@ -661,7 +661,7 @@ function AdminDashboard() {
           display: grid;
           grid-template-columns: 380px 1fr;
           gap: 35px;
-          align-items: start;
+          align-items: stretch;
         }
 
         .bloodGroupResponseSummary {
@@ -720,21 +720,21 @@ function AdminDashboard() {
           padding-right: 15px;
         }
 
-        .dataStreamPanel::-webkit-scrollbar {
+        .cardsContainer::-webkit-scrollbar {
           width: 8px;
         }
 
-        .dataStreamPanel::-webkit-scrollbar-track {
+        .cardsContainer::-webkit-scrollbar-track {
           background: #fcf8f8;
           border-radius: 10px;
         }
 
-        .dataStreamPanel::-webkit-scrollbar-thumb {
+        .cardsContainer::-webkit-scrollbar-thumb {
           background: #f0d5d9;
           border-radius: 10px;
         }
 
-        .dataStreamPanel::-webkit-scrollbar-thumb:hover {
+        .cardsContainer::-webkit-scrollbar-thumb:hover {
           background: #b00020;
         }
 
