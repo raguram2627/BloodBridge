@@ -140,7 +140,6 @@ const replacements = [
   ['<span className="bloodGroupIcon">🩸</span>', '<span className="bloodGroupIcon"><FaTint /></span>'],
   ['<span className="tabBloodDrop">🩸 ', '<span className="tabBloodDrop"><FaTint style={{ marginRight: "6px" }} /> '],
   ['<div className="adminIcon">🛡️</div>', '<div className="adminIcon"><FiShield /></div>'],
-  ['o ', '<FiXCircle />']
 ];
 
 for (const [search, replace] of replacements) {

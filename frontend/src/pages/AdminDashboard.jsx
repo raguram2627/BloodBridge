@@ -21,7 +21,7 @@ const donorMatchesRequestBloodGroup = (donorBloodGroup, requestBloodGroup) => {
 };
 
 const isDonorUnavailableWithin90Days = (donor) => {
-  const ninetyDaysAg<FiXCircle />= new Date();
+  const ninetyDaysAgo = new Date();
   ninetyDaysAgo.setDate(ninetyDaysAgo.getDate() - 90);
   ninetyDaysAgo.setHours(0, 0, 0, 0);
 
@@ -158,8 +158,8 @@ function AdminDashboard() {
       setStudentCount(data.filter((d) => d.role === "student").length);
       setFacultyCount(data.filter((d) => d.role === "faculty").length);
     } catch {
-      setError("Failed t<FiXCircle />load metrics data");
-      showToast("Critical: Failed t<FiXCircle />communicate with database.", "error");
+      setError("Failed to load metrics data");
+      showToast("Critical: Failed to communicate with database.", "error");
     } finally {
       setLoading(false);
     }
@@ -256,7 +256,7 @@ function AdminDashboard() {
       const userTypeMatch = !selectedUserType || d.role === selectedUserType;
       
       const nameMatch = !searchName || d.name?.toLowerCase().includes(searchName.toLowerCase());
-      const regNoMatch = !searchRegN<FiXCircle />|| d.registerNumber?.toLowerCase().includes(searchRegNo.toLowerCase());
+      const regNoMatch = !searchRegNo || d.registerNumber?.toLowerCase().includes(searchRegNo.toLowerCase());
 
       return bloodMatch && yearMatch && departmentMatch && userTypeMatch && nameMatch && regNoMatch;
     });
@@ -315,7 +315,7 @@ function AdminDashboard() {
 
       const data = await res.json();
       if (!res.ok) {
-        throw new Error(data.message || "Failed t<FiXCircle />create emergency request");
+        throw new Error(data.message || "Failed to create emergency request");
       }
 
       const newReq = data.request || data;
@@ -349,7 +349,7 @@ function AdminDashboard() {
       loadAll();
     } catch (err) {
       console.error(err);
-      showToast("Critical: Failed t<FiXCircle />register emergency dispatch channel.", "error");
+      showToast("Critical: Failed to register emergency dispatch channel.", "error");
     }
   };
 
@@ -357,7 +357,7 @@ function AdminDashboard() {
 
   const handleNotifyDonors = (id) => {
     updateActiveRequest(id, { isNotified: true });
-    showToast("Dispatched active alert broadcasts t<FiXCircle />the matching donor pool!", "success");
+    showToast("Dispatched active alert broadcasts to the matching donor pool!", "success");
   };
 
   const handleRefreshResponses = async () => {
@@ -373,7 +373,7 @@ function AdminDashboard() {
       });
       showToast("Synchronized response metrics successfully.", "success");
     } catch (error) {
-      showToast("Failed t<FiXCircle />refresh response data.", "error");
+      showToast("Failed to refresh response data.", "error");
     }
   };
 
@@ -381,19 +381,19 @@ function AdminDashboard() {
     const requestId = id || selectedRequestId;
 
     if (!requestId) {
-      showToast("N<FiXCircle />active request selected t<FiXCircle />close.", "error");
+      showToast("No active request selected to close.", "error");
       return;
     }
 
     triggerConfirm(
       "Confirm Closing Thread", 
-      "Are you sure you want t<FiXCircle />shut down this emergency dispatch line? Match stats and tracking entries for this blood type will be moved off the operational deck.",
+      "Are you sure you want to shut down this emergency dispatch line? Match stats and tracking entries for this blood type will be moved off the operational deck.",
       async () => {
         try {
           const response = await fetch(`${import.meta.env.VITE_API_URL}/emergency-request/${requestId}/close`, { method: "PATCH" });
           if (!response.ok) {
             const errData = await response.json().catch(() => ({}));
-            throw new Error(errData.message || "Failed t<FiXCircle />close request");
+            throw new Error(errData.message || "Failed to close request");
           }
 
           showToast("Broadcast terminated and archived.", "success");
@@ -406,7 +406,7 @@ function AdminDashboard() {
           setViewMode("all");
           loadAll();
         } catch (error) {
-          showToast(error.message || "Failed t<FiXCircle />gracefully terminate broadcast route.", "error");
+          showToast(error.message || "Failed to gracefully terminate broadcast route.", "error");
         }
       }
     );
@@ -414,7 +414,7 @@ function AdminDashboard() {
 
   const handleCloseAllActiveRequests = () => {
     if (!activeRequests.length) {
-      showToast("There are n<FiXCircle />active requests t<FiXCircle />close.", "error");
+      showToast("There are no active requests to close.", "error");
       return;
     }
 
@@ -426,7 +426,7 @@ function AdminDashboard() {
           const response = await fetch(`${import.meta.env.VITE_API_URL}/emergency-request/close-all`, { method: "PATCH" });
           if (!response.ok) {
             const errData = await response.json().catch(() => ({}));
-            throw new Error(errData.message || "Failed t<FiXCircle />close all active requests");
+            throw new Error(errData.message || "Failed to close all active requests");
           }
           const data = await response.json();
 
@@ -437,7 +437,7 @@ function AdminDashboard() {
           showToast(`${data.count || 0} active requests closed.`, "success");
           loadAll();
         } catch (error) {
-          showToast(error.message || "Failed t<FiXCircle />close all active requests.", "error");
+          showToast(error.message || "Failed to close all active requests.", "error");
         }
       }
     );
@@ -453,7 +453,7 @@ function AdminDashboard() {
     return history.sort((a, b) => new Date(b.date) - new Date(a.date));
   };
 
-  // Maps lightweight triage payloads safely t<FiXCircle />standard registered donor profiles
+  // Maps lightweight triage payloads safely to standard registered donor profiles
   const getDonorProfile = (name, mobile) => {
     const matched = donors.find(d => d.mobile === mobile || d.name?.toLowerCase() === name?.toLowerCase());
     if (matched) return matched;
@@ -498,7 +498,7 @@ function AdminDashboard() {
       setHospital(""); setDonationDate(""); setDonationUnits("");
       loadAll();
     } catch {
-      showToast("Failed t<FiXCircle />complete donation entry.", "error");
+      showToast("Failed to complete donation entry.", "error");
     }
   };
 
@@ -513,7 +513,7 @@ function AdminDashboard() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ hospital, date: donationDate, units: donationUnits }),
       });
-      showToast("External record verified and written t<FiXCircle />Master Logbook.", "success");
+      showToast("External record verified and written to Master Logbook.", "success");
       setShowGlobalLogger(false);
       setManualRegNo(""); setHospital(""); setDonationDate(""); setDonationUnits("");
       loadAll();
@@ -524,7 +524,7 @@ function AdminDashboard() {
 
   return (
     <div className="dashboardContainer">
-      {/* Injected Stylesheet t<FiXCircle />completely eliminate Esbuild resolution errors 
+      {/* Injected Stylesheet to completely eliminate Esbuild resolution errors 
         resulting from standalone stdin bundle processing of local CSS files
       */}
       <style dangerouslySetInnerHTML={{ __html: `
@@ -1085,7 +1085,7 @@ function AdminDashboard() {
           align-items: center !important;
           gap: 12px !important;
           flex-wrap: wrap !important;
-          margin-left: aut<FiXCircle />!important;
+          margin-left: auto !important;
         }
 
         .cardActionBtn {
@@ -1184,7 +1184,7 @@ function AdminDashboard() {
 
         @keyframes slideUp {
           from { transform: translateY(15px); opacity: 0; }
-          t<FiXCircle />{ transform: translateY(0); opacity: 1; }
+          to { transform: translateY(0); opacity: 1; }
         }
 
         .modalWindowHeader {
@@ -1206,7 +1206,7 @@ function AdminDashboard() {
           background: none; border: none; font-size: 18px; color: #aaa; cursor: pointer;
         }
 
-        .modalSubheaderInf<FiXCircle />{
+        .modalSubheaderInfo {
           color: #b00020; font-weight: bold; margin-bottom: 15px; font-size: 14px;
         }
 
@@ -1381,7 +1381,7 @@ function AdminDashboard() {
         .requestTrackTabBar {
           display: flex !important;
           gap: 12px !important;
-          overflow-x: aut<FiXCircle />!important;
+          overflow-x: auto !important;
           padding: 8px 0 16px 0 !important;
           margin-bottom: 25px !important;
           border-bottom: 2px solid #fff0f1 !important;
@@ -1460,7 +1460,7 @@ function AdminDashboard() {
 
         @keyframes slideInToast {
           from { transform: translateX(40px); opacity: 0; }
-          t<FiXCircle />{ transform: translateX(0); opacity: 1; }
+          to { transform: translateX(0); opacity: 1; }
         }
 
         .toastBanner.error {
@@ -1671,7 +1671,7 @@ function AdminDashboard() {
             <div className="formSet">
               <div className="bloodGroupHeader">
                 <h4><FaTint style={{ marginRight: "8px" }} /> Select Required Blood Groups</h4>
-                <p>Choose one or more blood groups t<FiXCircle />notify donors.</p>
+                <p>Choose one or more blood groups to notify donors.</p>
               </div>
               <div className="bloodGroupSelector">
                 <button
@@ -1816,7 +1816,7 @@ function AdminDashboard() {
                                   </div>
                                 </div>
                               ))}
-                              {currentRequest.availableDonors?.length === 0 && <p className="neutralSubText">N<FiXCircle />available matching assets located.</p>}
+                              {currentRequest.availableDonors?.length === 0 && <p className="neutralSubText">No available matching assets located.</p>}
                             </div>
                           </div>
                         </div>
@@ -1856,7 +1856,7 @@ function AdminDashboard() {
                                   </div>
                                 </div>
                               ))}
-                              {currentRequest.unavailableDonorsList?.length === 0 && <p className="neutralSubText">N<FiXCircle />matching locked assets.</p>}
+                              {currentRequest.unavailableDonorsList?.length === 0 && <p className="neutralSubText">No matching locked assets.</p>}
                             </div>
                           </div>
                         </div>
@@ -1966,7 +1966,7 @@ function AdminDashboard() {
                                   </div>
                                 );
                               })}
-                              {(!currentRequest.willingDonors || currentRequest.willingDonors.length === 0) && <p className="neutralSubText">N<FiXCircle />willing responses recorded yet.</p>}
+                              {(!currentRequest.willingDonors || currentRequest.willingDonors.length === 0) && <p className="neutralSubText">No willing responses recorded yet.</p>}
                             </div>
                           </div>
                         )}
@@ -2009,7 +2009,7 @@ function AdminDashboard() {
                                   </div>
                                 );
                               })}
-                              {(!currentRequest.unavailableDonors || currentRequest.unavailableDonors.length === 0) && <p className="neutralSubText">N<FiXCircle />decline responses logged.</p>}
+                              {(!currentRequest.unavailableDonors || currentRequest.unavailableDonors.length === 0) && <p className="neutralSubText">No decline responses logged.</p>}
                             </div>
                           </div>
                         )}
@@ -2120,6 +2120,7 @@ function AdminDashboard() {
               )}
 
               <div className="cardsContainerWrapper">
+            <div className="cardsContainerWrapper">
             {viewMode === "history" ? (
                 <>
                   <div className="panelSectionTitle historySectionTitle">
@@ -2214,12 +2215,16 @@ function AdminDashboard() {
         </div>
       </div>
 
+      </div>
+        </div>
+      </div>
+
       {showGlobalLogger && (
         <div className="modalOverlay" onClick={() => { setShowGlobalLogger(false); setManualRegNo(""); setManualDonorFound(null); }}>
           <div className="modalWindow" onClick={(e) => e.stopPropagation()}>
             <div className="modalWindowHeader">
               <h2>Log External Donation Record</h2>
-              <button className="modalCloseCorner" onClick={() => { setShowGlobalLogger(false); setManualRegNo(""); setManualDonorFound(null); }}><FiXCircle /></button>
+              <button className="modalCloseCorner" onClick={() => { setShowGlobalLogger(false); setManualRegNo(""); setManualDonorFound(null); }}>o </button>
             </div>
             <div className="modalWindowContent">
               <div className="formGroupInline" style={{ marginBottom: "20px" }}>
@@ -2227,7 +2232,7 @@ function AdminDashboard() {
                 <input type="text" placeholder="e.g. 312224104001" value={manualRegNo} onChange={(e) => setManualRegNo(e.target.value)} className="dashboardInput textInputBold" />
                 {manualRegNo.trim() && (
                   <div className={`realtimeVerifyFeedback ${manualDonorFound ? "matched" : "failed"}`}>
-                    {manualDonorFound ? <><FiCheckCircle style={{ marginRight: "6px" }} /> Found Asset: {manualDonorFound.name} ({manualDonorFound.bloodGroup})</> : <><FiXCircle style={{ marginRight: "6px" }} /> N<FiXCircle />identity found matching this input</>}
+                    {manualDonorFound ? <><FiCheckCircle style={{ marginRight: "6px" }} /> Found Asset: {manualDonorFound.name} ({manualDonorFound.bloodGroup})</> : <><FiXCircle style={{ marginRight: "6px" }} /> No identity found matching this input</>}
                   </div>
                 )}
               </div>
@@ -2252,7 +2257,7 @@ function AdminDashboard() {
           <div className="modalWindow detailsModal" onClick={(e) => e.stopPropagation()}>
             <div className="modalWindowHeader">
               <h2>Full Record Profile</h2>
-              <button className="modalCloseCorner" onClick={() => setDetailsDonor(null)}><FiXCircle /></button>
+              <button className="modalCloseCorner" onClick={() => setDetailsDonor(null)}>o </button>
             </div>
             <div className="modalWindowContent">
               <div className="fullDetailsList">
@@ -2289,7 +2294,7 @@ function AdminDashboard() {
       {selectedDonor && (
         <div className="modalOverlay" onClick={() => setSelectedDonor(null)}>
           <div className="modalWindow" onClick={(e) => e.stopPropagation()}>
-            <div className="modalWindowHeader"><h2>Donation History Logs</h2><button className="modalCloseCorner" onClick={() => setSelectedDonor(null)}><FiXCircle /></button></div>
+            <div className="modalWindowHeader"><h2>Donation History Logs</h2><button className="modalCloseCorner" onClick={() => setSelectedDonor(null)}>o </button></div>
             <div className="modalWindowContent">
               <h3>{selectedDonor.name}</h3>
               <p className="modalSubheaderInfo">Blood Type: {selectedDonor.bloodGroup}</p>
@@ -2312,7 +2317,7 @@ function AdminDashboard() {
           <div className="modalWindow" onClick={(e) => e.stopPropagation()}>
             <div className="modalWindowHeader">
               <h2>Record New Donation Event</h2>
-              <button className="modalCloseCorner" onClick={() => setDonationDonor(null)}><FiXCircle /></button>
+              <button className="modalCloseCorner" onClick={() => setDonationDonor(null)}>o </button>
             </div>
             <div className="modalWindowContent">
               <p className="donationTargetTitle">Logging details for: <strong>{donationDonor.name}</strong></p>
