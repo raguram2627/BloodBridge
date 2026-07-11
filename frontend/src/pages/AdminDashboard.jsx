@@ -1863,6 +1863,18 @@ function AdminDashboard() {
           <span className="tileIcon">👨‍🏫</span>
           <div className="tileData"><h3>{facultyCount}</h3><p>Faculty & Staff</p></div>
         </div>
+        
+        <div 
+          className="metricTile critical clickableTrackBtn dynamicClickEffect"
+          onClick={() => navigate('/emergency-dashboard')}
+          style={{ cursor: "pointer", ...buttonMotionStyle }}
+        >
+          <span className="tileIcon">🚨</span>
+          <div className="tileData">
+            <h3>{activeRequests.length}</h3>
+            <p>{activeRequests.length === 1 ? "Active Live Request" : "Active Live Requests"}</p>
+          </div>
+        </div>
       </div>
 
       <div className="dashboardLayout">
