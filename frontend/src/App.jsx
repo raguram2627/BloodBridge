@@ -11,6 +11,7 @@ import RegisterPage from "./pages/RegisterPage";
 import FacultyRegisterPage from "./pages/FacultyRegisterPage";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
+import EmergencyDashboard from "./pages/EmergencyDashboard";
 import EmergencyRequestPage from "./pages/EmergencyRequestPage";
 import MyProfilePage from "./pages/MyProfilePage";
 
@@ -24,6 +25,7 @@ function App() {
         <Route path="/register-faculty" element={<FacultyRegisterPage />} />
         <Route path="/admin-login" element={<AdminLogin />} />
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
+        <Route path="/emergency-dashboard" element={<EmergencyDashboard />} />
         <Route path="/profile" element={<MyProfilePage />} />
         <Route path="/request/:id" element={<EmergencyRequestPage />} />
       </Routes>

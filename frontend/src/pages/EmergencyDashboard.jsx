@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 
 const BLOOD_GROUPS = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
 
@@ -72,8 +71,7 @@ const groupResponseCounts = (responses = []) => {
   }, {});
 };
 
-function AdminDashboard() {
-  const navigate = useNavigate();
+function EmergencyDashboard() {
   const [donors, setDonors] = useState([]);
   const [results, setResults] = useState([]);
 
@@ -84,7 +82,7 @@ function AdminDashboard() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const [viewMode, setViewMode] = useState("all"); 
+  const [viewMode, setViewMode] = useState("emergency_console");
 
   const [selectedDonor, setSelectedDonor] = useState(null);
   const [detailsDonor, setDetailsDonor] = useState(null);
@@ -1833,18 +1831,9 @@ function AdminDashboard() {
         }
       `}} />
 
-      <div className="dashboardHeader" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '15px' }}>
-        <div>
-          <h1>🩸 BloodBridge Command Center</h1>
-          <p className="dashboardSubtitle">Real-time metrics, donor tracking, and live emergency network map</p>
-        </div>
-        <button 
-          className="actionTriggerBtn emergency dynamicClickEffect" 
-          style={{ width: 'auto', padding: '12px 24px', margin: 0 }}
-          onClick={() => navigate('/emergency-dashboard')}
-        >
-          + Create Emergency Request
-        </button>
+      <div className="dashboardHeader">
+        <h1>🚨 Emergency Response Console</h1>
+        <p className="dashboardSubtitle">Live triage, real-time donor tracking, and emergency network dispatch</p>
       </div>
 
       {loading && <div className="loadingAlert"><span className="spinner">🔄</span> Updating database records...</div>}
@@ -1866,142 +1855,423 @@ function AdminDashboard() {
 
       <div className="dashboardLayout">
         <div className="controlPanel">
-          <div className="controlBlock">
-            <h3>Navigation & Filters</h3>
-            <div className="actionButtonGroup">
-              <button className={`panelBtn ${viewMode === "all" ? "active" : ""}`} onClick={() => setViewMode("all")}>📋 View All Donors</button>
-              <button className={`panelBtn ${viewMode === "student" ? "active" : ""}`} onClick={() => setViewMode("student")}>🎓 Filter Students</button>
-              <button className={`panelBtn ${viewMode === "faculty" ? "active" : ""}`} onClick={() => setViewMode("faculty")}>👨‍🏫 Filter Faculty</button>
-              <button className={`panelBtn ${viewMode === "frequent" ? "active" : ""}`} onClick={() => setViewMode("frequent")}>🏆 Frequent Donors</button>
-              <button className={`panelBtn ${viewMode === "history" ? "active" : ""}`} onClick={() => setViewMode("history")}>📜 Donation History Log</button>
+
+          <div className="controlBlock emergencySection">
+            <h3>🚨 Launch Emergency Broadcast</h3>
+            <div className="formSet">
+              <div className="bloodGroupHeader">
+                <h4>🩸 Select Required Blood Groups</h4>
+                <p>Choose one or more blood groups to notify donors.</p>
+              </div>
+              <div className="bloodGroupSelector">
+                <button
+                  type="button"
+                  className={`bloodGroupOption allGroups ${allBloodGroupsSelected ? "selected" : ""}`}
+                  onClick={toggleAllBloodGroupsSelection}
+                >
+                  <span className="bloodGroupIcon">🩸</span>
+                  <span className="bloodGroupText">All Blood Groups</span>
+                </button>
+                {BLOOD_GROUPS.map((group) => (
+                  <button
+                    key={group}
+                    type="button"
+                    className={`bloodGroupOption ${!allBloodGroupsSelected && requestBloodGroups.includes(group) ? "selected" : ""}`}
+                    disabled={allBloodGroupsSelected}
+                    onClick={() => toggleBloodGroupSelection(group)}
+                  >
+                    <span className="bloodGroupIcon">🩸</span>
+                    <span className="bloodGroupText">{group}</span>
+                  </button>
+                ))}
+              </div>
+              <input placeholder="Hospital Name" value={requestHospital} onChange={(e) => setRequestHospital(e.target.value)} className="dashboardInput" />
+              <input placeholder="Units Needed" value={requestUnits} onChange={(e) => setRequestUnits(e.target.value)} className="dashboardInput" />
+              <input placeholder="Admin Mobile Number" value={requestPhone} onChange={(e) => setRequestPhone(e.target.value)} className="dashboardInput" />
+
+              <button className="actionTriggerBtn emergency" onClick={createEmergencyRequest}>
+                Create Request
+              </button>
             </div>
+          </div>
         </div>
 
         <div className="dataStreamPanel">
-            <>
-              {viewMode !== "history" && (
-                <div className="horizontalSearchBlock">
-                  <div className="searchFilterRow">
-                    <select value={selectedBloodGroup} onChange={(e) => setSelectedBloodGroup(e.target.value)} className="dashboardInput textInputBold">
-                      <option value="">All Blood Groups</option>
-                      <option value="A+">A+</option><option value="A-">A-</option>
-                      <option value="B+">B+</option><option value="B-">B-</option>
-                      <option value="AB+">AB+</option><option value="AB-">AB-</option>
-                      <option value="O+">O+</option><option value="O-">O-</option>
-                    </select>
-                    <select value={selectedYear} onChange={(e) => setSelectedYear(e.target.value)} className="dashboardInput textInputBold">
-                      <option value="">All Years</option>
-                      <option value="I">I Year</option><option value="II">II Year</option>
-                      <option value="III">III Year</option><option value="IV">IV Year</option>
-                    </select>
-                    <select value={selectedDepartment} onChange={(e) => setSelectedDepartment(e.target.value)} className="dashboardInput textInputBold">
-                      <option value="">All Departments</option>
-                      <option value="CSE">CSE</option><option value="IT">IT</option>
-                      <option value="ECE">ECE</option><option value="EEE">EEE</option>
-                      <option value="MECH">MECH</option><option value="CIVIL">CIVIL</option>
-                    </select>
-                    <select value={selectedUserType} onChange={(e) => setSelectedUserType(e.target.value)} className="dashboardInput textInputBold">
-                      <option value="">All Roles</option>
-                      <option value="student">Student</option>
-                      <option value="faculty">Faculty</option>
-                    </select>
-                  </div>
+            <div className="emergencyConsoleWorkspace">
+              <div className="panelSectionTitle">
+                <h2>🚨 Concurrent Emergency Operations</h2>
+                <p>Track multiple active broadcast streams contextually without closing or locking background operations.</p>
+              </div>
 
-                  <div className="searchFilterRow doubleGrid">
-                    <input type="text" placeholder="🔍 Search by Name..." value={searchName} onChange={(e) => setSearchName(e.target.value)} className="dashboardInput textInputBold" />
-                    <input type="text" placeholder="🆔 Search by Register Number..." value={searchRegNo} onChange={(e) => setSearchRegNo(e.target.value)} className="dashboardInput textInputBold" />
-                  </div>
-                </div>
-              )}
+              {/* Multi-Request selector bar tabs */}
+              <div className="requestTrackTabBar">
+                {activeRequests.map((req) => (
+                  <button 
+                    key={req._id} 
+                    className={`trackTabItem dynamicClickEffect ${selectedRequestId === req._id ? "activeTrack" : ""}`}
+                    onClick={() => { setSelectedRequestId(req._id); }}
+                    style={buttonMotionStyle}
+                  >
+                    <span className="tabBloodDrop">🩸 {formatRequestBloodGroupLabel(req.bloodGroup)}</span>
+                    <span className="tabHospitalLabel">{req.hospital}</span>
+                  </button>
+                ))}
+              </div>
 
-              {viewMode === "history" ? (
-                <>
-                  <div className="panelSectionTitle historySectionTitle">
-                    <div>
-                      <h2>📜 Master Donation History Logbook</h2>
-                      <p>Complete historical listing of all blood donations recorded</p>
-                    </div>
-                    <button className="globalLogDonationBtn dynamicClickEffect" onClick={() => setShowGlobalLogger(true)}>
-                      ➕ Log Manual Donation
-                    </button>
-                  </div>
-                  
-                  <div className="cardsContainer">
-                    {getHistory().map((h, index) => (
-                      <div key={index} className="dataCard logCard">
-                        <div className="logCardHeader">
-                          <span className="logBadge" style={{ background: "#fff0f1", color: "#b00020", padding: "4px 8px", borderRadius: "6px", fontWeight: "700" }}>RECORD LOGGED</span>
-                          <p className="logDate">📅 {new Date(h.date).toDateString()}</p>
-                        </div>
-                        <div style={{ display: "flex", flexDirection: "column", gap: "8px", margin: "12px 0" }}>
-                          <p className="logDonor" style={{ margin: 0 }}>👤 <span style={{ color: "#666" }}>Donor Asset:</span> <strong>{h.donor.name}</strong></p>
-                          <p className="logHospital" style={{ margin: 0 }}>🏥 <span style={{ color: "#666" }}>Hospital:</span> <strong>{h.hospital}</strong></p>
-                          <p style={{ margin: 0, fontSize: "15px" }}>💧 <span style={{ color: "#666" }}>Volume Contributed:</span> <strong style={{ color: "#b00020" }}>{h.units} Units</strong></p>
-                        </div>
-                        <button className="cardActionBtn" onClick={() => setDetailsDonor(h.donor)}>Full Details</button>
-                      </div>
-                    ))}
-                  </div>
-                </>
-              ) : (
-                <>
-                  <div className="panelSectionTitle">
-                    <h2>{viewMode === "frequent" ? "🏆 Frequent Donors" : "📋 Registered Donors List"}</h2>
-                    {viewMode === "frequent" && (
-                      <p className="resultsCounter">Ranked by total donations — highest first</p>
-                    )}
-                  </div>
-
-                  <div className="resultsScrollArea">
-                    <div className="cardsContainer">
-                      {results.map((d, index) => {
-                        const donationCount = d.donationCount ?? d.donationHistory?.length ?? 0;
-
-                        return (
-                        <div key={d._id} className="dataCard donorCard">
-                          <div className="donorCardTop">
-                            <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
-                              {viewMode === "frequent" && index < 3 && (
-                                <span className="frequentDonorMedal" title={`Rank #${index + 1}`}>{MEDAL_EMOJIS[index]}</span>
-                              )}
-                              <h3 style={{ margin: 0, fontWeight: "700" }}>{d.name}</h3>
-                              <span className="roleTag">{d.role}</span>
-                              <span className="bloodTypeBadge">{d.bloodGroup}</span>
-                            </div>
+              {currentRequest ? (
+                <div className="activeTrackContentArea">
+                  {!currentRequest.showLiveTriage ? (
+                    <>
+                      <div className="consoleActionHeader" style={{ marginBottom: "20px", padding: "15px", background: "#fdf2f2", borderRadius: "12px" }}>
+                        <div style={{ display: "flex", gap: "15px", alignItems: "center", flexWrap: "wrap" }}>
+                          <div style={{ flex: 1 }}>
+                            <label className="modalInputLabel" style={{ marginBottom: "4px" }}>Broadcast Public Response Link:</label>
+                            <input value={currentRequest.link} readOnly className="dashboardInput" onClick={(e) => e.target.select()} style={{ background: "#fff", border: "1px solid #ecc" }} />
                           </div>
+                          
+                          <div style={{ display: "flex", gap: "10px", alignSelf: "flex-end" }}>
+                            <button 
+                              className="actionTriggerBtn emergency dynamicClickEffect"
+                              style={{ width: "auto", padding: "12px 20px" }}
+                              onClick={() => handleNotifyDonors(currentRequest._id)}
+                            >
+                              📢 Notify Donors
+                            </button>
 
-                          <div className="donorCardDetailsGrid alignedDetailsGrid">
-                            {viewMode === "frequent" && (
-                              <div className="detailsGridRow totalDonationRow">
-                                <span className="detailsGridLabel">Total Donation:</span>
-                                <span className="detailsGridValue donationCountGold">{donationCount}</span>
-                              </div>
+                            {currentRequest.isNotified && (
+                              <button 
+                                className="secondaryActionBtn dynamicClickEffect" 
+                                style={{ ...buttonMotionStyle, width: "auto", margin: 0, padding: "12px 20px" }} 
+                                onClick={() => {
+                                  updateActiveRequest(currentRequest._id, { showLiveTriage: true });
+                                  handleRefreshResponses();
+                                }}
+                              >
+                                Track Live Responses →
+                              </button>
                             )}
-                            <div className="detailsGridRow"><span className="detailsGridLabel">Department:</span> <span className="detailsGridValue">{d.department}</span></div>
-                            <div className="detailsGridRow"><span className="detailsGridLabel">Year Level:</span> <span className="detailsGridValue">{d.year || "N/A"}</span></div>
-                            <div className="detailsGridRow"><span className="detailsGridLabel">Mobile Terminal:</span> <span className="detailsGridValue">{d.mobile}</span></div>
-                            <div className="detailsGridRow"><span className="detailsGridLabel">Register Number:</span> <span className="detailsGridValue">{d.registerNumber || "N/A"}</span></div>
                           </div>
+                        </div>
+                      </div>
 
-                          <div className="cardActionRow">
-                            <div className="actionBtnLeftGroup">
-                              <button className="cardActionBtn" onClick={() => setDetailsDonor(d)}>📊 Details</button>
-                              <a href={`tel:${d.mobile}`} className="commsLink"><button className="cardActionBtn">📞 Call</button></a>
-                              <a href={`https://wa.me/91${d.mobile}`} target="_blank" rel="noreferrer" className="commsLink"><button className="cardActionBtn">📱 WhatsApp</button></a>
-                            </div>
-                            <div className="actionBtnRightGroup">
-                              <button className="cardActionBtn actionBtnHistory" onClick={() => setSelectedDonor(d)}>📜 History</button>
-                              <button className="cardActionBtn actionBtnRecord" onClick={() => setDonationDonor(d)}>➕ Log Donation</button>
+                      <div className="availabilityHeaderBar premiumHeader">
+                        <button
+                          className={`sectionToggleBtn ${availabilityView === "available" ? "active" : ""}`}
+                          onClick={() => setAvailabilityView("available")}
+                        >
+                          Available ({currentRequest.availableDonors?.length || 0})
+                        </button>
+                        <button
+                          className={`sectionToggleBtn ${availabilityView === "unavailable" ? "active" : ""}`}
+                          onClick={() => setAvailabilityView("unavailable")}
+                        >
+                          Unavailable ({currentRequest.unavailableDonorsList?.length || 0})
+                        </button>
+                      </div>
+
+                      {availabilityView === "available" ? (
+                        <div className="eligibilityVerticalStack">
+                          <div className="availableColumn">
+                            <h3 style={{ borderBottom: "3px solid green", paddingBottom: "8px", marginBottom: "15px", color: "green" }}>
+                              Available Donors ({currentRequest.availableDonors?.length || 0})
+                            </h3>
+                            <div className="cardsContainer">
+                              {currentRequest.availableDonors?.map(d => (
+                                <div key={d._id} className="dataCard donorCard">
+                                  <div className="donorCardTop">
+                                    <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
+                                      <h3 style={{ margin: 0, fontWeight: "700" }}>{d.name}</h3>
+                                      <span className="roleTag">{d.role}</span>
+                                      <span className="bloodTypeBadge">{d.bloodGroup}</span>
+                                    </div>
+                                  </div>
+
+                                  <div className="donorCardDetailsGrid alignedDetailsGrid">
+                                    <div className="detailsGridRow"><span className="detailsGridLabel">Department:</span> <span className="detailsGridValue">{d.department}</span></div>
+                                    <div className="detailsGridRow"><span className="detailsGridLabel">Year Level:</span> <span className="detailsGridValue">{d.year || "N/A"}</span></div>
+                                    <div className="detailsGridRow"><span className="detailsGridLabel">Mobile Terminal:</span> <span className="detailsGridValue">{d.mobile}</span></div>
+                                    <div className="detailsGridRow"><span className="detailsGridLabel">Register Number:</span> <span className="detailsGridValue">{d.registerNumber || "N/A"}</span></div>
+                                  </div>
+
+                                  <div className="cardActionRow">
+                                    <div className="actionBtnLeftGroup">
+                                      <button className="cardActionBtn" onClick={() => setDetailsDonor(d)}>📊 Details</button>
+                                      <a href={`tel:${d.mobile}`} className="commsLink"><button className="cardActionBtn">📞 Call</button></a>
+                                      <a href={`https://wa.me/91${d.mobile}`} target="_blank" rel="noreferrer" className="commsLink"><button className="cardActionBtn">📱 WhatsApp</button></a>
+                                    </div>
+                                    <div className="actionBtnRightGroup">
+                                      <button className="cardActionBtn actionBtnHistory" onClick={() => setSelectedDonor(d)}>📜 History</button>
+                                    </div>
+                                  </div>
+                                </div>
+                              ))}
+                              {currentRequest.availableDonors?.length === 0 && <p className="neutralSubText">No available matching assets located.</p>}
                             </div>
                           </div>
                         </div>
-                      );
-                      })}
+                      ) : (
+                        <div className="eligibilityVerticalStack">
+                          <div className="unavailableColumn">
+                            <h3 style={{ borderBottom: "3px solid #b00020", paddingBottom: "8px", marginBottom: "15px", color: "#b00020" }}>
+                              Unavailable Donors ({currentRequest.unavailableDonorsList?.length || 0})
+                            </h3>
+                            <div className="cardsContainer">
+                              {currentRequest.unavailableDonorsList?.map(d => (
+                                <div key={d._id} className="dataCard donorCard" style={{ opacity: 0.85 }}>
+                                  <div className="donorCardTop">
+                                    <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
+                                      <h3 style={{ margin: 0, fontWeight: "700" }}>{d.name}</h3>
+                                      <span className="roleTag">{d.role}</span>
+                                      <span className="bloodTypeBadge">{d.bloodGroup}</span>
+                                    </div>
+                                  </div>
+
+                                  <div className="donorCardDetailsGrid alignedDetailsGrid">
+                                    <div className="detailsGridRow"><span className="detailsGridLabel">Department:</span> <span className="detailsGridValue">{d.department}</span></div>
+                                    <div className="detailsGridRow"><span className="detailsGridLabel">Year Level:</span> <span className="detailsGridValue">{d.year || "N/A"}</span></div>
+                                    <div className="detailsGridRow"><span className="detailsGridLabel">Mobile Terminal:</span> <span className="detailsGridValue">{d.mobile}</span></div>
+                                    <div className="detailsGridRow"><span className="detailsGridLabel">Register Number:</span> <span className="detailsGridValue">{d.registerNumber || "N/A"}</span></div>
+                                  </div>
+
+                                  <div className="cardActionRow">
+                                    <div className="actionBtnLeftGroup">
+                                      <button className="cardActionBtn" onClick={() => setDetailsDonor(d)}>📊 Details</button>
+                                      <a href={`tel:${d.mobile}`} className="commsLink"><button className="cardActionBtn">📞 Call</button></a>
+                                      <a href={`https://wa.me/91${d.mobile}`} target="_blank" rel="noreferrer" className="commsLink"><button className="cardActionBtn">📱 WhatsApp</button></a>
+                                    </div>
+                                    <div className="actionBtnRightGroup">
+                                      <button className="cardActionBtn actionBtnHistory" onClick={() => setSelectedDonor(d)}>📜 History</button>
+                                    </div>
+                                  </div>
+                                </div>
+                              ))}
+                              {currentRequest.unavailableDonorsList?.length === 0 && <p className="neutralSubText">No matching locked assets.</p>}
+                            </div>
+                          </div>
+                        </div>
+                      )}
+
+                      <div style={{ display: "flex", flexWrap: "wrap", gap: "12px", marginTop: "30px" }}>
+                        <button
+                          className="closeBroadcastBtn dynamicClickEffect"
+                          style={{ ...buttonMotionStyle, background: "#b00020", marginTop: 0 }}
+                          onClick={() => handleCloseBroadcastChannel(currentRequest._id)}
+                        >
+                          🔒 Close Request Thread
+                        </button>
+                        <button
+                          className="closeBroadcastBtn dynamicClickEffect"
+                          style={{ ...buttonMotionStyle, background: "#7b1fa2", marginTop: 0 }}
+                          onClick={handleCloseAllActiveRequests}
+                        >
+                          🧹 Close All Active Requests
+                        </button>
+                      </div>
+                    </>
+                  ) : (
+                    <div className="liveTriageTrackingView">
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px", flexWrap: "wrap", gap: "10px" }}>
+                        <h3>📊 Triage Tracker: Request Group [{formatRequestBloodGroupLabel(currentRequest.bloodGroup)}]</h3>
+                        <div style={{ display: "flex", gap: "10px" }}>
+                          <button className="panelBtn dynamicClickEffect" style={{ ...buttonMotionStyle, background: "#0056b3", color: "#fff", width: "auto" }} onClick={handleRefreshResponses}>🔄 Refresh</button>
+                          <button className="panelBtn dynamicClickEffect" style={{ ...buttonMotionStyle, width: "auto" }} onClick={() => updateActiveRequest(currentRequest._id, { showLiveTriage: false })}>← Back</button>
+                        </div>
+                      </div>
+
+                      <div className="bloodGroupResponseSummary">
+                        {(() => {
+                          const willingCounts = groupResponseCounts(currentRequest.willingDonors || []);
+                          const unavailableCounts = groupResponseCounts(currentRequest.unavailableDonors || []);
+                          return parseBloodGroupList(currentRequest.bloodGroup).map((group) => (
+                            <div key={group} className="responseGroupBadge">
+                              <span className="groupLabel">{group}</span>
+                              <div className="groupStats">
+                                <span className="statItem willingCount">✅ {willingCounts[group] || 0}</span>
+                                <span className="statItem unavailableCount">❌ {unavailableCounts[group] || 0}</span>
+                              </div>
+                            </div>
+                          ));
+                        })()}
+                      </div>
+
+                      <div className="responseHeaderBar">
+                        <button
+                          className={`sectionToggleBtn ${responseView === "willing" ? "active" : ""}`}
+                          onClick={() => setResponseView("willing")}
+                        >
+                          ✅ Willing ({currentRequest.willingDonors?.length || 0})
+                        </button>
+                        <button
+                          className={`sectionToggleBtn ${responseView === "declined" ? "active" : ""}`}
+                          onClick={() => setResponseView("declined")}
+                        >
+                          ❌ Declined ({currentRequest.unavailableDonors?.length || 0})
+                        </button>
+                        <button
+                          className={`sectionToggleBtn ${responseView === "pending" ? "active" : ""}`}
+                          onClick={() => setResponseView("pending")}
+                        >
+                          ⏳ Pending Contact ({Math.max(0, (currentRequest.availableDonors?.length || 0) - (currentRequest.willingDonors?.length || 0) - (currentRequest.unavailableDonors?.length || 0))})
+                        </button>
+                      </div>
+
+                      {/* One by One layout for responses sequentially: Willing -> Declined -> Pending */}
+                      <div className="triageVerticalStack" style={{ display: "flex", flexDirection: "column", gap: "30px" }}>
+                        {responseView === "willing" && (
+                          <div className="triageSection">
+                            <h4 style={{ color: "green", borderBottom: "2px solid green", paddingBottom: "6px", marginBottom: "15px" }}>
+                              ✅ Willing ({currentRequest.willingDonors?.length || 0})
+                            </h4>
+                            <div className="cardsContainer">
+                              {currentRequest.willingDonors?.map((w, i) => {
+                                const d = getDonorProfile(w.donorName, w.mobile);
+                                return (
+                                  <div key={i} className="dataCard donorCard">
+                                    <div className="donorCardTop">
+                                      <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
+                                        <h3 style={{ margin: 0, fontWeight: "700" }}>{d.name}</h3>
+                                        <span className="roleTag">{d.role}</span>
+                                        <span className="bloodTypeBadge">{d.bloodGroup}</span>
+                                      </div>
+                                    </div>
+
+                                    <div className="donorCardDetailsGrid alignedDetailsGrid">
+                                      <div className="detailsGridRow"><span className="detailsGridLabel">Department:</span> <span className="detailsGridValue">{d.department}</span></div>
+                                      <div className="detailsGridRow"><span className="detailsGridLabel">Year Level:</span> <span className="detailsGridValue">{d.year || "N/A"}</span></div>
+                                      <div className="detailsGridRow"><span className="detailsGridLabel">Mobile Terminal:</span> <span className="detailsGridValue">{d.mobile}</span></div>
+                                      <div className="detailsGridRow"><span className="detailsGridLabel">Register Number:</span> <span className="detailsGridValue">{d.registerNumber || "N/A"}</span></div>
+                                    </div>
+
+                                    <div className="cardActionRow">
+                                      <div className="actionBtnLeftGroup">
+                                        <button className="cardActionBtn" onClick={() => setDetailsDonor(d)}>📊 Details</button>
+                                        <a href={`tel:${d.mobile}`} className="commsLink"><button className="cardActionBtn">📞 Call</button></a>
+                                        <a href={`https://wa.me/91${d.mobile}`} target="_blank" rel="noreferrer" className="commsLink"><button className="cardActionBtn">📱 WhatsApp</button></a>
+                                      </div>
+                                      <div className="actionBtnRightGroup">
+                                        <button className="cardActionBtn actionBtnRecord" onClick={() => setDonationDonor(d)}>➕ Log Donation</button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                );
+                              })}
+                              {(!currentRequest.willingDonors || currentRequest.willingDonors.length === 0) && <p className="neutralSubText">No willing responses recorded yet.</p>}
+                            </div>
+                          </div>
+                        )}
+
+                        {responseView === "declined" && (
+                          <div className="triageSection">
+                            <h4 style={{ color: "#b00020", borderBottom: "2px solid #b00020", paddingBottom: "6px", marginBottom: "15px" }}>
+                              ❌ Declined ({currentRequest.unavailableDonors?.length || 0})
+                            </h4>
+                            <div className="cardsContainer">
+                              {currentRequest.unavailableDonors?.map((un, i) => {
+                                const d = getDonorProfile(un.donorName, un.mobile);
+                                return (
+                                  <div key={i} className="dataCard donorCard" style={{ opacity: 0.85 }}>
+                                    <div className="donorCardTop">
+                                      <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
+                                        <h3 style={{ margin: 0, fontWeight: "700" }}>{d.name}</h3>
+                                        <span className="roleTag">{d.role}</span>
+                                        <span className="bloodTypeBadge">{d.bloodGroup}</span>
+                                      </div>
+                                    </div>
+
+                                    <div className="donorCardDetailsGrid alignedDetailsGrid">
+                                      <div className="detailsGridRow"><span className="detailsGridLabel">Department:</span> <span className="detailsGridValue">{d.department}</span></div>
+                                      <div className="detailsGridRow"><span className="detailsGridLabel">Year Level:</span> <span className="detailsGridValue">{d.year || "N/A"}</span></div>
+                                      <div className="detailsGridRow"><span className="detailsGridLabel">Mobile Terminal:</span> <span className="detailsGridValue">{d.mobile}</span></div>
+                                      <div className="detailsGridRow"><span className="detailsGridLabel">Register Number:</span> <span className="detailsGridValue">{d.registerNumber || "N/A"}</span></div>
+                                    </div>
+
+                                    <div className="cardActionRow">
+                                      <div className="actionBtnLeftGroup">
+                                        <button className="cardActionBtn" onClick={() => setDetailsDonor(d)}>📊 Details</button>
+                                        <a href={`tel:${d.mobile}`} className="commsLink"><button className="cardActionBtn">📞 Call</button></a>
+                                        <a href={`https://wa.me/91${d.mobile}`} target="_blank" rel="noreferrer" className="commsLink"><button className="cardActionBtn">📱 WhatsApp</button></a>
+                                      </div>
+                                      <div className="actionBtnRightGroup">
+                                        <button className="cardActionBtn actionBtnHistory" onClick={() => setSelectedDonor(un)}>📜 History</button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                );
+                              })}
+                              {(!currentRequest.unavailableDonors || currentRequest.unavailableDonors.length === 0) && <p className="neutralSubText">No decline responses logged.</p>}
+                            </div>
+                          </div>
+                        )}
+
+                        {responseView === "pending" && (
+                          <div className="triageSection">
+                            <h4 style={{ color: "#666", borderBottom: "2px solid #666", paddingBottom: "6px", marginBottom: "15px" }}>
+                              ⏳ Pending Contact ({
+                                Math.max(0, (currentRequest.availableDonors?.length || 0) - (currentRequest.willingDonors?.length || 0) - (currentRequest.unavailableDonors?.length || 0))
+                              })
+                            </h4>
+                            <div className="cardsContainer">
+                              {currentRequest.availableDonors
+                                ?.filter(d => !currentRequest.willingDonors?.some(w => w.mobile === d.mobile) && !currentRequest.unavailableDonors?.some(un => un.mobile === d.mobile))
+                                .map(d => (
+                                  <div key={d._id} className="dataCard donorCard" style={{ opacity: 0.75 }}>
+                                    <div className="donorCardTop">
+                                      <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
+                                        <h3 style={{ margin: 0, fontWeight: "700" }}>{d.name}</h3>
+                                        <span className="roleTag">{d.role}</span>
+                                        <span className="bloodTypeBadge">{d.bloodGroup}</span>
+                                      </div>
+                                    </div>
+
+                                    <div className="donorCardDetailsGrid alignedDetailsGrid">
+                                      <div className="detailsGridRow"><span className="detailsGridLabel">Department:</span> <span className="detailsGridValue">{d.department}</span></div>
+                                      <div className="detailsGridRow"><span className="detailsGridLabel">Year Level:</span> <span className="detailsGridValue">{d.year || "N/A"}</span></div>
+                                      <div className="detailsGridRow"><span className="detailsGridLabel">Mobile Terminal:</span> <span className="detailsGridValue">{d.mobile}</span></div>
+                                      <div className="detailsGridRow"><span className="detailsGridLabel">Register Number:</span> <span className="detailsGridValue">{d.registerNumber || "N/A"}</span></div>
+                                    </div>
+
+                                    <div className="cardActionRow">
+                                      <div className="actionBtnLeftGroup">
+                                        <button className="cardActionBtn" onClick={() => setDetailsDonor(d)}>📊 Details</button>
+                                        <a href={`tel:${d.mobile}`} className="commsLink"><button className="cardActionBtn">📞 Call</button></a>
+                                        <a href={`https://wa.me/91${d.mobile}`} target="_blank" rel="noreferrer" className="commsLink"><button className="cardActionBtn">📱 WhatsApp</button></a>
+                                      </div>
+                                      <div className="actionBtnRightGroup">
+                                        <button className="cardActionBtn actionBtnHistory" onClick={() => setSelectedDonor(d)}>📜 History</button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                ))
+                              }
+                            </div>
+                          </div>
+                        )}
+                      </div>
+
+                      <div style={{ display: "flex", flexWrap: "wrap", gap: "12px", marginTop: "40px" }}>
+                        <button
+                          className="closeBroadcastBtn dynamicClickEffect"
+                          style={{ ...buttonMotionStyle, background: "#b00020" }}
+                          onClick={() => handleCloseBroadcastChannel(currentRequest._id)}
+                        >
+                          🔒 Close Request Thread
+                        </button>
+                        <button
+                          className="closeBroadcastBtn dynamicClickEffect"
+                          style={{ ...buttonMotionStyle, background: "#7b1fa2" }}
+                          onClick={handleCloseAllActiveRequests}
+                        >
+                          🧹 Close All Active Requests
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                </>
+                  )}
+                </div>
+              ) : (
+                <div className="emptyState" style={{ padding: "40px", textAlign: "center" }}>All concurrent operational tasks are complete.</div>
               )}
-            </>
+            </div>
+            </div>
         </div>
       </div>
 
@@ -2149,4 +2419,4 @@ function AdminDashboard() {
   );
 }
 
-export default AdminDashboard;
+export default EmergencyDashboard;
