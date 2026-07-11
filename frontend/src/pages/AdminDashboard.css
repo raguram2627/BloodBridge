@@ -3770,3 +3770,16 @@ transform: translateY(-1px) !important;
     flex-wrap: wrap !important;
   }
 }
+
+/* 5. GRID LAYOUT FOR CARDS */
+.cardsContainer {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 20px !important;
+}
+
+@media (max-width: 1100px) {
+  .cardsContainer {
+    grid-template-columns: 1fr !important;
+  }
+}
