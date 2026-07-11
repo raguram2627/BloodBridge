@@ -665,7 +665,7 @@ function AdminDashboard() {
           display: grid;
           grid-template-columns: minmax(320px, 380px) minmax(0, 1fr);
           gap: 35px;
-          align-items: start;
+          align-items: stretch;
           flex: 1;
           min-height: 0;
           overflow: visible;
@@ -921,6 +921,7 @@ function AdminDashboard() {
           flex-direction: column;
           min-width: 0;
           min-height: 0;
+          align-self: stretch;
           overflow: visible;
         }
 
@@ -951,7 +952,6 @@ function AdminDashboard() {
         .resultsScrollArea {
           flex: 1;
           min-height: 0;
-          max-height: calc(100vh - 260px);
           overflow-y: auto;
           padding-right: 8px;
           padding-bottom: 6px;
