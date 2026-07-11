@@ -1851,6 +1851,7 @@ function EmergencyDashboard() {
         <div className="metricTile">
           <span className="tileIcon">👨‍🏫</span>
           <div className="tileData"><h3>{facultyCount}</h3><p>Faculty & Staff</p></div>
+        </div>
       </div>
 
       <div className="dashboardLayout">
@@ -2271,9 +2272,8 @@ function EmergencyDashboard() {
                 <div className="emptyState" style={{ padding: "40px", textAlign: "center" }}>All concurrent operational tasks are complete.</div>
               )}
             </div>
-            </div>
+          </div>
         </div>
-      </div>
 
       {showGlobalLogger && (
         <div className="modalOverlay" onClick={() => { setShowGlobalLogger(false); setManualRegNo(""); setManualDonorFound(null); }}>

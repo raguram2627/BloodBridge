@@ -1862,6 +1862,7 @@ function AdminDashboard() {
         <div className="metricTile">
           <span className="tileIcon">👨‍🏫</span>
           <div className="tileData"><h3>{facultyCount}</h3><p>Faculty & Staff</p></div>
+        </div>
       </div>
 
       <div className="dashboardLayout">
@@ -1875,6 +1876,7 @@ function AdminDashboard() {
               <button className={`panelBtn ${viewMode === "frequent" ? "active" : ""}`} onClick={() => setViewMode("frequent")}>🏆 Frequent Donors</button>
               <button className={`panelBtn ${viewMode === "history" ? "active" : ""}`} onClick={() => setViewMode("history")}>📜 Donation History Log</button>
             </div>
+          </div>
         </div>
 
         <div className="dataStreamPanel">
