@@ -1753,52 +1753,100 @@ function EmergencyDashboard() {
           }
           
           .donorCardTop {
+            display: flex;
             flex-direction: row;
+            justify-content: space-between;
             align-items: center;
             gap: 8px;
           }
           
           .donorCardTop h3 {
-            font-size: 15px;
+            font-size: 16px;
+            font-weight: 700;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
             max-width: 140px;
+            margin: 0;
           }
           
           .donorCardTop > div {
-            width: 100%;
-            justify-content: space-between;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 8px;
+            width: auto !important;
+            justify-content: flex-start !important;
           }
           
           .donorCardDetailsGrid.alignedDetailsGrid {
-            grid-template-columns: 1fr 1fr !important;
-            gap: 8px !important;
-            font-size: 12px;
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 4px !important;
+            background: #fdfdfd;
+            padding: 8px 10px;
+            border-radius: 8px;
+            margin: 12px 0;
+            border: 1px solid #f0f0f0;
           }
           
           .detailsGridRow {
-            flex-direction: column;
-            align-items: flex-start;
-            justify-content: flex-start;
+            display: flex !important;
+            flex-direction: row !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            border-bottom: 1px solid #f6f6f6;
+            padding-bottom: 4px;
+            margin-bottom: 2px;
+          }
+          .detailsGridRow:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 0;
           }
           
           .detailsGridLabel {
             width: auto;
-            font-size: 10px;
-            margin-bottom: 2px;
+            font-size: 11px !important;
+            color: #777;
+            margin: 0 !important;
+          }
+
+          .detailsGridRow .detailsGridValue {
+            font-size: 12px !important;
+            font-weight: 600;
+            color: #222;
+            text-align: right;
           }
 
           .cardActionRow {
-            flex-wrap: nowrap;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap !important;
             overflow-x: auto;
             padding-bottom: 5px;
+            gap: 8px;
+            -webkit-overflow-scrolling: touch;
+          }
+          
+          .cardActionRow::-webkit-scrollbar {
+            display: none;
+          }
+          
+          .actionBtnLeftGroup, .actionBtnRightGroup {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap !important;
+            gap: 8px;
+            width: auto;
           }
 
           .cardActionBtn {
-            padding: 6px 12px;
+            padding: 8px 14px;
             font-size: 11px;
+            font-weight: 600;
             white-space: nowrap;
+            flex-shrink: 0;
           }
           
           .bloodGroupSelector {
