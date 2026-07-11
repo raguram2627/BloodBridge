@@ -1643,6 +1643,192 @@ function AdminDashboard() {
         .sectionToggleBtn.active:active {
           transform: scale(0.97);
         }
+
+        /* Professional Mobile Alignments */
+        @media (max-width: 768px) {
+          .dashboardContainer {
+            padding: 20px 15px;
+          }
+          
+          .dashboardHeader {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            text-align: center;
+          }
+          
+          .dashboardHeader h1 {
+            font-size: 26px;
+          }
+          
+          .dashboardSubtitle {
+            font-size: 14px;
+            line-height: 1.5;
+          }
+          
+          .metricsGrid {
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
+          }
+          
+          .metricTile {
+            padding: 20px;
+          }
+          
+          .tileIcon {
+            font-size: 32px;
+            padding: 10px;
+          }
+          
+          .tileData h3 {
+            font-size: 28px;
+          }
+          
+          .controlPanel {
+            position: relative;
+            top: 0;
+            max-height: none;
+            overflow: visible;
+            gap: 20px;
+            padding-right: 0;
+          }
+          
+          .controlBlock {
+            padding: 20px 15px;
+            border-radius: 20px;
+          }
+          
+          .actionButtonGroup {
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 8px;
+          }
+          
+          .panelBtn {
+            flex: 1;
+            min-width: calc(50% - 5px);
+            padding: 12px 10px;
+            font-size: 13px;
+            text-align: center;
+            justify-content: center;
+          }
+          
+          .dataCard {
+            padding: 20px 15px;
+            border-radius: 16px;
+          }
+          
+          .donorCardTop {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+          }
+          
+          .donorCardTop h3 {
+            font-size: 18px;
+          }
+          
+          .donorCardTop > div {
+            width: 100%;
+            justify-content: space-between;
+          }
+          
+          .donorCardDetailsGrid.alignedDetailsGrid {
+            grid-template-columns: 1fr !important;
+            gap: 10px !important;
+          }
+          
+          .detailsGridRow {
+            justify-content: space-between;
+          }
+          
+          .detailsGridLabel {
+            width: auto;
+          }
+          
+          .bloodGroupSelector {
+            grid-template-columns: 1fr 1fr;
+          }
+          
+          .modalWindow {
+            padding: 25px 20px;
+            border-radius: 20px;
+          }
+          
+          .modalWindowHeader {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+            position: relative;
+          }
+
+          .modalCloseCorner {
+            position: absolute;
+            top: 0;
+            right: 0;
+          }
+          
+          .modalWindowHeader h2 {
+            font-size: 18px;
+            padding-right: 20px;
+          }
+          
+          .availabilityHeaderBar, .responseHeaderBar {
+            flex-direction: column;
+          }
+          
+          .sectionToggleBtn {
+            width: 100%;
+          }
+          
+          .panelSectionTitle {
+            margin-bottom: 20px;
+            text-align: center;
+          }
+          
+          .panelSectionTitle h2 {
+            font-size: 20px;
+          }
+          
+          .globalLogDonationBtn {
+            width: 100%;
+            justify-content: center;
+          }
+          
+          .toastBanner {
+            top: 20px;
+            right: 15px;
+            left: 15px;
+            padding: 14px 16px;
+            width: auto;
+            flex-direction: column;
+            text-align: center;
+          }
+
+          .resultsScrollArea {
+            padding-right: 0;
+          }
+
+          /* Ensure emergency section adapts */
+          .controlBlock.emergencySection {
+            padding: 20px 15px;
+          }
+
+          /* Button rows adjustment */
+          .actionTriggerBtn, .closeBroadcastBtn {
+            font-size: 15px;
+            padding: 14px;
+          }
+
+          .requestTrackTabBar {
+            padding-bottom: 10px !important;
+          }
+
+          .trackTabItem {
+            min-width: 130px;
+            padding: 10px 15px;
+          }
+        }
       `}} />
 
       <div className="dashboardHeader">
