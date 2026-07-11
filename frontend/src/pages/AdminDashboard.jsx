@@ -535,7 +535,7 @@ function AdminDashboard() {
 
         html, body, #root {
           height: 100%;
-          overflow: hidden;
+          overflow-x: hidden;
         }
 
         body {
@@ -551,8 +551,7 @@ function AdminDashboard() {
             radial-gradient(circle at bottom right, #ffe5e8 0%, transparent 30%),
             linear-gradient(135deg, #fcf8f8, #ffffff, #fffcfc);
           min-height: 100vh;
-          height: 100vh;
-          overflow: hidden;
+          overflow: visible;
           display: flex;
           flex-direction: column;
         }
@@ -669,8 +668,7 @@ function AdminDashboard() {
           align-items: start;
           flex: 1;
           min-height: 0;
-          height: 100%;
-          overflow: hidden;
+          overflow: visible;
         }
 
         .bloodGroupResponseSummary {
@@ -923,8 +921,7 @@ function AdminDashboard() {
           flex-direction: column;
           min-width: 0;
           min-height: 0;
-          height: 100%;
-          overflow: hidden;
+          overflow: visible;
         }
 
         .panelSectionTitle {
@@ -954,8 +951,7 @@ function AdminDashboard() {
         .resultsScrollArea {
           flex: 1;
           min-height: 0;
-          height: 100%;
-          max-height: 100%;
+          max-height: calc(100vh - 260px);
           overflow-y: auto;
           padding-right: 8px;
           padding-bottom: 6px;
