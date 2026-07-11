@@ -3342,9 +3342,13 @@ box-sizing: border-box;
 font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
+html, body, #root {
+  height: 100%;
+  overflow: hidden;
+}
+
 body {
-background-color: #fcf8f8;
-overflow-x: hidden;
+  background-color: #fcf8f8;
 }
 
 .dashboardContainer {

@@ -533,6 +533,11 @@ function AdminDashboard() {
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
 
+        html, body, #root {
+          height: 100%;
+          overflow: hidden;
+        }
+
         body {
           background-color: #fcf8f8;
         }
@@ -546,6 +551,10 @@ function AdminDashboard() {
             radial-gradient(circle at bottom right, #ffe5e8 0%, transparent 30%),
             linear-gradient(135deg, #fcf8f8, #ffffff, #fffcfc);
           min-height: 100vh;
+          height: 100vh;
+          overflow: hidden;
+          display: flex;
+          flex-direction: column;
         }
 
         .dashboardHeader {
@@ -655,9 +664,12 @@ function AdminDashboard() {
 
         .dashboardLayout {
           display: grid;
-          grid-template-columns: 380px 1fr;
+          grid-template-columns: minmax(320px, 380px) minmax(0, 1fr);
           gap: 35px;
           align-items: start;
+          flex: 1;
+          min-height: 0;
+          overflow: hidden;
         }
 
         .bloodGroupResponseSummary {
@@ -720,6 +732,12 @@ function AdminDashboard() {
           display: flex;
           flex-direction: column;
           gap: 30px;
+          position: sticky;
+          top: 24px;
+          align-self: start;
+          max-height: calc(100vh - 48px);
+          overflow-y: auto;
+          padding-right: 6px;
         }
 
         .controlBlock {
@@ -902,6 +920,8 @@ function AdminDashboard() {
         .dataStreamPanel {
           display: flex;
           flex-direction: column;
+          min-width: 0;
+          min-height: 0;
         }
 
         .panelSectionTitle {
@@ -926,6 +946,14 @@ function AdminDashboard() {
           gap: 20px !important;
           padding: 10px 0 !important;
           width: 100% !important;
+        }
+
+        .resultsScrollArea {
+          flex: 1;
+          min-height: 0;
+          overflow-y: auto;
+          padding-right: 8px;
+          padding-bottom: 6px;
         }
 
         .dataCard {
