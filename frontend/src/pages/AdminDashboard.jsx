@@ -669,6 +669,7 @@ function AdminDashboard() {
           align-items: start;
           flex: 1;
           min-height: 0;
+          height: 100%;
           overflow: hidden;
         }
 
@@ -735,8 +736,8 @@ function AdminDashboard() {
           position: sticky;
           top: 24px;
           align-self: start;
-          max-height: calc(100vh - 48px);
-          overflow-y: auto;
+          height: fit-content;
+          overflow: visible;
           padding-right: 6px;
         }
 
@@ -922,6 +923,8 @@ function AdminDashboard() {
           flex-direction: column;
           min-width: 0;
           min-height: 0;
+          height: 100%;
+          overflow: hidden;
         }
 
         .panelSectionTitle {
@@ -951,6 +954,8 @@ function AdminDashboard() {
         .resultsScrollArea {
           flex: 1;
           min-height: 0;
+          height: 100%;
+          max-height: 100%;
           overflow-y: auto;
           padding-right: 8px;
           padding-bottom: 6px;
