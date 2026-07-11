@@ -1852,6 +1852,17 @@ function EmergencyDashboard() {
           <span className="tileIcon">👨‍🏫</span>
           <div className="tileData"><h3>{facultyCount}</h3><p>Faculty & Staff</p></div>
         </div>
+        
+        <div 
+          className="metricTile critical activeConsoleCard"
+          style={{ cursor: "default", ...buttonMotionStyle }}
+        >
+          <span className="tileIcon">🚨</span>
+          <div className="tileData">
+            <h3>{activeRequests.length}</h3>
+            <p>{activeRequests.length === 1 ? "Active Live Request" : "Active Live Requests"}</p>
+          </div>
+        </div>
       </div>
 
       <div className="dashboardLayout">
@@ -2269,7 +2280,37 @@ function EmergencyDashboard() {
                   )}
                 </div>
               ) : (
-                <div className="emptyState" style={{ padding: "40px", textAlign: "center" }}>All concurrent operational tasks are complete.</div>
+                <div className="emptyState" style={{ 
+                  padding: "60px 40px", 
+                  textAlign: "center", 
+                  background: "linear-gradient(180deg, #ffffff, #fcfcfc)", 
+                  borderRadius: "24px", 
+                  border: "2px dashed #ffebeb",
+                  boxShadow: "inset 0 4px 20px rgba(0,0,0,0.02)",
+                  display: "flex", 
+                  flexDirection: "column", 
+                  alignItems: "center", 
+                  justifyContent: "center", 
+                  minHeight: "50vh" 
+                }}>
+                  <div style={{ 
+                    fontSize: "64px", 
+                    marginBottom: "24px", 
+                    opacity: 0.8,
+                    background: "#fff0f1",
+                    width: "120px",
+                    height: "120px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    borderRadius: "50%",
+                    boxShadow: "0 8px 30px rgba(176, 0, 32, 0.12)"
+                  }}>🛡️</div>
+                  <h3 style={{ fontSize: "28px", color: "#b00020", marginBottom: "12px", fontWeight: "800", letterSpacing: "-0.5px" }}>System on Standby</h3>
+                  <p style={{ color: "#666", maxWidth: "450px", lineHeight: 1.7, fontSize: "15px" }}>
+                    All concurrent operational tasks are complete. The emergency broadcast network is fully operational and actively monitoring for incoming triage dispatch requests.
+                  </p>
+                </div>
               )}
             </div>
           </div>

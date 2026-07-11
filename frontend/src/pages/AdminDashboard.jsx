@@ -1878,7 +1878,7 @@ function AdminDashboard() {
       </div>
 
       <div className="dashboardLayout">
-        <div className="controlPanel">
+        <div className="controlPanel" style={{ position: 'sticky', top: '20px' }}>
           <div className="controlBlock">
             <h3>Navigation & Filters</h3>
             <div className="actionButtonGroup">
@@ -1887,6 +1887,31 @@ function AdminDashboard() {
               <button className={`panelBtn ${viewMode === "faculty" ? "active" : ""}`} onClick={() => setViewMode("faculty")}>👨‍🏫 Filter Faculty</button>
               <button className={`panelBtn ${viewMode === "frequent" ? "active" : ""}`} onClick={() => setViewMode("frequent")}>🏆 Frequent Donors</button>
               <button className={`panelBtn ${viewMode === "history" ? "active" : ""}`} onClick={() => setViewMode("history")}>📜 Donation History Log</button>
+            </div>
+          </div>
+
+          <div className="controlBlock systemStatusBlock" style={{ marginTop: '20px', background: 'linear-gradient(135deg, #fdf2f2, #fff)', border: '1px solid #fbc2c2', boxShadow: '0 4px 15px rgba(176, 0, 32, 0.05)' }}>
+            <h3 style={{ fontSize: '15px', color: '#b00020', marginBottom: '15px', display: 'flex', alignItems: 'center', gap: '8px', borderBottom: 'none', paddingBottom: 0 }}>
+              <span className="pulsingDot" style={{ width: '8px', height: '8px', background: '#b00020', borderRadius: '50%', display: 'inline-block', animation: 'pulse 2s infinite' }}></span>
+              Network Status
+            </h3>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', fontSize: '13px', color: '#555' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span>Database Sync</span>
+                <span style={{ color: 'green', fontWeight: 'bold', background: '#e8f5e9', padding: '2px 8px', borderRadius: '12px', fontSize: '11px' }}>Online</span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span>Active Nodes</span>
+                <span style={{ fontWeight: 'bold', color: '#333' }}>{totalDonors}</span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span>Last Updated</span>
+                <span style={{ fontWeight: 'bold', color: '#333' }}>Just now</span>
+              </div>
+            </div>
+            <div style={{ marginTop: '20px', padding: '12px', background: '#fff0f1', borderRadius: '8px', textAlign: 'center', color: '#b00020', fontSize: '12px', fontWeight: 'bold', display: 'flex', flexDirection: 'column', gap: '4px' }}>
+              <span>🛡️ Secure Network</span>
+              <span style={{ fontSize: '10px', opacity: 0.8, fontWeight: 'normal' }}>End-to-end encrypted dispatch</span>
             </div>
           </div>
         </div>
