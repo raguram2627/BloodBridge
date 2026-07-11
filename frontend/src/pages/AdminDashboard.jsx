@@ -2155,50 +2155,52 @@ function AdminDashboard() {
                     )}
                   </div>
 
-                  <div className="cardsContainer">
-                    {results.map((d, index) => {
-                      const donationCount = d.donationCount ?? d.donationHistory?.length ?? 0;
+                  <div className="resultsScrollArea">
+                    <div className="cardsContainer">
+                      {results.map((d, index) => {
+                        const donationCount = d.donationCount ?? d.donationHistory?.length ?? 0;
 
-                      return (
-                      <div key={d._id} className="dataCard donorCard">
-                        <div className="donorCardTop">
-                          <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
-                            {viewMode === "frequent" && index < 3 && (
-                              <span className="frequentDonorMedal" title={`Rank #${index + 1}`}>{MEDAL_EMOJIS[index]}</span>
-                            )}
-                            <h3 style={{ margin: 0, fontWeight: "700" }}>{d.name}</h3>
-                            <span className="roleTag">{d.role}</span>
-                            <span className="bloodTypeBadge">{d.bloodGroup}</span>
-                          </div>
-                        </div>
-
-                        <div className="donorCardDetailsGrid alignedDetailsGrid">
-                          {viewMode === "frequent" && (
-                            <div className="detailsGridRow totalDonationRow">
-                              <span className="detailsGridLabel">Total Donation:</span>
-                              <span className="detailsGridValue donationCountGold">{donationCount}</span>
+                        return (
+                        <div key={d._id} className="dataCard donorCard">
+                          <div className="donorCardTop">
+                            <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
+                              {viewMode === "frequent" && index < 3 && (
+                                <span className="frequentDonorMedal" title={`Rank #${index + 1}`}>{MEDAL_EMOJIS[index]}</span>
+                              )}
+                              <h3 style={{ margin: 0, fontWeight: "700" }}>{d.name}</h3>
+                              <span className="roleTag">{d.role}</span>
+                              <span className="bloodTypeBadge">{d.bloodGroup}</span>
                             </div>
-                          )}
-                          <div className="detailsGridRow"><span className="detailsGridLabel">Department:</span> <span className="detailsGridValue">{d.department}</span></div>
-                          <div className="detailsGridRow"><span className="detailsGridLabel">Year Level:</span> <span className="detailsGridValue">{d.year || "N/A"}</span></div>
-                          <div className="detailsGridRow"><span className="detailsGridLabel">Mobile Terminal:</span> <span className="detailsGridValue">{d.mobile}</span></div>
-                          <div className="detailsGridRow"><span className="detailsGridLabel">Register Number:</span> <span className="detailsGridValue">{d.registerNumber || "N/A"}</span></div>
-                        </div>
+                          </div>
 
-                        <div className="cardActionRow">
-                          <div className="actionBtnLeftGroup">
-                            <button className="cardActionBtn" onClick={() => setDetailsDonor(d)}>📊 Details</button>
-                            <a href={`tel:${d.mobile}`} className="commsLink"><button className="cardActionBtn">📞 Call</button></a>
-                            <a href={`https://wa.me/91${d.mobile}`} target="_blank" rel="noreferrer" className="commsLink"><button className="cardActionBtn">📱 WhatsApp</button></a>
+                          <div className="donorCardDetailsGrid alignedDetailsGrid">
+                            {viewMode === "frequent" && (
+                              <div className="detailsGridRow totalDonationRow">
+                                <span className="detailsGridLabel">Total Donation:</span>
+                                <span className="detailsGridValue donationCountGold">{donationCount}</span>
+                              </div>
+                            )}
+                            <div className="detailsGridRow"><span className="detailsGridLabel">Department:</span> <span className="detailsGridValue">{d.department}</span></div>
+                            <div className="detailsGridRow"><span className="detailsGridLabel">Year Level:</span> <span className="detailsGridValue">{d.year || "N/A"}</span></div>
+                            <div className="detailsGridRow"><span className="detailsGridLabel">Mobile Terminal:</span> <span className="detailsGridValue">{d.mobile}</span></div>
+                            <div className="detailsGridRow"><span className="detailsGridLabel">Register Number:</span> <span className="detailsGridValue">{d.registerNumber || "N/A"}</span></div>
                           </div>
-                          <div className="actionBtnRightGroup">
-                            <button className="cardActionBtn actionBtnHistory" onClick={() => setSelectedDonor(d)}>📜 History</button>
-                            <button className="cardActionBtn actionBtnRecord" onClick={() => setDonationDonor(d)}>➕ Log Donation</button>
+
+                          <div className="cardActionRow">
+                            <div className="actionBtnLeftGroup">
+                              <button className="cardActionBtn" onClick={() => setDetailsDonor(d)}>📊 Details</button>
+                              <a href={`tel:${d.mobile}`} className="commsLink"><button className="cardActionBtn">📞 Call</button></a>
+                              <a href={`https://wa.me/91${d.mobile}`} target="_blank" rel="noreferrer" className="commsLink"><button className="cardActionBtn">📱 WhatsApp</button></a>
+                            </div>
+                            <div className="actionBtnRightGroup">
+                              <button className="cardActionBtn actionBtnHistory" onClick={() => setSelectedDonor(d)}>📜 History</button>
+                              <button className="cardActionBtn actionBtnRecord" onClick={() => setDonationDonor(d)}>➕ Log Donation</button>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    );
-                    })}
+                      );
+                      })}
+                    </div>
                   </div>
                 </>
               )}

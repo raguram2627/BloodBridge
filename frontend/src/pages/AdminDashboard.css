@@ -459,6 +459,23 @@ body {
 .dataStreamPanel {
   display: flex;
   flex-direction: column;
+  min-width: 0;
+}
+
+.resultsScrollArea {
+  max-height: calc(100vh - 310px);
+  overflow-y: auto;
+  padding-right: 8px;
+  padding-bottom: 6px;
+}
+
+.resultsScrollArea::-webkit-scrollbar {
+  width: 7px;
+}
+
+.resultsScrollArea::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #fbc2c2, #e7a0aa);
+  border-radius: 999px;
 }
 
 .panelSectionTitle {
@@ -483,6 +500,10 @@ body {
   flex-direction: column !important;
   gap: 20px !important;
   padding: 10px 0 !important;
+}
+
+.resultsScrollArea .cardsContainer {
+  padding-right: 4px;
 }
 
 /* Premium Universal Card with Top Red Accent & Tactile Interaction */
@@ -2366,9 +2387,10 @@ body {
 /* Structural Dashboard Layout Grid Splits */
 .dashboardLayout {
   display: grid;
-  grid-template-columns: 380px 1fr;
+  grid-template-columns: minmax(320px, 380px) minmax(0, 1fr);
   gap: 35px;
   align-items: start;
+  position: relative;
 }
 
 @media (max-width: 1100px) {
@@ -2382,6 +2404,21 @@ body {
   display: flex;
   flex-direction: column;
   gap: 30px;
+  position: sticky;
+  top: 24px;
+  align-self: start;
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+.controlPanel::-webkit-scrollbar {
+  width: 6px;
+}
+
+.controlPanel::-webkit-scrollbar-thumb {
+  background: #f3dcdc;
+  border-radius: 999px;
 }
 
 .controlBlock {
