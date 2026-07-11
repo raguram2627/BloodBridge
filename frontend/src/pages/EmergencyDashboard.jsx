@@ -1666,22 +1666,22 @@ function EmergencyDashboard() {
           }
           
           .metricsGrid {
-            grid-template-columns: 1fr;
-            gap: 15px;
-            margin-bottom: 25px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
           }
           
           .metricTile {
-            padding: 20px;
+            padding: 15px;
           }
           
           .tileIcon {
-            font-size: 32px;
-            padding: 10px;
+            font-size: 24px;
+            padding: 8px;
           }
           
           .tileData h3 {
-            font-size: 28px;
+            font-size: 20px;
           }
           
           .controlPanel {
