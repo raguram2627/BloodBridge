@@ -1644,6 +1644,12 @@ function EmergencyDashboard() {
           transform: scale(0.97);
         }
 
+        .desktop-sticky {
+          position: sticky;
+          top: 20px;
+          z-index: 10;
+        }
+
         /* Professional Mobile Alignments */
         @media (max-width: 768px) {
           .dashboardContainer {
@@ -1666,31 +1672,58 @@ function EmergencyDashboard() {
           }
           
           .metricsGrid {
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
+            display: flex;
+            flex-direction: row;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            gap: 12px;
             margin-bottom: 20px;
+            padding-bottom: 8px;
+            -webkit-overflow-scrolling: touch;
+          }
+          
+          .metricsGrid::-webkit-scrollbar {
+            display: none;
           }
           
           .metricTile {
+            min-width: 220px;
+            flex-shrink: 0;
+            scroll-snap-align: start;
             padding: 15px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 12px;
           }
           
           .tileIcon {
-            font-size: 24px;
-            padding: 8px;
+            font-size: 28px;
+            padding: 0;
+            background: none;
           }
           
           .tileData h3 {
-            font-size: 20px;
+            font-size: 22px;
+            margin: 0;
+          }
+          
+          .tileData p {
+            font-size: 12px;
+            margin: 0;
           }
           
           .controlPanel {
-            position: relative;
-            top: 0;
+            position: relative !important;
+            top: 0 !important;
             max-height: none;
             overflow: visible;
             gap: 20px;
             padding-right: 0;
+          }
+          .desktop-sticky {
+            position: relative !important;
+            top: 0 !important;
           }
           
           .controlBlock {
@@ -1714,18 +1747,23 @@ function EmergencyDashboard() {
           }
           
           .dataCard {
-            padding: 20px 15px;
-            border-radius: 16px;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 12px;
           }
           
           .donorCardTop {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 10px;
+            flex-direction: row;
+            align-items: center;
+            gap: 8px;
           }
           
           .donorCardTop h3 {
-            font-size: 18px;
+            font-size: 15px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 140px;
           }
           
           .donorCardTop > div {
@@ -1734,16 +1772,33 @@ function EmergencyDashboard() {
           }
           
           .donorCardDetailsGrid.alignedDetailsGrid {
-            grid-template-columns: 1fr !important;
-            gap: 10px !important;
+            grid-template-columns: 1fr 1fr !important;
+            gap: 8px !important;
+            font-size: 12px;
           }
           
           .detailsGridRow {
-            justify-content: space-between;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
           }
           
           .detailsGridLabel {
             width: auto;
+            font-size: 10px;
+            margin-bottom: 2px;
+          }
+
+          .cardActionRow {
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            padding-bottom: 5px;
+          }
+
+          .cardActionBtn {
+            padding: 6px 12px;
+            font-size: 11px;
+            white-space: nowrap;
           }
           
           .bloodGroupSelector {
@@ -1866,7 +1921,7 @@ function EmergencyDashboard() {
       </div>
 
       <div className="dashboardLayout">
-        <div className="controlPanel">
+        <div className="controlPanel desktop-sticky">
 
           <div className="controlBlock emergencySection">
             <h3>🚨 Launch Emergency Broadcast</h3>
