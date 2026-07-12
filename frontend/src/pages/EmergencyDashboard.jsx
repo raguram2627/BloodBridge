@@ -1675,79 +1675,60 @@ function EmergencyDashboard() {
             display: flex !important;
             flex-direction: row !important;
             flex-wrap: nowrap !important;
-            overflow-x: auto !important;
-            gap: 10px !important;
-            padding-bottom: 10px !important;
-            -webkit-overflow-scrolling: touch;
-          }
-          
-          .searchFilterRow::-webkit-scrollbar {
-            display: none;
+            gap: 4px !important;
+            padding-bottom: 8px !important;
           }
 
-          .searchFilterRow .dashboardInput {
-            min-width: 140px;
-            flex-shrink: 0;
+          .searchFilterRow .dashboardInput, .searchFilterRow .searchInputWrapper {
+            width: 100%;
+            min-width: 0;
+            padding: 6px 2px;
+            font-size: 9px;
           }
           
           .metricsGrid {
-            display: flex;
-            flex-direction: row;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            gap: 12px;
-            margin-bottom: 20px;
-            padding-bottom: 8px;
-            -webkit-overflow-scrolling: touch;
-          }
-          
-          .metricsGrid::-webkit-scrollbar {
-            display: none;
+            display: grid !important;
+            grid-template-columns: repeat(4, 1fr) !important;
+            gap: 4px !important;
+            margin-bottom: 10px !important;
           }
           
           .metricTile {
-            min-width: 220px;
-            flex-shrink: 0;
-            scroll-snap-align: start;
-            padding: 15px;
+            padding: 8px 4px;
             display: flex;
-            flex-direction: row;
+            flex-direction: column;
             align-items: center;
-            gap: 12px;
+            justify-content: center;
+            text-align: center;
+            gap: 4px;
           }
           
           .tileIcon {
-            font-size: 28px;
+            font-size: 16px;
             padding: 0;
             background: none;
           }
           
           .tileData h3 {
-            font-size: 22px;
+            font-size: 14px;
             margin: 0;
           }
           
           .tileData p {
-            font-size: 12px;
+            font-size: 8px;
             margin: 0;
+            white-space: normal;
+            line-height: 1.1;
           }
           
           .controlPanel {
             position: relative !important;
             top: 0 !important;
             display: flex;
-            flex-direction: row;
-            flex-wrap: nowrap;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            gap: 15px;
+            flex-direction: column;
+            gap: 10px;
             padding-right: 0;
-            padding-bottom: 8px;
-            margin-bottom: 15px;
-            -webkit-overflow-scrolling: touch;
-          }
-          .controlPanel::-webkit-scrollbar {
-            display: none;
+            margin-bottom: 10px;
           }
           .desktop-sticky {
             position: relative !important;
@@ -1755,34 +1736,29 @@ function EmergencyDashboard() {
           }
           
           .controlBlock {
-            min-width: 85vw;
-            flex-shrink: 0;
-            scroll-snap-align: start;
-            padding: 15px;
-            border-radius: 16px;
+            padding: 12px 8px;
+            border-radius: 10px;
             margin: 0 !important;
           }
           
           .actionButtonGroup {
             display: flex;
             flex-direction: row;
-            flex-wrap: nowrap !important;
-            overflow-x: auto;
-            gap: 8px;
-            padding-bottom: 4px;
-            -webkit-overflow-scrolling: touch;
-          }
-          .actionButtonGroup::-webkit-scrollbar {
-            display: none;
+            flex-wrap: nowrap;
+            gap: 4px;
+            padding-bottom: 0;
           }
           
           .panelBtn {
-            flex-shrink: 0;
-            padding: 10px 16px;
-            font-size: 12px;
-            white-space: nowrap;
-            width: auto;
-            min-width: auto;
+            padding: 6px 2px;
+            font-size: 8px;
+            white-space: normal;
+            word-wrap: break-word;
+            width: 100%;
+            min-width: 0;
+            text-align: center;
+            justify-content: center;
+            flex: 1;
           }
           
           .dataCard {
