@@ -255,6 +255,18 @@ app.put("/donors/:id", async (req, res) => {
         });
     }
 });
+
+app.get("/donors/:id", async (req, res) => {
+    try {
+        const donor = await Donor.findById(req.params.id);
+        if (!donor) {
+            return res.status(404).json({ message: "Donor not found" });
+        }
+        res.json(donor);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
 app.get("/donors/frequent", async (req, res) => {
   try {
     const donors = await Donor.find();

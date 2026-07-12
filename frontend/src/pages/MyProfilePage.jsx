@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { FaTelegramPlane, FaCheckCircle } from "react-icons/fa";
 import "./MyProfilePage.css";
 
 function MyProfilePage() {
@@ -11,8 +12,19 @@ function MyProfilePage() {
     const storedDonor = localStorage.getItem("loggedInDonor");
     if (storedDonor) {
       const parsedDonor = JSON.parse(storedDonor);
-      setDonor(parsedDonor);
-      setFormData(parsedDonor);
+      // Fetch latest profile data to ensure telegram status is up to date
+      fetch(`${import.meta.env.VITE_API_URL || "http://localhost:5000"}/donors/${parsedDonor._id}`)
+        .then(res => res.json())
+        .then(latestDonor => {
+          setDonor(latestDonor);
+          setFormData(latestDonor);
+          localStorage.setItem("loggedInDonor", JSON.stringify(latestDonor));
+        })
+        .catch(err => {
+          console.error("Failed to fetch latest donor data", err);
+          setDonor(parsedDonor);
+          setFormData(parsedDonor);
+        });
     } else {
       navigate("/");
     }
@@ -115,17 +127,21 @@ function MyProfilePage() {
                   <button 
                     type="button" 
                     className="saveBtn" 
-                    style={{ background: "#0088cc", width: "auto" }}
+                    style={{ background: "#0088cc", width: "auto", display: "flex", alignItems: "center", gap: "8px", justifyContent: "center" }}
                     onClick={() => {
                       window.location.href = `${import.meta.env.VITE_API_URL || "http://localhost:5000"}/connect-telegram/${formData.registerNumber || formData.facultyId}`;
                     }}
                   >
-                    Connect Telegram
+                    <FaTelegramPlane size={18} /> Connect with Telegram
                   </button>
                 </div>
               ) : (
-                <div className="inputGroup fullWidth">
-                  <p style={{ fontSize: "14px", color: "green", fontWeight: "600" }}>✅ Telegram Connected</p>
+                <div className="inputGroup fullWidth" style={{ display: "flex", alignItems: "center", gap: "8px", background: "#f0fdf4", padding: "15px", borderRadius: "8px", border: "1px solid #bbf7d0" }}>
+                  <FaCheckCircle size={24} color="#16a34a" />
+                  <div>
+                    <p style={{ fontSize: "16px", color: "#166534", fontWeight: "700", margin: 0 }}>Telegram Connected</p>
+                    <p style={{ fontSize: "13px", color: "#15803d", margin: 0, marginTop: "2px" }}>You are actively receiving emergency broadcasts.</p>
+                  </div>
                 </div>
               )}
             </div>
