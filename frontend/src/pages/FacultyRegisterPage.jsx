@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { FiHeart, FiPhone } from "react-icons/fi";
+import { FaChalkboardTeacher } from "react-icons/fa";
+import { MdBloodtype } from "react-icons/md";
 import "./FacultyRegisterPage.css";
 
 function FacultyRegisterPage() {
@@ -101,7 +104,7 @@ function FacultyRegisterPage() {
         <div className="successOverlay" onClick={() => setShowSuccess(false)}>
           <div className="successCard" onClick={(e) => e.stopPropagation()}>
             <div className="successIconRing">
-              <span className="successIcon">❤️</span>
+              <span className="successIcon"><FiHeart color="#b00020" size={32} /></span>
             </div>
             <h2 className="successTitle">Thank You for Joining Us!</h2>
             <p className="successSlogan">
@@ -121,14 +124,14 @@ function FacultyRegisterPage() {
       )}
 
       <div className="registerCard">
-        <h1>❤️ Become a Faculty Donor</h1>
+        <h1 style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}><FiHeart color="#b00020" /> Become a Faculty Donor</h1>
         <p className="subtitle">
           Join the BloodBridge network to guide and support our emergency community.
         </p>
 
         <form onSubmit={handleSubmit}>
           <div className="section">
-            <h3>👨‍🏫 Profile Information</h3>
+            <h3 style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><FaChalkboardTeacher /> Profile Information</h3>
             <input
               type="text"
               placeholder="Full Name"
@@ -205,7 +208,7 @@ function FacultyRegisterPage() {
           </div>
 
           <div className="section">
-            <h3>📞 Contact Details</h3>
+            <h3 style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><FiPhone /> Contact Details</h3>
             <input
               type="text"
               placeholder="Mobile Number"
@@ -223,7 +226,7 @@ function FacultyRegisterPage() {
           </div>
 
           <div className="section">
-            <h3>🩸 Donation History</h3>
+            <h3 style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><MdBloodtype /> Donation History</h3>
             <label className="fieldLabel">Have you donated blood before?</label>
             <select
               value={hasDonatedBefore ? "Yes" : "No"}

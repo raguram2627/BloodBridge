@@ -1,6 +1,8 @@
 import "./ChooseRolePage.css";
 
 import { useNavigate } from "react-router-dom";
+import { FiHeart } from "react-icons/fi";
+import { FaUserGraduate, FaChalkboardTeacher } from "react-icons/fa";
 
 function ChooseRolePage() {
   const navigate = useNavigate();
@@ -8,7 +10,7 @@ function ChooseRolePage() {
     <div className="chooseRolePage">
       <div className="roleContainer">
 
-        <h1>❤️ Join BloodBridge</h1>
+        <h1 style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}><FiHeart color="#b00020" /> Join BloodBridge</h1>
 
         <h2>Become a Blood Donor</h2>
 
@@ -25,7 +27,7 @@ function ChooseRolePage() {
             onClick={() => navigate("/register-student")}
           >
             <div className="roleIcon">
-              🎓
+              <FaUserGraduate />
             </div>
 
             <h3>Student Donor</h3>
@@ -45,7 +47,7 @@ function ChooseRolePage() {
             onClick={() => navigate("/register-faculty")}
           >
             <div className="roleIcon">
-              👨‍🏫
+              <FaChalkboardTeacher />
             </div>
 
             <h3>Faculty Donor</h3>

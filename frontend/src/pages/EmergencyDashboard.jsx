@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
-import { FiUsers, FiAlertCircle, FiClock, FiShield, FiFileText, FiPhone, FiDroplet, FiInfo, FiBell, FiLock, FiCheckCircle, FiXCircle } from "react-icons/fi";
-import { FaUserGraduate, FaChalkboardTeacher, FaWhatsapp } from "react-icons/fa";
+import { FiLoader, FiAlertTriangle, FiX, FiPlus, FiTrash2, FiUsers, FiAlertCircle, FiClock, FiShield, FiFileText, FiPhone, FiDroplet, FiInfo, FiBell, FiLock, FiCheckCircle, FiXCircle } from "react-icons/fi";
+import { FaTrophy, FaHospital, FaUserGraduate, FaChalkboardTeacher, FaWhatsapp } from "react-icons/fa";
+import { GiSiren } from "react-icons/gi";
+import { MdBloodtype } from "react-icons/md";
 
 const BLOOD_GROUPS = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
 
@@ -126,7 +128,7 @@ function EmergencyDashboard() {
     outline: "none"
   };
 
-  const MEDAL_EMOJIS = ["🥇", "🥈", "🥉"];
+  const MEDAL_EMOJIS = [<FaTrophy color="#FFD700" />, <FaTrophy color="#C0C0C0" />, <FaTrophy color="#CD7F32" />];
 
   const showToast = (message, type = "success") => {
     setToast({ show: true, message, type });
@@ -1975,8 +1977,8 @@ function EmergencyDashboard() {
         <p className="dashboardSubtitle">Live triage, real-time donor tracking, and emergency network dispatch</p>
       </div>
 
-      {loading && <div className="loadingAlert"><span className="spinner">🔄</span> Updating database records...</div>}
-      {error && <div className="errorAlert">⚠️ System Error: {error}</div>}
+      {loading && <div className="loadingAlert"><FiLoader className="spinner" /> Updating database records...</div>}
+      {error && <div className="errorAlert"><FiAlertTriangle color="#c62828" /> System Error: {error}</div>}
 
       <div className="metricsGrid">
         <div className="metricTile">
@@ -1996,7 +1998,7 @@ function EmergencyDashboard() {
           className="metricTile critical activeConsoleCard"
           style={{ cursor: "default", ...buttonMotionStyle }}
         >
-          <span className="tileIcon"><FiAlertCircle /></span>
+          <span className="tileIcon"><GiSiren size={36} color="#d90429" /></span>
           <div className="tileData">
             <h3>{activeRequests.length}</h3>
             <p>{activeRequests.length === 1 ? "Active Live Request" : "Active Live Requests"}</p>
@@ -2011,7 +2013,7 @@ function EmergencyDashboard() {
             <h3 style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><FiAlertCircle /> Launch Emergency Broadcast</h3>
             <div className="formSet">
               <div className="bloodGroupHeader">
-                <h4 style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><FiDroplet /> Select Required Blood Groups</h4>
+                <h4 style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><MdBloodtype /> Select Required Blood Groups</h4>
                 <p>Choose one or more blood groups to notify donors.</p>
               </div>
               <div className="bloodGroupSelector">
@@ -2020,7 +2022,7 @@ function EmergencyDashboard() {
                   className={`bloodGroupOption allGroups ${allBloodGroupsSelected ? "selected" : ""}`}
                   onClick={toggleAllBloodGroupsSelection}
                 >
-                  <span className="bloodGroupIcon"><FiDroplet /></span>
+                  <span className="bloodGroupIcon"><MdBloodtype /></span>
                   <span className="bloodGroupText">All Blood Groups</span>
                 </button>
                 {BLOOD_GROUPS.map((group) => (
@@ -2031,7 +2033,7 @@ function EmergencyDashboard() {
                     disabled={allBloodGroupsSelected}
                     onClick={() => toggleBloodGroupSelection(group)}
                   >
-                    <span className="bloodGroupIcon"><FiDroplet /></span>
+                    <span className="bloodGroupIcon"><MdBloodtype /></span>
                     <span className="bloodGroupText">{group}</span>
                   </button>
                 ))}
@@ -2063,7 +2065,7 @@ function EmergencyDashboard() {
                     onClick={() => { setSelectedRequestId(req._id); }}
                     style={buttonMotionStyle}
                   >
-                    <span className="tabBloodDrop" style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><FiDroplet /> {formatRequestBloodGroupLabel(req.bloodGroup)}</span>
+                    <span className="tabBloodDrop" style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><MdBloodtype /> {formatRequestBloodGroupLabel(req.bloodGroup)}</span>
                     <span className="tabHospitalLabel">{req.hospital}</span>
                   </button>
                 ))}
@@ -2146,12 +2148,12 @@ function EmergencyDashboard() {
 
                                   <div className="cardActionRow">
                                     <div className="actionBtnLeftGroup">
-                                      <button className="cardActionBtn" onClick={() => setDetailsDonor(d)}>📊 Details</button>
-                                      <a href={`tel:${d.mobile}`} className="commsLink"><button className="cardActionBtn">📞 Call</button></a>
-                                      <a href={`https://wa.me/91${d.mobile}`} target="_blank" rel="noreferrer" className="commsLink"><button className="cardActionBtn">📱 WhatsApp</button></a>
+                                      <button className="cardActionBtn" onClick={() => setDetailsDonor(d)}><FiFileText /> Details</button>
+                                      <a href={`tel:${d.mobile}`} className="commsLink"><button className="cardActionBtn"><FiPhone /> Call</button></a>
+                                      <a href={`https://wa.me/91${d.mobile}`} target="_blank" rel="noreferrer" className="commsLink"><button className="cardActionBtn"><FaWhatsapp /> WhatsApp</button></a>
                                     </div>
                                     <div className="actionBtnRightGroup">
-                                      <button className="cardActionBtn actionBtnHistory" onClick={() => setSelectedDonor(d)}>📜 History</button>
+                                      <button className="cardActionBtn actionBtnHistory" onClick={() => setSelectedDonor(d)}><FiClock /> History</button>
                                     </div>
                                   </div>
                                 </div>
@@ -2295,9 +2297,9 @@ function EmergencyDashboard() {
 
                                     <div className="cardActionRow">
                                       <div className="actionBtnLeftGroup">
-                                        <button className="cardActionBtn" onClick={() => setDetailsDonor(d)}>📊 Details</button>
-                                        <a href={`tel:${d.mobile}`} className="commsLink"><button className="cardActionBtn">📞 Call</button></a>
-                                        <a href={`https://wa.me/91${d.mobile}`} target="_blank" rel="noreferrer" className="commsLink"><button className="cardActionBtn">📱 WhatsApp</button></a>
+                                        <button className="cardActionBtn" onClick={() => setDetailsDonor(d)}><FiFileText /> Details</button>
+                                        <a href={`tel:${d.mobile}`} className="commsLink"><button className="cardActionBtn"><FiPhone /> Call</button></a>
+                                        <a href={`https://wa.me/91${d.mobile}`} target="_blank" rel="noreferrer" className="commsLink"><button className="cardActionBtn"><FaWhatsapp /> WhatsApp</button></a>
                                       </div>
                                       <div className="actionBtnRightGroup">
                                         <button className="cardActionBtn actionBtnRecord" onClick={() => setDonationDonor(d)}>➕ Log Donation</button>
@@ -2460,7 +2462,7 @@ function EmergencyDashboard() {
           <div className="modalWindow" onClick={(e) => e.stopPropagation()}>
             <div className="modalWindowHeader">
               <h2>Log External Donation Record</h2>
-              <button className="modalCloseCorner" onClick={() => { setShowGlobalLogger(false); setManualRegNo(""); setManualDonorFound(null); }}>✕</button>
+              <button className="modalCloseCorner" onClick={() => { setShowGlobalLogger(false); setManualRegNo(""); setManualDonorFound(null); }}><FiX /></button>
             </div>
             <div className="modalWindowContent">
               <div className="formGroupInline" style={{ marginBottom: "20px" }}>
@@ -2493,7 +2495,7 @@ function EmergencyDashboard() {
           <div className="modalWindow detailsModal" onClick={(e) => e.stopPropagation()}>
             <div className="modalWindowHeader">
               <h2>Full Record Profile</h2>
-              <button className="modalCloseCorner" onClick={() => setDetailsDonor(null)}>✕</button>
+              <button className="modalCloseCorner" onClick={() => setDetailsDonor(null)}><FiX /></button>
             </div>
             <div className="modalWindowContent">
               <div className="fullDetailsList">
@@ -2530,14 +2532,14 @@ function EmergencyDashboard() {
       {selectedDonor && (
         <div className="modalOverlay" onClick={() => setSelectedDonor(null)}>
           <div className="modalWindow" onClick={(e) => e.stopPropagation()}>
-            <div className="modalWindowHeader"><h2>Donation History Logs</h2><button className="modalCloseCorner" onClick={() => setSelectedDonor(null)}>✕</button></div>
+            <div className="modalWindowHeader"><h2>Donation History Logs</h2><button className="modalCloseCorner" onClick={() => setSelectedDonor(null)}><FiX /></button></div>
             <div className="modalWindowContent">
               <h3>{selectedDonor.name}</h3>
               <p className="modalSubheaderInfo">Blood Type: {selectedDonor.bloodGroup}</p>
               <div className="historyTimeline professionalTimeline">
                 {selectedDonor.donationHistory?.map((h, i) => (
                   <div key={i} className="timelineNode professionalNode">
-                    <p className="nodeDate" style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><FiClock /> {new Date(h.date).toDateString()} — <FiDroplet /> {h.units || "N/A"} Units</p>
+                    <p className="nodeDate" style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><FiClock /> {new Date(h.date).toDateString()} — <MdBloodtype /> {h.units || "N/A"} Units</p>
                     <p className="timelineDesc" style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><FiInfo /> <strong>Location:</strong> {h.hospital}</p>
                   </div>
                 ))}
@@ -2553,7 +2555,7 @@ function EmergencyDashboard() {
           <div className="modalWindow" onClick={(e) => e.stopPropagation()}>
             <div className="modalWindowHeader">
               <h2>Record New Donation Event</h2>
-              <button className="modalCloseCorner" onClick={() => setDonationDonor(null)}>✕</button>
+              <button className="modalCloseCorner" onClick={() => setDonationDonor(null)}><FiX /></button>
             </div>
             <div className="modalWindowContent">
               <p className="donationTargetTitle">Logging details for: <strong>{donationDonor.name}</strong></p>

@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { FiLoader, FiCheckCircle, FiHeart, FiAlertTriangle, FiLock, FiXCircle } from "react-icons/fi";
+import { FaHospital } from "react-icons/fa";
+import { MdBloodtype } from "react-icons/md";
 import "./EmergencyRequestPage.css";
 
 const ALL_BLOOD_GROUPS = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
@@ -120,7 +123,7 @@ function EmergencyRequestPage() {
   if (loading) {
     return (
       <div className="stateContainer">
-        <div className="statusLoadingSpinner">🔄</div>
+        <div className="statusLoadingSpinner"><FiLoader className="spinner" /></div>
         <p className="statusText">Resolving Triage Vector...</p>
       </div>
     );
@@ -129,7 +132,7 @@ function EmergencyRequestPage() {
   if (request?.status === "CLOSED") {
     return (
       <div className="stateContainer textCenter">
-        <div className="statusIcon closed">✅</div>
+        <div className="statusIcon closed"><FiCheckCircle color="#2e7d32" /></div>
         <h1 className="statusHeading success">Requirement Fulfilled</h1>
         <p className="statusMessage">This emergency broadcast has been successfully addressed and closed by system dispatchers. Thank you for your readiness.</p>
       </div>
@@ -139,7 +142,7 @@ function EmergencyRequestPage() {
   if (submitted) {
     return (
       <div className="stateContainer textCenter">
-        <div className="statusIcon acknowledged">❤️</div>
+        <div className="statusIcon acknowledged"><FiHeart color="#b00020" /></div>
         <h1 className="statusHeading acknowledged">Response Registered</h1>
         <p className="statusMessage">Your deployment availability matrix code was appended to the supervisor stream safely. The command center has been synchronized.</p>
       </div>
@@ -149,7 +152,7 @@ function EmergencyRequestPage() {
   if (!request) {
     return (
       <div className="stateContainer textCenter">
-        <div className="statusIcon error">⚠️</div>
+        <div className="statusIcon error"><FiAlertTriangle color="#c62828" /></div>
         <h1 className="statusHeading error">Request Invalid</h1>
         <p className="statusMessage">The active routing identifier could not find any active emergency parameters matching this digital key header.</p>
       </div>
@@ -182,17 +185,17 @@ function EmergencyRequestPage() {
 
         <div className="requestDataBlock">
           <div className="dataRowItem">
-            <span className="rowLabel">🏥 Institution Hub</span>
+            <span className="rowLabel"><span style={{marginRight: '6px'}}><FaHospital /></span> Institution Hub</span>
             <span className="rowValue highlight">{request.hospital}</span>
           </div>
           <div className="dataRowItem">
-            <span className="rowLabel">🩸 Volume Allocation</span>
+            <span className="rowLabel"><span style={{marginRight: '6px'}}><MdBloodtype /></span> Volume Allocation</span>
             <span className="rowValue highlight">{request.unitsNeeded} Units</span>
           </div>
         </div>
 
         <div className="verificationSection">
-          <h3>🔐 Verify Identity Network Handle</h3>
+          <h3 style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><FiLock /> Verify Identity Network Handle</h3>
           <p className="fieldCaption">Verify your credentials to choose your response vector state safely.</p>
           
           <div className="searchBarInline">
@@ -210,7 +213,7 @@ function EmergencyRequestPage() {
 
         {donor && (
           <div className="bloodGroupSelectSection">
-            <label className="selectLabel">🩸 Enter your blood group</label>
+            <label className="selectLabel" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><MdBloodtype /> Enter your blood group</label>
             <select
               className="bloodGroupSelect"
               value={selectedResponseBloodGroup}
@@ -229,7 +232,7 @@ function EmergencyRequestPage() {
         {/* Dynamically Render Verified Individual Data Card */}
         {donor && (
           <div className="donorVerificationTicket animateFadeIn">
-            <div className="ticketHeader">🔒 Synchronized Network Profile</div>
+            <div className="ticketHeader" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><FiLock /> Synchronized Network Profile</div>
             <div className="ticketGrid">
               <p><strong>Identity:</strong> {donor.name}</p>
               <p><strong>Registry Type:</strong> {donor.bloodGroup}</p>
@@ -242,11 +245,11 @@ function EmergencyRequestPage() {
 
         {/* Unified Mobile Touch Control Footprint */}
         <div className="triageActionFootprint">
-          <button onClick={respondWilling} className="triageBtn willing">
-            ✅ Confirm Immediate Deployment
+          <button onClick={respondWilling} className="triageBtn willing" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+            <FiCheckCircle /> Confirm Immediate Deployment
           </button>
-          <button onClick={respondUnavailable} className="triageBtn unavailable">
-            ❌ Declare Out-of-Service Profile
+          <button onClick={respondUnavailable} className="triageBtn unavailable" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+            <FiXCircle /> Declare Out-of-Service Profile
           </button>
         </div>
       </div>

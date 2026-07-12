@@ -277,19 +277,20 @@ body {
 }
 
 .actionTriggerBtn.emergency {
-  background: linear-gradient(90deg, #d90429, #ef233c);
+  background: #1e293b;
   color: white;
-  box-shadow: 0 6px 20px rgba(217, 4, 41, 0.15);
+  box-shadow: 0 6px 20px rgba(30, 41, 59, 0.15);
 }
 
 .actionTriggerBtn.emergency:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(217, 4, 41, 0.3);
+  box-shadow: 0 8px 25px rgba(30, 41, 59, 0.25);
+  background: #0f172a;
 }
 
 .actionTriggerBtn.emergency:active {
   transform: translateY(1px) scale(0.97);
-  box-shadow: 0 3px 10px rgba(217, 4, 41, 0.1);
+  box-shadow: 0 3px 10px rgba(30, 41, 59, 0.1);
 }
 
 .actionTriggerBtn.search {
@@ -773,15 +774,15 @@ body {
 
 /* Master Primary Call to Action Log Button */
 .cardActionBtn.actionBtnRecord {
-  background: linear-gradient(135deg, #d90429, #ef233c) !important;
+  background: #1e3a8a !important;
   color: white !important;
   border-color: transparent !important;
-  box-shadow: 0 4px 12px rgba(217, 4, 41, 0.15) !important;
+  box-shadow: 0 4px 12px rgba(30, 58, 138, 0.15) !important;
 }
 
 .cardActionBtn.actionBtnRecord:hover {
-  background: linear-gradient(135deg, #b00020, #d90429) !important;
-  box-shadow: 0 6px 16px rgba(217, 4, 41, 0.25) !important;
+  background: #1e40af !important;
+  box-shadow: 0 6px 16px rgba(30, 58, 138, 0.25) !important;
 }
 
 /* Isolated layout logic specifically for historical logs list */

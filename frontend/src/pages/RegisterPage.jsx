@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { FiHeart, FiUser, FiPhone } from "react-icons/fi";
+import { FaUserGraduate } from "react-icons/fa";
+import { MdBloodtype } from "react-icons/md";
 import "./RegisterPage.css";
 
 function RegisterPage() {
@@ -106,7 +109,7 @@ function RegisterPage() {
         <div className="successOverlay" onClick={() => setShowSuccess(false)}>
           <div className="successCard" onClick={(e) => e.stopPropagation()}>
             <div className="successIconRing">
-              <span className="successIcon">❤️</span>
+              <span className="successIcon"><FiHeart color="#b00020" size={32} /></span>
             </div>
             <h2 className="successTitle">Thank You for Joining Us!</h2>
             <p className="successSlogan">
@@ -126,14 +129,14 @@ function RegisterPage() {
       )}
 
       <div className="registerCard">
-        <h1>❤️ Become a Blood Donor</h1>
+        <h1 style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}><FiHeart color="#b00020" /> Become a Blood Donor</h1>
         <p className="subtitle">
           Join BloodBridge and help save lives during emergencies
         </p>
 
         <form onSubmit={handleSubmit}>
           <div className="section">
-            <h3>👤 Personal Information</h3>
+            <h3 style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><FiUser /> Personal Information</h3>
 
             <input placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} required />
             <input type="number" placeholder="Age" value={age} onChange={(e) => setAge(e.target.value)} required />
@@ -150,7 +153,7 @@ function RegisterPage() {
           </div>
 
           <div className="section">
-            <h3>🎓 Academic Details</h3>
+            <h3 style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><FaUserGraduate /> Academic Details</h3>
 
             <select value={department} onChange={(e) => setDepartment(e.target.value)} required>
               <option value="">Select Department</option>
@@ -180,7 +183,7 @@ function RegisterPage() {
           </div>
 
           <div className="section">
-            <h3>📞 Contact Details</h3>
+            <h3 style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><FiPhone /> Contact Details</h3>
 
             <input
               type="text"
@@ -205,7 +208,7 @@ function RegisterPage() {
           </div>
 
           <div className="section">
-            <h3>🩸 Donation History</h3>
+            <h3 style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><MdBloodtype /> Donation History</h3>
 
             <select
               value={hasDonatedBefore ? "Yes" : "No"}
@@ -227,7 +230,7 @@ function RegisterPage() {
           </div>
 
           <button type="submit" className="submitBtn">
-            Register Donor ❤️
+            Register Donor <FiHeart />
           </button>
         </form>
       </div>

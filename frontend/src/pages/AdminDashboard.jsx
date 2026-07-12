@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { FiUsers, FiBook, FiBriefcase, FiAlertCircle, FiList, FiAward, FiClock, FiShield, FiFileText, FiPhone, FiDroplet, FiSearch, FiInfo } from "react-icons/fi";
-import { FaUserGraduate, FaChalkboardTeacher, FaWhatsapp } from "react-icons/fa";
+import { FiLoader, FiAlertTriangle, FiX, FiCheckCircle, FiXCircle, FiCalendar, FiUsers, FiBook, FiBriefcase, FiAlertCircle, FiList, FiAward, FiClock, FiShield, FiFileText, FiPhone, FiSearch, FiInfo } from "react-icons/fi";
+import { FaTrophy, FaHospital, FaUserGraduate, FaChalkboardTeacher, FaWhatsapp } from "react-icons/fa";
+import { GiSiren } from "react-icons/gi";
+import { MdBloodtype } from "react-icons/md";
 
 const BLOOD_GROUPS = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
 
@@ -128,7 +130,7 @@ function AdminDashboard() {
     outline: "none"
   };
 
-  const MEDAL_EMOJIS = ["🥇", "🥈", "🥉"];
+  const MEDAL_EMOJIS = [<FaTrophy color="#FFD700" />, <FaTrophy color="#C0C0C0" />, <FaTrophy color="#CD7F32" />];
 
   const showToast = (message, type = "success") => {
     setToast({ show: true, message, type });
@@ -1974,7 +1976,7 @@ function AdminDashboard() {
 
       <div className="dashboardHeader" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '15px' }}>
         <div>
-          <h1 style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><FiDroplet style={{color: '#b00020'}} /> BloodBridge Command Center</h1>
+          <h1 style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><MdBloodtype style={{color: '#b00020'}} /> BloodBridge Command Center</h1>
           <p className="dashboardSubtitle">Real-time metrics, donor tracking, and live emergency network map</p>
         </div>
         <button 
@@ -1986,8 +1988,8 @@ function AdminDashboard() {
         </button>
       </div>
 
-      {loading && <div className="loadingAlert"><span className="spinner">🔄</span> Updating database records...</div>}
-      {error && <div className="errorAlert">⚠️ System Error: {error}</div>}
+      {loading && <div className="loadingAlert"><FiLoader className="spinner" /> Updating database records...</div>}
+      {error && <div className="errorAlert"><FiAlertTriangle color="#c62828" /> System Error: {error}</div>}
 
       <div className="metricsGrid">
         <div className="metricTile">
@@ -2008,7 +2010,7 @@ function AdminDashboard() {
           onClick={() => navigate('/emergency-dashboard')}
           style={{ cursor: "pointer", ...buttonMotionStyle }}
         >
-          <span className="tileIcon"><FiAlertCircle /></span>
+          <span className="tileIcon"><GiSiren size={36} color="#d90429" /></span>
           <div className="tileData">
             <h3>{activeRequests.length}</h3>
             <p>{activeRequests.length === 1 ? "Active Live Request" : "Active Live Requests"}</p>
@@ -2100,7 +2102,7 @@ function AdminDashboard() {
                       <p>Complete historical listing of all blood donations recorded</p>
                     </div>
                     <button className="globalLogDonationBtn dynamicClickEffect" onClick={() => setShowGlobalLogger(true)}>
-                      <FiDroplet /> Log Manual Donation
+                      <MdBloodtype /> Log Manual Donation
                     </button>
                   </div>
                   
@@ -2114,7 +2116,7 @@ function AdminDashboard() {
                         <div style={{ display: "flex", flexDirection: "column", gap: "8px", margin: "12px 0" }}>
                           <p className="logDonor" style={{ margin: 0, display: 'flex', alignItems: 'center', gap: '6px' }}><FiUsers /> <span style={{ color: "#666" }}>Donor Asset:</span> <strong>{h.donor.name}</strong></p>
                           <p className="logHospital" style={{ margin: 0, display: 'flex', alignItems: 'center', gap: '6px' }}><FiInfo /> <span style={{ color: "#666" }}>Hospital:</span> <strong>{h.hospital}</strong></p>
-                          <p style={{ margin: 0, fontSize: "15px", display: 'flex', alignItems: 'center', gap: '6px' }}><FiDroplet /> <span style={{ color: "#666" }}>Volume Contributed:</span> <strong style={{ color: "#b00020" }}>{h.units} Units</strong></p>
+                          <p style={{ margin: 0, fontSize: "15px", display: 'flex', alignItems: 'center', gap: '6px' }}><MdBloodtype /> <span style={{ color: "#666" }}>Volume Contributed:</span> <strong style={{ color: "#b00020" }}>{h.units} Units</strong></p>
                         </div>
                         <button className="cardActionBtn" onClick={() => setDetailsDonor(h.donor)}>Full Details</button>
                       </div>
@@ -2171,7 +2173,7 @@ function AdminDashboard() {
                             </div>
                             <div className="actionBtnRightGroup">
                               <button className="cardActionBtn actionBtnHistory" onClick={() => setSelectedDonor(d)}><FiClock /> History</button>
-                              <button className="cardActionBtn actionBtnRecord" onClick={() => setDonationDonor(d)}><FiDroplet /> Log Donation</button>
+                              <button className="cardActionBtn actionBtnRecord" onClick={() => setDonationDonor(d)}><MdBloodtype /> Log Donation</button>
                             </div>
                           </div>
                         </div>
@@ -2190,7 +2192,7 @@ function AdminDashboard() {
           <div className="modalWindow" onClick={(e) => e.stopPropagation()}>
             <div className="modalWindowHeader">
               <h2>Log External Donation Record</h2>
-              <button className="modalCloseCorner" onClick={() => { setShowGlobalLogger(false); setManualRegNo(""); setManualDonorFound(null); }}>✕</button>
+              <button className="modalCloseCorner" onClick={() => { setShowGlobalLogger(false); setManualRegNo(""); setManualDonorFound(null); }}><FiX /></button>
             </div>
             <div className="modalWindowContent">
               <div className="formGroupInline" style={{ marginBottom: "20px" }}>
@@ -2223,7 +2225,7 @@ function AdminDashboard() {
           <div className="modalWindow detailsModal" onClick={(e) => e.stopPropagation()}>
             <div className="modalWindowHeader">
               <h2>Full Record Profile</h2>
-              <button className="modalCloseCorner" onClick={() => setDetailsDonor(null)}>✕</button>
+              <button className="modalCloseCorner" onClick={() => setDetailsDonor(null)}><FiX /></button>
             </div>
             <div className="modalWindowContent">
               <div className="fullDetailsList">
@@ -2260,15 +2262,15 @@ function AdminDashboard() {
       {selectedDonor && (
         <div className="modalOverlay" onClick={() => setSelectedDonor(null)}>
           <div className="modalWindow" onClick={(e) => e.stopPropagation()}>
-            <div className="modalWindowHeader"><h2>Donation History Logs</h2><button className="modalCloseCorner" onClick={() => setSelectedDonor(null)}>✕</button></div>
+            <div className="modalWindowHeader"><h2>Donation History Logs</h2><button className="modalCloseCorner" onClick={() => setSelectedDonor(null)}><FiX /></button></div>
             <div className="modalWindowContent">
               <h3>{selectedDonor.name}</h3>
               <p className="modalSubheaderInfo">Blood Type: {selectedDonor.bloodGroup}</p>
               <div className="historyTimeline professionalTimeline">
                 {selectedDonor.donationHistory?.map((h, i) => (
                   <div key={i} className="timelineNode professionalNode">
-                    <p className="nodeDate">📅 {new Date(h.date).toDateString()} — 🩸 {h.units || "N/A"} Units</p>
-                    <p className="timelineDesc">🏥 <strong>Location:</strong> {h.hospital}</p>
+                    <p className="nodeDate"><FiCalendar /> {new Date(h.date).toDateString()} — 🩸 {h.units || "N/A"} Units</p>
+                    <p className="timelineDesc"><FaHospital /> <strong>Location:</strong> {h.hospital}</p>
                   </div>
                 ))}
               </div>
@@ -2283,7 +2285,7 @@ function AdminDashboard() {
           <div className="modalWindow" onClick={(e) => e.stopPropagation()}>
             <div className="modalWindowHeader">
               <h2>Record New Donation Event</h2>
-              <button className="modalCloseCorner" onClick={() => setDonationDonor(null)}>✕</button>
+              <button className="modalCloseCorner" onClick={() => setDonationDonor(null)}><FiX /></button>
             </div>
             <div className="modalWindowContent">
               <p className="donationTargetTitle">Logging details for: <strong>{donationDonor.name}</strong></p>
