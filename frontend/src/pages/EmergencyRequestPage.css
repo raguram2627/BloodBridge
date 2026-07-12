@@ -28,7 +28,7 @@
 .crisisBanner {
   background: #fff0f1;
   border: 1px solid #fbc2c2;
-  color: #d90429;
+  color: #b00020;
   font-weight: 800;
   font-size: 13px;
   letter-spacing: 1px;
@@ -43,7 +43,7 @@
 .pulseCircle {
   width: 8px;
   height: 8px;
-  background: #d90429;
+  background: #b00020;
   border-radius: 50%;
   animation: beaconPulse 1.5s infinite;
 }
@@ -168,12 +168,12 @@
 }
 
 .bloodGroupSelect:focus {
-  border-color: #d90429;
+  border-color: #b00020;
   box-shadow: 0 0 0 4px rgba(217, 4, 41, 0.08);
 }
 
 .emergencyInput:focus {
-  border-color: #d62839;
+  border-color: #8e001a;
 }
 
 .verifyBtn {
@@ -244,7 +244,7 @@
 }
 
 .triageBtn.willing {
-  background: linear-gradient(90deg, #d90429, #ef233c);
+  background: #b00020;
   color: white;
   box-shadow: 0 6px 20px rgba(217, 4, 41, 0.2);
 }

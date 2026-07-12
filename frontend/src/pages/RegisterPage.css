@@ -37,7 +37,7 @@
 }
 
 .section h3 {
-  color: #d62839;
+  color: #8e001a;
   margin-bottom: 12px;
   border-bottom: 2px solid #fff0f1;
   padding-bottom: 6px;
@@ -61,7 +61,7 @@ textarea {
 }
 
 input:focus, select:focus, textarea:focus {
-  border-color: #d62839;
+  border-color: #8e001a;
   box-shadow: 0 0 0 4px rgba(214, 40, 57, 0.12);
 }
 
@@ -70,7 +70,7 @@ input:focus, select:focus, textarea:focus {
   padding: 15px;
   border: none;
   border-radius: 50px;
-  background: linear-gradient(90deg, #d90429, #ef233c);
+  background: #b00020;
   color: white;
   font-size: 18px;
   font-weight: bold;
@@ -155,7 +155,7 @@ input:focus, select:focus, textarea:focus {
   padding: 14px 36px;
   border: none;
   border-radius: 50px;
-  background: linear-gradient(90deg, #b00020, #d62839);
+  background: #b00020;
   color: white;
   font-size: 16px;
   font-weight: 700;

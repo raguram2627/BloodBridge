@@ -33,7 +33,7 @@
 }
 
 .profileHeader {
-  background: linear-gradient(135deg, #b00020, #d62839);
+  background: #b00020;
   padding: 40px 30px;
   color: white;
   text-align: center;
@@ -150,7 +150,7 @@
 .inputGroup select:focus,
 .inputGroup textarea:focus {
   background: white;
-  border-color: #d62839;
+  border-color: #8e001a;
   box-shadow: 0 0 0 3px rgba(214, 40, 57, 0.1);
 }
 
@@ -172,7 +172,7 @@
 }
 
 .saveBtn {
-  background: linear-gradient(135deg, #d90429, #ef233c);
+  background: #b00020;
   color: white;
   border: none;
   padding: 14px 28px;

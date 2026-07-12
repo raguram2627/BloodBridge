@@ -81,7 +81,7 @@ input::placeholder {
 }
 
 input:focus {
-  border-color: #d62839;
+  border-color: #8e001a;
   box-shadow: 0 0 0 4px rgba(214, 40, 57, 0.12);
 }
 
@@ -91,7 +91,7 @@ input:focus {
   margin-top: 10px;
   border: none;
   border-radius: 50px;
-  background: linear-gradient(90deg, #d90429, #ef233c);
+  background: #b00020;
   color: white;
   font-size: 17px;
   font-weight: bold;
