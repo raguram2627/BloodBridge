@@ -2250,7 +2250,6 @@ function EmergencyDashboard() {
                           className={`sectionToggleBtn ${responseView === "willing" ? "active" : ""}`}
                           onClick={() => setResponseView("willing")}
                         >
-                        >
                           <FiCheckCircle /> Willing ({currentRequest.willingDonors?.length || 0})
                         </button>
                         <button
