@@ -125,7 +125,7 @@ function MyProfilePage() {
                 </div>
               ) : (
                 <div className="inputGroup fullWidth">
-                  <p style={{ fontSize: "14px", color: "green", fontWeight: "600" }}>✓ Telegram Connected</p>
+                  <p style={{ fontSize: "14px", color: "green", fontWeight: "600" }}>✅ Telegram Connected</p>
                 </div>
               )}
             </div>

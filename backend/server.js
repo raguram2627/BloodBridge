@@ -620,7 +620,10 @@ app.post("/test-whatsapp", async (req, res) => {
     );
   }
 });
-const PORT = process.env.PORT || 5000;
+
+
+// Import Telegram Bot Service
+const { initTelegramBot } = require('./telegramService');
 
 
 app.post("/donor/login", async (req, res) => {
@@ -657,11 +660,14 @@ app.get("/connect-telegram/:registerNumber", async (req, res) => {
     if (!donor) {
       return res.status(404).json({ message: "Donor not found" });
     }
-    res.redirect("https://t.me/Bloodbridgehq_bot");
+    res.redirect(`https://t.me/Bloodbridgehq_bot?start=${req.params.registerNumber}`);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
+
+// Initialize Telegram Bot Service
+initTelegramBot();
 
 app.listen(PORT, () => {
     console.log(`🚀 Server running on port ${PORT}`);
