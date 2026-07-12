@@ -1723,15 +1723,30 @@ function AdminDashboard() {
             line-height: 1.1;
           }
           
-          .controlPanel {
-            position: relative !important;
-            top: 0 !important;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            padding-right: 0;
-            margin-bottom: 10px;
+          .dashboardLayout {
+            display: flex !important;
+            flex-direction: column !important;
           }
+          
+          .controlPanel {
+            display: contents !important;
+          }
+          
+          .controlBlock:not(.systemStatusBlock) {
+            order: 1 !important;
+            margin-bottom: 10px !important;
+          }
+          
+          .dataStreamPanel {
+            order: 2 !important;
+            margin-bottom: 15px !important;
+          }
+          
+          .systemStatusBlock {
+            order: 3 !important;
+            margin-top: 15px !important;
+          }
+
           .desktop-sticky {
             position: relative !important;
             top: 0 !important;
@@ -1739,7 +1754,6 @@ function AdminDashboard() {
           
           .controlBlock {
             padding: 12px 8px;
-            border-radius: 10px;
             margin: 0 !important;
           }
           
@@ -1761,6 +1775,11 @@ function AdminDashboard() {
             text-align: center;
             justify-content: center;
             flex: 1;
+          }
+
+          /* Professional Sharper Corners */
+          .metricTile, .controlBlock, .panelBtn, .dataCard, .dashboardInput, .searchInputWrapper, .donorCardDetailsGrid, .actionTriggerBtn, .modalWindow {
+            border-radius: 4px !important;
           }
           
           .dataCard {
