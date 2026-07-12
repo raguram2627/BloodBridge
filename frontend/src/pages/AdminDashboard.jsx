@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { FiUsers, FiBook, FiBriefcase, FiAlertCircle, FiList, FiAward, FiClock, FiShield, FiFileText, FiPhone, FiDroplet, FiSearch, FiInfo } from "react-icons/fi";
+import { FaUserGraduate, FaChalkboardTeacher, FaWhatsapp } from "react-icons/fa";
 
 const BLOOD_GROUPS = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
 
@@ -1972,7 +1974,7 @@ function AdminDashboard() {
 
       <div className="dashboardHeader" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '15px' }}>
         <div>
-          <h1>🩸 BloodBridge Command Center</h1>
+          <h1 style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><FiDroplet style={{color: '#b00020'}} /> BloodBridge Command Center</h1>
           <p className="dashboardSubtitle">Real-time metrics, donor tracking, and live emergency network map</p>
         </div>
         <button 
@@ -1989,15 +1991,15 @@ function AdminDashboard() {
 
       <div className="metricsGrid">
         <div className="metricTile">
-          <span className="tileIcon">👥</span>
+          <span className="tileIcon"><FiUsers /></span>
           <div className="tileData"><h3>{totalDonors}</h3><p>Total Registered</p></div>
         </div>
         <div className="metricTile">
-          <span className="tileIcon">🎓</span>
+          <span className="tileIcon"><FaUserGraduate /></span>
           <div className="tileData"><h3>{studentCount}</h3><p>Students</p></div>
         </div>
         <div className="metricTile">
-          <span className="tileIcon">👨‍🏫</span>
+          <span className="tileIcon"><FaChalkboardTeacher /></span>
           <div className="tileData"><h3>{facultyCount}</h3><p>Faculty & Staff</p></div>
         </div>
         
@@ -2006,7 +2008,7 @@ function AdminDashboard() {
           onClick={() => navigate('/emergency-dashboard')}
           style={{ cursor: "pointer", ...buttonMotionStyle }}
         >
-          <span className="tileIcon">🚨</span>
+          <span className="tileIcon"><FiAlertCircle /></span>
           <div className="tileData">
             <h3>{activeRequests.length}</h3>
             <p>{activeRequests.length === 1 ? "Active Live Request" : "Active Live Requests"}</p>
@@ -2019,11 +2021,11 @@ function AdminDashboard() {
           <div className="controlBlock">
             <h3>Navigation & Filters</h3>
             <div className="actionButtonGroup">
-              <button className={`panelBtn ${viewMode === "all" ? "active" : ""}`} onClick={() => setViewMode("all")}>📋 View All Donors</button>
-              <button className={`panelBtn ${viewMode === "student" ? "active" : ""}`} onClick={() => setViewMode("student")}>🎓 Filter Students</button>
-              <button className={`panelBtn ${viewMode === "faculty" ? "active" : ""}`} onClick={() => setViewMode("faculty")}>👨‍🏫 Filter Faculty</button>
-              <button className={`panelBtn ${viewMode === "frequent" ? "active" : ""}`} onClick={() => setViewMode("frequent")}>🏆 Frequent Donors</button>
-              <button className={`panelBtn ${viewMode === "history" ? "active" : ""}`} onClick={() => setViewMode("history")}>📜 Donation History Log</button>
+              <button className={`panelBtn ${viewMode === "all" ? "active" : ""}`} onClick={() => setViewMode("all")}><FiList /> View All Donors</button>
+              <button className={`panelBtn ${viewMode === "student" ? "active" : ""}`} onClick={() => setViewMode("student")}><FaUserGraduate /> Filter Students</button>
+              <button className={`panelBtn ${viewMode === "faculty" ? "active" : ""}`} onClick={() => setViewMode("faculty")}><FaChalkboardTeacher /> Filter Faculty</button>
+              <button className={`panelBtn ${viewMode === "frequent" ? "active" : ""}`} onClick={() => setViewMode("frequent")}><FiAward /> Frequent Donors</button>
+              <button className={`panelBtn ${viewMode === "history" ? "active" : ""}`} onClick={() => setViewMode("history")}><FiClock /> Donation History Log</button>
             </div>
           </div>
 
@@ -2047,7 +2049,7 @@ function AdminDashboard() {
               </div>
             </div>
             <div style={{ marginTop: '20px', padding: '12px', background: '#fff0f1', borderRadius: '8px', textAlign: 'center', color: '#b00020', fontSize: '12px', fontWeight: 'bold', display: 'flex', flexDirection: 'column', gap: '4px' }}>
-              <span>🛡️ Secure Network</span>
+              <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}><FiShield /> Secure Network</span>
               <span style={{ fontSize: '10px', opacity: 0.8, fontWeight: 'normal' }}>End-to-end encrypted dispatch</span>
             </div>
           </div>
@@ -2084,8 +2086,8 @@ function AdminDashboard() {
                   </div>
 
                   <div className="searchFilterRow doubleGrid">
-                    <input type="text" placeholder="🔍 Search by Name..." value={searchName} onChange={(e) => setSearchName(e.target.value)} className="dashboardInput textInputBold" />
-                    <input type="text" placeholder="🆔 Search by Register Number..." value={searchRegNo} onChange={(e) => setSearchRegNo(e.target.value)} className="dashboardInput textInputBold" />
+                    <input type="text" placeholder="Search by Name..." value={searchName} onChange={(e) => setSearchName(e.target.value)} className="dashboardInput textInputBold" />
+                    <input type="text" placeholder="Search by Register Number..." value={searchRegNo} onChange={(e) => setSearchRegNo(e.target.value)} className="dashboardInput textInputBold" />
                   </div>
                 </div>
               )}
@@ -2094,11 +2096,11 @@ function AdminDashboard() {
                 <>
                   <div className="panelSectionTitle historySectionTitle">
                     <div>
-                      <h2>📜 Master Donation History Logbook</h2>
+                      <h2 style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}><FiClock /> Master Donation History Logbook</h2>
                       <p>Complete historical listing of all blood donations recorded</p>
                     </div>
                     <button className="globalLogDonationBtn dynamicClickEffect" onClick={() => setShowGlobalLogger(true)}>
-                      ➕ Log Manual Donation
+                      <FiDroplet /> Log Manual Donation
                     </button>
                   </div>
                   
@@ -2107,12 +2109,12 @@ function AdminDashboard() {
                       <div key={index} className="dataCard logCard">
                         <div className="logCardHeader">
                           <span className="logBadge" style={{ background: "#fff0f1", color: "#b00020", padding: "4px 8px", borderRadius: "6px", fontWeight: "700" }}>RECORD LOGGED</span>
-                          <p className="logDate">📅 {new Date(h.date).toDateString()}</p>
+                          <p className="logDate"><FiClock /> {new Date(h.date).toDateString()}</p>
                         </div>
                         <div style={{ display: "flex", flexDirection: "column", gap: "8px", margin: "12px 0" }}>
-                          <p className="logDonor" style={{ margin: 0 }}>👤 <span style={{ color: "#666" }}>Donor Asset:</span> <strong>{h.donor.name}</strong></p>
-                          <p className="logHospital" style={{ margin: 0 }}>🏥 <span style={{ color: "#666" }}>Hospital:</span> <strong>{h.hospital}</strong></p>
-                          <p style={{ margin: 0, fontSize: "15px" }}>💧 <span style={{ color: "#666" }}>Volume Contributed:</span> <strong style={{ color: "#b00020" }}>{h.units} Units</strong></p>
+                          <p className="logDonor" style={{ margin: 0, display: 'flex', alignItems: 'center', gap: '6px' }}><FiUsers /> <span style={{ color: "#666" }}>Donor Asset:</span> <strong>{h.donor.name}</strong></p>
+                          <p className="logHospital" style={{ margin: 0, display: 'flex', alignItems: 'center', gap: '6px' }}><FiInfo /> <span style={{ color: "#666" }}>Hospital:</span> <strong>{h.hospital}</strong></p>
+                          <p style={{ margin: 0, fontSize: "15px", display: 'flex', alignItems: 'center', gap: '6px' }}><FiDroplet /> <span style={{ color: "#666" }}>Volume Contributed:</span> <strong style={{ color: "#b00020" }}>{h.units} Units</strong></p>
                         </div>
                         <button className="cardActionBtn" onClick={() => setDetailsDonor(h.donor)}>Full Details</button>
                       </div>
@@ -2122,7 +2124,9 @@ function AdminDashboard() {
               ) : (
                 <>
                   <div className="panelSectionTitle">
-                    <h2>{viewMode === "frequent" ? "🏆 Frequent Donors" : "📋 Registered Donors List"}</h2>
+                    <h2 style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+                      {viewMode === "frequent" ? <><FiAward /> Frequent Donors</> : <><FiList /> Registered Donors List</>}
+                    </h2>
                     {viewMode === "frequent" && (
                       <p className="resultsCounter">Ranked by total donations — highest first</p>
                     )}
@@ -2161,13 +2165,13 @@ function AdminDashboard() {
 
                           <div className="cardActionRow">
                             <div className="actionBtnLeftGroup">
-                              <button className="cardActionBtn" onClick={() => setDetailsDonor(d)}>📊 Details</button>
-                              <a href={`tel:${d.mobile}`} className="commsLink"><button className="cardActionBtn">📞 Call</button></a>
-                              <a href={`https://wa.me/91${d.mobile}`} target="_blank" rel="noreferrer" className="commsLink"><button className="cardActionBtn">📱 WhatsApp</button></a>
+                              <button className="cardActionBtn" onClick={() => setDetailsDonor(d)}><FiFileText /> Details</button>
+                              <a href={`tel:${d.mobile}`} className="commsLink"><button className="cardActionBtn"><FiPhone /> Call</button></a>
+                              <a href={`https://wa.me/91${d.mobile}`} target="_blank" rel="noreferrer" className="commsLink"><button className="cardActionBtn"><FaWhatsapp /> WhatsApp</button></a>
                             </div>
                             <div className="actionBtnRightGroup">
-                              <button className="cardActionBtn actionBtnHistory" onClick={() => setSelectedDonor(d)}>📜 History</button>
-                              <button className="cardActionBtn actionBtnRecord" onClick={() => setDonationDonor(d)}>➕ Log Donation</button>
+                              <button className="cardActionBtn actionBtnHistory" onClick={() => setSelectedDonor(d)}><FiClock /> History</button>
+                              <button className="cardActionBtn actionBtnRecord" onClick={() => setDonationDonor(d)}><FiDroplet /> Log Donation</button>
                             </div>
                           </div>
                         </div>

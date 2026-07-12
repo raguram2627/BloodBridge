@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import { FiUsers, FiAlertCircle, FiClock, FiShield, FiFileText, FiPhone, FiDroplet, FiInfo, FiBell, FiLock, FiCheckCircle, FiXCircle } from "react-icons/fi";
+import { FaUserGraduate, FaChalkboardTeacher, FaWhatsapp } from "react-icons/fa";
 
 const BLOOD_GROUPS = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
 
@@ -1969,7 +1971,7 @@ function EmergencyDashboard() {
       `}} />
 
       <div className="dashboardHeader">
-        <h1>🚨 Emergency Response Console</h1>
+        <h1 style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}><FiAlertCircle style={{color: '#b00020'}} /> Emergency Response Console</h1>
         <p className="dashboardSubtitle">Live triage, real-time donor tracking, and emergency network dispatch</p>
       </div>
 
@@ -1978,15 +1980,15 @@ function EmergencyDashboard() {
 
       <div className="metricsGrid">
         <div className="metricTile">
-          <span className="tileIcon">👥</span>
+          <span className="tileIcon"><FiUsers /></span>
           <div className="tileData"><h3>{totalDonors}</h3><p>Total Registered</p></div>
         </div>
         <div className="metricTile">
-          <span className="tileIcon">🎓</span>
+          <span className="tileIcon"><FaUserGraduate /></span>
           <div className="tileData"><h3>{studentCount}</h3><p>Students</p></div>
         </div>
         <div className="metricTile">
-          <span className="tileIcon">👨‍🏫</span>
+          <span className="tileIcon"><FaChalkboardTeacher /></span>
           <div className="tileData"><h3>{facultyCount}</h3><p>Faculty & Staff</p></div>
         </div>
         
@@ -1994,7 +1996,7 @@ function EmergencyDashboard() {
           className="metricTile critical activeConsoleCard"
           style={{ cursor: "default", ...buttonMotionStyle }}
         >
-          <span className="tileIcon">🚨</span>
+          <span className="tileIcon"><FiAlertCircle /></span>
           <div className="tileData">
             <h3>{activeRequests.length}</h3>
             <p>{activeRequests.length === 1 ? "Active Live Request" : "Active Live Requests"}</p>
@@ -2006,10 +2008,10 @@ function EmergencyDashboard() {
         <div className="controlPanel desktop-sticky">
 
           <div className="controlBlock emergencySection">
-            <h3>🚨 Launch Emergency Broadcast</h3>
+            <h3 style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><FiAlertCircle /> Launch Emergency Broadcast</h3>
             <div className="formSet">
               <div className="bloodGroupHeader">
-                <h4>🩸 Select Required Blood Groups</h4>
+                <h4 style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><FiDroplet /> Select Required Blood Groups</h4>
                 <p>Choose one or more blood groups to notify donors.</p>
               </div>
               <div className="bloodGroupSelector">
@@ -2018,7 +2020,7 @@ function EmergencyDashboard() {
                   className={`bloodGroupOption allGroups ${allBloodGroupsSelected ? "selected" : ""}`}
                   onClick={toggleAllBloodGroupsSelection}
                 >
-                  <span className="bloodGroupIcon">🩸</span>
+                  <span className="bloodGroupIcon"><FiDroplet /></span>
                   <span className="bloodGroupText">All Blood Groups</span>
                 </button>
                 {BLOOD_GROUPS.map((group) => (
@@ -2029,7 +2031,7 @@ function EmergencyDashboard() {
                     disabled={allBloodGroupsSelected}
                     onClick={() => toggleBloodGroupSelection(group)}
                   >
-                    <span className="bloodGroupIcon">🩸</span>
+                    <span className="bloodGroupIcon"><FiDroplet /></span>
                     <span className="bloodGroupText">{group}</span>
                   </button>
                 ))}
@@ -2048,7 +2050,7 @@ function EmergencyDashboard() {
         <div className="dataStreamPanel">
             <div className="emergencyConsoleWorkspace">
               <div className="panelSectionTitle">
-                <h2>🚨 Concurrent Emergency Operations</h2>
+                <h2 style={{ display: 'flex', alignItems: 'center', gap: '6px', justifyContent: 'center' }}><FiAlertCircle /> Concurrent Emergency Operations</h2>
                 <p>Track multiple active broadcast streams contextually without closing or locking background operations.</p>
               </div>
 
@@ -2061,7 +2063,7 @@ function EmergencyDashboard() {
                     onClick={() => { setSelectedRequestId(req._id); }}
                     style={buttonMotionStyle}
                   >
-                    <span className="tabBloodDrop">🩸 {formatRequestBloodGroupLabel(req.bloodGroup)}</span>
+                    <span className="tabBloodDrop" style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><FiDroplet /> {formatRequestBloodGroupLabel(req.bloodGroup)}</span>
                     <span className="tabHospitalLabel">{req.hospital}</span>
                   </button>
                 ))}
@@ -2084,7 +2086,7 @@ function EmergencyDashboard() {
                               style={{ width: "auto", padding: "12px 20px" }}
                               onClick={() => handleNotifyDonors(currentRequest._id)}
                             >
-                              📢 Notify Donors
+                              <FiBell /> Notify Donors
                             </button>
 
                             {currentRequest.isNotified && (
@@ -2184,12 +2186,12 @@ function EmergencyDashboard() {
 
                                   <div className="cardActionRow">
                                     <div className="actionBtnLeftGroup">
-                                      <button className="cardActionBtn" onClick={() => setDetailsDonor(d)}>📊 Details</button>
-                                      <a href={`tel:${d.mobile}`} className="commsLink"><button className="cardActionBtn">📞 Call</button></a>
-                                      <a href={`https://wa.me/91${d.mobile}`} target="_blank" rel="noreferrer" className="commsLink"><button className="cardActionBtn">📱 WhatsApp</button></a>
+                                      <button className="cardActionBtn" onClick={() => setDetailsDonor(d)}><FiFileText /> Details</button>
+                                      <a href={`tel:${d.mobile}`} className="commsLink"><button className="cardActionBtn"><FiPhone /> Call</button></a>
+                                      <a href={`https://wa.me/91${d.mobile}`} target="_blank" rel="noreferrer" className="commsLink"><button className="cardActionBtn"><FaWhatsapp /> WhatsApp</button></a>
                                     </div>
                                     <div className="actionBtnRightGroup">
-                                      <button className="cardActionBtn actionBtnHistory" onClick={() => setSelectedDonor(d)}>📜 History</button>
+                                      <button className="cardActionBtn actionBtnHistory" onClick={() => setSelectedDonor(d)}><FiClock /> History</button>
                                     </div>
                                   </div>
                                 </div>
@@ -2206,23 +2208,23 @@ function EmergencyDashboard() {
                           style={{ ...buttonMotionStyle, background: "#b00020", marginTop: 0 }}
                           onClick={() => handleCloseBroadcastChannel(currentRequest._id)}
                         >
-                          🔒 Close Request Thread
+                          <FiLock /> Close Request Thread
                         </button>
                         <button
                           className="closeBroadcastBtn dynamicClickEffect"
                           style={{ ...buttonMotionStyle, background: "#7b1fa2", marginTop: 0 }}
                           onClick={handleCloseAllActiveRequests}
                         >
-                          🧹 Close All Active Requests
+                          <FiXCircle /> Close All Active Requests
                         </button>
                       </div>
                     </>
                   ) : (
                     <div className="liveTriageTrackingView">
                       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px", flexWrap: "wrap", gap: "10px" }}>
-                        <h3>📊 Triage Tracker: Request Group [{formatRequestBloodGroupLabel(currentRequest.bloodGroup)}]</h3>
+                        <h3 style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><FiFileText /> Triage Tracker: Request Group [{formatRequestBloodGroupLabel(currentRequest.bloodGroup)}]</h3>
                         <div style={{ display: "flex", gap: "10px" }}>
-                          <button className="panelBtn dynamicClickEffect" style={{ ...buttonMotionStyle, background: "#0056b3", color: "#fff", width: "auto" }} onClick={handleRefreshResponses}>🔄 Refresh</button>
+                          <button className="panelBtn dynamicClickEffect" style={{ ...buttonMotionStyle, background: "#0056b3", color: "#fff", width: "auto" }} onClick={handleRefreshResponses}><FiClock /> Refresh</button>
                           <button className="panelBtn dynamicClickEffect" style={{ ...buttonMotionStyle, width: "auto" }} onClick={() => updateActiveRequest(currentRequest._id, { showLiveTriage: false })}>← Back</button>
                         </div>
                       </div>
@@ -2235,8 +2237,8 @@ function EmergencyDashboard() {
                             <div key={group} className="responseGroupBadge">
                               <span className="groupLabel">{group}</span>
                               <div className="groupStats">
-                                <span className="statItem willingCount">✅ {willingCounts[group] || 0}</span>
-                                <span className="statItem unavailableCount">❌ {unavailableCounts[group] || 0}</span>
+                                <span className="statItem willingCount"><FiCheckCircle /> {willingCounts[group] || 0}</span>
+                                <span className="statItem unavailableCount"><FiXCircle /> {unavailableCounts[group] || 0}</span>
                               </div>
                             </div>
                           ));
@@ -2248,19 +2250,20 @@ function EmergencyDashboard() {
                           className={`sectionToggleBtn ${responseView === "willing" ? "active" : ""}`}
                           onClick={() => setResponseView("willing")}
                         >
-                          ✅ Willing ({currentRequest.willingDonors?.length || 0})
+                        >
+                          <FiCheckCircle /> Willing ({currentRequest.willingDonors?.length || 0})
                         </button>
                         <button
                           className={`sectionToggleBtn ${responseView === "declined" ? "active" : ""}`}
                           onClick={() => setResponseView("declined")}
                         >
-                          ❌ Declined ({currentRequest.unavailableDonors?.length || 0})
+                          <FiXCircle /> Declined ({currentRequest.unavailableDonors?.length || 0})
                         </button>
                         <button
                           className={`sectionToggleBtn ${responseView === "pending" ? "active" : ""}`}
                           onClick={() => setResponseView("pending")}
                         >
-                          ⏳ Pending Contact ({Math.max(0, (currentRequest.availableDonors?.length || 0) - (currentRequest.willingDonors?.length || 0) - (currentRequest.unavailableDonors?.length || 0))})
+                          <FiClock /> Pending Contact ({Math.max(0, (currentRequest.availableDonors?.length || 0) - (currentRequest.willingDonors?.length || 0) - (currentRequest.unavailableDonors?.length || 0))})
                         </button>
                       </div>
 
@@ -2268,8 +2271,8 @@ function EmergencyDashboard() {
                       <div className="triageVerticalStack" style={{ display: "flex", flexDirection: "column", gap: "30px" }}>
                         {responseView === "willing" && (
                           <div className="triageSection">
-                            <h4 style={{ color: "green", borderBottom: "2px solid green", paddingBottom: "6px", marginBottom: "15px" }}>
-                              ✅ Willing ({currentRequest.willingDonors?.length || 0})
+                            <h4 style={{ color: "green", borderBottom: "2px solid green", paddingBottom: "6px", marginBottom: "15px", display: 'flex', alignItems: 'center', gap: '6px' }}>
+                              <FiCheckCircle /> Willing ({currentRequest.willingDonors?.length || 0})
                             </h4>
                             <div className="cardsContainer">
                               {currentRequest.willingDonors?.map((w, i) => {
@@ -2311,8 +2314,8 @@ function EmergencyDashboard() {
 
                         {responseView === "declined" && (
                           <div className="triageSection">
-                            <h4 style={{ color: "#b00020", borderBottom: "2px solid #b00020", paddingBottom: "6px", marginBottom: "15px" }}>
-                              ❌ Declined ({currentRequest.unavailableDonors?.length || 0})
+                            <h4 style={{ color: "#b00020", borderBottom: "2px solid #b00020", paddingBottom: "6px", marginBottom: "15px", display: 'flex', alignItems: 'center', gap: '6px' }}>
+                              <FiXCircle /> Declined ({currentRequest.unavailableDonors?.length || 0})
                             </h4>
                             <div className="cardsContainer">
                               {currentRequest.unavailableDonors?.map((un, i) => {
@@ -2336,12 +2339,12 @@ function EmergencyDashboard() {
 
                                     <div className="cardActionRow">
                                       <div className="actionBtnLeftGroup">
-                                        <button className="cardActionBtn" onClick={() => setDetailsDonor(d)}>📊 Details</button>
-                                        <a href={`tel:${d.mobile}`} className="commsLink"><button className="cardActionBtn">📞 Call</button></a>
-                                        <a href={`https://wa.me/91${d.mobile}`} target="_blank" rel="noreferrer" className="commsLink"><button className="cardActionBtn">📱 WhatsApp</button></a>
+                                        <button className="cardActionBtn" onClick={() => setDetailsDonor(d)}><FiFileText /> Details</button>
+                                        <a href={`tel:${d.mobile}`} className="commsLink"><button className="cardActionBtn"><FiPhone /> Call</button></a>
+                                        <a href={`https://wa.me/91${d.mobile}`} target="_blank" rel="noreferrer" className="commsLink"><button className="cardActionBtn"><FaWhatsapp /> WhatsApp</button></a>
                                       </div>
                                       <div className="actionBtnRightGroup">
-                                        <button className="cardActionBtn actionBtnHistory" onClick={() => setSelectedDonor(un)}>📜 History</button>
+                                        <button className="cardActionBtn actionBtnHistory" onClick={() => setSelectedDonor(un)}><FiClock /> History</button>
                                       </div>
                                     </div>
                                   </div>
@@ -2354,8 +2357,8 @@ function EmergencyDashboard() {
 
                         {responseView === "pending" && (
                           <div className="triageSection">
-                            <h4 style={{ color: "#666", borderBottom: "2px solid #666", paddingBottom: "6px", marginBottom: "15px" }}>
-                              ⏳ Pending Contact ({
+                            <h4 style={{ color: "#666", borderBottom: "2px solid #666", paddingBottom: "6px", marginBottom: "15px", display: 'flex', alignItems: 'center', gap: '6px' }}>
+                              <FiClock /> Pending Contact ({
                                 Math.max(0, (currentRequest.availableDonors?.length || 0) - (currentRequest.willingDonors?.length || 0) - (currentRequest.unavailableDonors?.length || 0))
                               })
                             </h4>
@@ -2381,12 +2384,12 @@ function EmergencyDashboard() {
 
                                     <div className="cardActionRow">
                                       <div className="actionBtnLeftGroup">
-                                        <button className="cardActionBtn" onClick={() => setDetailsDonor(d)}>📊 Details</button>
-                                        <a href={`tel:${d.mobile}`} className="commsLink"><button className="cardActionBtn">📞 Call</button></a>
-                                        <a href={`https://wa.me/91${d.mobile}`} target="_blank" rel="noreferrer" className="commsLink"><button className="cardActionBtn">📱 WhatsApp</button></a>
+                                        <button className="cardActionBtn" onClick={() => setDetailsDonor(d)}><FiFileText /> Details</button>
+                                        <a href={`tel:${d.mobile}`} className="commsLink"><button className="cardActionBtn"><FiPhone /> Call</button></a>
+                                        <a href={`https://wa.me/91${d.mobile}`} target="_blank" rel="noreferrer" className="commsLink"><button className="cardActionBtn"><FaWhatsapp /> WhatsApp</button></a>
                                       </div>
                                       <div className="actionBtnRightGroup">
-                                        <button className="cardActionBtn actionBtnHistory" onClick={() => setSelectedDonor(d)}>📜 History</button>
+                                        <button className="cardActionBtn actionBtnHistory" onClick={() => setSelectedDonor(d)}><FiClock /> History</button>
                                       </div>
                                     </div>
                                   </div>
@@ -2442,7 +2445,7 @@ function EmergencyDashboard() {
                     justifyContent: "center",
                     borderRadius: "50%",
                     boxShadow: "0 8px 30px rgba(176, 0, 32, 0.12)"
-                  }}>🛡️</div>
+                  }}><FiShield color="#b00020" size={54} /></div>
                   <h3 style={{ fontSize: "28px", color: "#b00020", marginBottom: "12px", fontWeight: "800", letterSpacing: "-0.5px" }}>System on Standby</h3>
                   <p style={{ color: "#666", maxWidth: "450px", lineHeight: 1.7, fontSize: "15px" }}>
                     All concurrent operational tasks are complete. The emergency broadcast network is fully operational and actively monitoring for incoming triage dispatch requests.
@@ -2466,7 +2469,7 @@ function EmergencyDashboard() {
                 <input type="text" placeholder="e.g. 312224104001" value={manualRegNo} onChange={(e) => setManualRegNo(e.target.value)} className="dashboardInput textInputBold" />
                 {manualRegNo.trim() && (
                   <div className={`realtimeVerifyFeedback ${manualDonorFound ? "matched" : "failed"}`}>
-                    {manualDonorFound ? `✅ Found Asset: ${manualDonorFound.name} (${manualDonorFound.bloodGroup})` : "❌ No identity found matching this input"}
+                    {manualDonorFound ? <><FiCheckCircle style={{verticalAlign: 'middle', marginRight:'4px'}} /> Found Asset: {manualDonorFound.name} ({manualDonorFound.bloodGroup})</> : <><FiXCircle style={{verticalAlign: 'middle', marginRight:'4px'}} /> No identity found matching this input</>}
                   </div>
                 )}
               </div>
@@ -2535,8 +2538,8 @@ function EmergencyDashboard() {
               <div className="historyTimeline professionalTimeline">
                 {selectedDonor.donationHistory?.map((h, i) => (
                   <div key={i} className="timelineNode professionalNode">
-                    <p className="nodeDate">📅 {new Date(h.date).toDateString()} — 🩸 {h.units || "N/A"} Units</p>
-                    <p className="timelineDesc">🏥 <strong>Location:</strong> {h.hospital}</p>
+                    <p className="nodeDate" style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><FiClock /> {new Date(h.date).toDateString()} — <FiDroplet /> {h.units || "N/A"} Units</p>
+                    <p className="timelineDesc" style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><FiInfo /> <strong>Location:</strong> {h.hospital}</p>
                   </div>
                 ))}
               </div>
