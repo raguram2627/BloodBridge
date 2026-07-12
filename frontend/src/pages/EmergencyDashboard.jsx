@@ -2075,31 +2075,35 @@ function EmergencyDashboard() {
                 <div className="activeTrackContentArea">
                   {!currentRequest.showLiveTriage ? (
                     <>
-                      <div className="consoleActionHeader" style={{ marginBottom: "20px", padding: "15px", background: "#fdf2f2", borderRadius: "12px", border: "1px solid #ecc" }}>
-                        <label className="modalInputLabel" style={{ marginBottom: "8px", display: "block", fontSize: "14px", fontWeight: "600", color: "#b00020" }}>Broadcast Public Response Link:</label>
-                        <div style={{ display: "flex", gap: "10px", alignItems: "stretch", flexWrap: "wrap" }}>
-                          <input value={currentRequest.link} readOnly className="dashboardInput" onClick={(e) => e.target.select()} style={{ flex: "1 1 50%", background: "#fff", border: "1px solid #ecc", padding: "12px", borderRadius: "8px", margin: 0, boxSizing: "border-box" }} />
+                      <div className="consoleActionHeader" style={{ marginBottom: "20px", padding: "15px", background: "#fdf2f2", borderRadius: "12px" }}>
+                        <div style={{ display: "flex", gap: "15px", alignItems: "center", flexWrap: "wrap" }}>
+                          <div style={{ flex: 1 }}>
+                            <label className="modalInputLabel" style={{ marginBottom: "4px" }}>Broadcast Public Response Link:</label>
+                            <input value={currentRequest.link} readOnly className="dashboardInput" onClick={(e) => e.target.select()} style={{ background: "#fff", border: "1px solid #ecc" }} />
+                          </div>
                           
-                          <button 
-                            className="actionTriggerBtn emergency dynamicClickEffect"
-                            style={{ flex: "1 1 auto", padding: "12px 20px", margin: 0, display: "flex", justifyContent: "center", alignItems: "center", gap: "8px", boxSizing: "border-box" }}
-                            onClick={() => handleNotifyDonors(currentRequest._id)}
-                          >
-                            <FiBell /> Notify Donors
-                          </button>
-
-                          {currentRequest.isNotified && (
+                          <div style={{ display: "flex", gap: "10px", alignSelf: "flex-end" }}>
                             <button 
-                              className="actionTriggerBtn search dynamicClickEffect" 
-                              style={{ flex: "1 1 auto", padding: "12px 20px", margin: 0, display: "flex", justifyContent: "center", alignItems: "center", gap: "8px", background: "#0f172a", color: "white", boxSizing: "border-box" }} 
-                              onClick={() => {
-                                updateActiveRequest(currentRequest._id, { showLiveTriage: true });
-                                handleRefreshResponses();
-                              }}
+                              className="actionTriggerBtn emergency dynamicClickEffect"
+                              style={{ width: "auto", padding: "12px 20px" }}
+                              onClick={() => handleNotifyDonors(currentRequest._id)}
                             >
-                              Track Live Responses →
+                              <FiBell /> Notify Donors
                             </button>
-                          )}
+
+                            {currentRequest.isNotified && (
+                              <button 
+                                className="secondaryActionBtn dynamicClickEffect" 
+                                style={{ ...buttonMotionStyle, width: "auto", margin: 0, padding: "12px 20px" }} 
+                                onClick={() => {
+                                  updateActiveRequest(currentRequest._id, { showLiveTriage: true });
+                                  handleRefreshResponses();
+                                }}
+                              >
+                                Track Live Responses →
+                              </button>
+                            )}
+                          </div>
                         </div>
                       </div>
 
