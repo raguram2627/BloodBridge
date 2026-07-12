@@ -1672,6 +1672,25 @@ function AdminDashboard() {
             font-size: 14px;
             line-height: 1.5;
           }
+
+          .searchFilterRow {
+            display: flex !important;
+            flex-direction: row !important;
+            flex-wrap: nowrap !important;
+            overflow-x: auto !important;
+            gap: 10px !important;
+            padding-bottom: 10px !important;
+            -webkit-overflow-scrolling: touch;
+          }
+          
+          .searchFilterRow::-webkit-scrollbar {
+            display: none;
+          }
+
+          .searchFilterRow .dashboardInput {
+            min-width: 140px;
+            flex-shrink: 0;
+          }
           
           .metricsGrid {
             display: flex;
@@ -1718,10 +1737,19 @@ function AdminDashboard() {
           .controlPanel {
             position: relative !important;
             top: 0 !important;
-            max-height: none;
-            overflow: visible;
-            gap: 20px;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            gap: 15px;
             padding-right: 0;
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+            -webkit-overflow-scrolling: touch;
+          }
+          .controlPanel::-webkit-scrollbar {
+            display: none;
           }
           .desktop-sticky {
             position: relative !important;
@@ -1729,23 +1757,34 @@ function AdminDashboard() {
           }
           
           .controlBlock {
-            padding: 20px 15px;
-            border-radius: 20px;
+            min-width: 85vw;
+            flex-shrink: 0;
+            scroll-snap-align: start;
+            padding: 15px;
+            border-radius: 16px;
+            margin: 0 !important;
           }
           
           .actionButtonGroup {
+            display: flex;
             flex-direction: row;
-            flex-wrap: wrap;
+            flex-wrap: nowrap !important;
+            overflow-x: auto;
             gap: 8px;
+            padding-bottom: 4px;
+            -webkit-overflow-scrolling: touch;
+          }
+          .actionButtonGroup::-webkit-scrollbar {
+            display: none;
           }
           
           .panelBtn {
-            flex: 1;
-            min-width: calc(50% - 5px);
-            padding: 12px 10px;
-            font-size: 13px;
-            text-align: center;
-            justify-content: center;
+            flex-shrink: 0;
+            padding: 10px 16px;
+            font-size: 12px;
+            white-space: nowrap;
+            width: auto;
+            min-width: auto;
           }
           
           .dataCard {
