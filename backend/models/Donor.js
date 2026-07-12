@@ -69,7 +69,14 @@ const donorSchema = new mongoose.Schema({
             date: Date,
             hospital: String
         }
-    ]
+    ],
+    telegramChatId: {
+        type: String
+    },
+    telegramConnected: {
+        type: Boolean,
+        default: false
+    }
 }, { timestamps: true });
 
 module.exports = mongoose.model("Donor", donorSchema);

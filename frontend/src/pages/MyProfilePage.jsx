@@ -107,6 +107,29 @@ function MyProfilePage() {
               </div>
             </div>
 
+            <h3 className="sectionTitle">Telegram Notifications</h3>
+            <div className="profileGrid">
+              {formData.telegramConnected === false || formData.telegramConnected === undefined ? (
+                <div className="inputGroup fullWidth">
+                  <p style={{ marginBottom: "10px", fontSize: "14px", color: "#666" }}>Connect your Telegram account to receive instant notifications for emergency broadcasts.</p>
+                  <button 
+                    type="button" 
+                    className="saveBtn" 
+                    style={{ background: "#0088cc", width: "auto" }}
+                    onClick={() => {
+                      window.location.href = `${import.meta.env.VITE_API_URL || "http://localhost:5000"}/connect-telegram/${formData.registerNumber || formData.facultyId}`;
+                    }}
+                  >
+                    Connect Telegram
+                  </button>
+                </div>
+              ) : (
+                <div className="inputGroup fullWidth">
+                  <p style={{ fontSize: "14px", color: "green", fontWeight: "600" }}>✓ Telegram Connected</p>
+                </div>
+              )}
+            </div>
+
             <div className="profileActions">
               <button type="submit" className="saveBtn">Save Changes</button>
             </div>

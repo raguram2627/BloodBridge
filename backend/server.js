@@ -651,6 +651,18 @@ app.post("/donor/login", async (req, res) => {
   }
 });
 
+app.get("/connect-telegram/:registerNumber", async (req, res) => {
+  try {
+    const donor = await Donor.findOne({ registerNumber: req.params.registerNumber });
+    if (!donor) {
+      return res.status(404).json({ message: "Donor not found" });
+    }
+    res.redirect("https://t.me/Bloddbridgehq_bot");
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 app.listen(PORT, () => {
     console.log(`🚀 Server running on port ${PORT}`);
 });
