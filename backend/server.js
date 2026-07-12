@@ -702,6 +702,7 @@ app.post("/emergency-request/:id/notify", async (req, res) => {
 
     let sent = 0;
     let failed = 0;
+    let lastError = null;
 
     for (const donor of matchingDonors) {
       try {
@@ -710,6 +711,7 @@ app.post("/emergency-request/:id/notify", async (req, res) => {
       } catch (err) {
         console.error(`Failed to send to ${donor.telegramChatId}:`, err.message);
         failed++;
+        lastError = err.message;
       }
     }
 
@@ -717,7 +719,7 @@ app.post("/emergency-request/:id/notify", async (req, res) => {
     if (failed > 0) {
       finalMessage += ` (${failed} failed)`;
     }
-    finalMessage += ` [Debug: connected=${donors.length}, matchedGroups=${matchingDonors.length}, reqGroups=${requestedGroups}]`;
+    finalMessage += ` [Debug: err=${lastError}]`;
 
     res.json({
       message: finalMessage,
