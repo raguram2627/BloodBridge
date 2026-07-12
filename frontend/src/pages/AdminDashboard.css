@@ -279,18 +279,18 @@ body {
 .actionTriggerBtn.emergency {
   background: #b00020;
   color: white;
-  box-shadow: 0 6px 20px rgba(30, 41, 59, 0.15);
+  box-shadow: 0 6px 20px rgba(176, 0, 32, 0.15);
 }
 
 .actionTriggerBtn.emergency:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(30, 41, 59, 0.25);
+  box-shadow: 0 8px 25px rgba(176, 0, 32, 0.25);
   background: #8e001a;
 }
 
 .actionTriggerBtn.emergency:active {
   transform: translateY(1px) scale(0.97);
-  box-shadow: 0 3px 10px rgba(30, 41, 59, 0.1);
+  box-shadow: 0 3px 10px rgba(176, 0, 32, 0.1);
 }
 
 .actionTriggerBtn.search {
@@ -777,12 +777,12 @@ body {
   background: #b00020 !important;
   color: white !important;
   border-color: transparent !important;
-  box-shadow: 0 4px 12px rgba(30, 58, 138, 0.15) !important;
+  box-shadow: 0 4px 12px rgba(176, 0, 32, 0.15) !important;
 }
 
 .cardActionBtn.actionBtnRecord:hover {
   background: #8e001a !important;
-  box-shadow: 0 6px 16px rgba(30, 58, 138, 0.25) !important;
+  box-shadow: 0 6px 16px rgba(176, 0, 32, 0.25) !important;
 }
 
 /* Isolated layout logic specifically for historical logs list */

@@ -1984,7 +1984,7 @@ function AdminDashboard() {
           style={{ width: 'auto', padding: '12px 24px', margin: 0 }}
           onClick={() => navigate('/emergency-dashboard')}
         >
-          + Create Emergency Request
+          Emergency Request
         </button>
       </div>
 
