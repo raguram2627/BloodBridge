@@ -27,8 +27,12 @@ function initTelegramBot() {
     const registerNumber = match[1];
 
     try {
-      // Find the donor
-      const donor = await Donor.findOne({ registerNumber });
+      const donor = await Donor.findOne({
+        $or: [
+          { registerNumber },
+          { facultyId: registerNumber }
+        ]
+      });
 
       if (donor) {
         // Save telegram details
@@ -44,7 +48,7 @@ function initTelegramBot() {
       }
     } catch (error) {
       console.error("Error linking Telegram account:", error);
-      bot.sendMessage(chatId, "An error occurred while connecting your account. Please try again later.");
+      bot.sendMessage(chatId, `An error occurred while connecting your account. Error: ${error.message}`);
     }
   });
 
