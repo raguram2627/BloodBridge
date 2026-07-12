@@ -581,7 +581,7 @@ function EmergencyDashboard() {
 
         .loadingAlert {
           background: rgba(220, 20, 60, 0.05);
-          border: 1px dashed #d62839;
+          border: 1px dashed #b00020;
           padding: 15px 20px;
           border-radius: 12px;
           color: #b00020;
@@ -603,7 +603,7 @@ function EmergencyDashboard() {
 
         .errorAlert {
           background: #fdf2f2;
-          border-left: 5px solid #d62839;
+          border-left: 5px solid #b00020;
           padding: 15px 20px;
           border-radius: 8px;
           color: #b00020;
@@ -798,7 +798,7 @@ function EmergencyDashboard() {
         }
 
         .panelBtn.active {
-          background: linear-gradient(90deg, #b00020, #d62839);
+          background: #b00020;
           color: white;
           border-color: transparent;
         }
@@ -826,7 +826,7 @@ function EmergencyDashboard() {
         }
 
         .dashboardInput:focus {
-          border-color: #d62839;
+          border-color: #b00020;
           box-shadow: 0 0 0 3px rgba(214, 40, 57, 0.1);
         }
 
@@ -849,7 +849,7 @@ function EmergencyDashboard() {
         }
 
         .actionTriggerBtn.emergency {
-          background: linear-gradient(90deg, #d90429, #ef233c);
+          background: #b00020;
           color: white;
           box-shadow: 0 6px 20px rgba(217, 4, 41, 0.15);
         }
@@ -1158,14 +1158,14 @@ function EmergencyDashboard() {
         }
 
         .cardActionBtn.actionBtnRecord {
-          background: linear-gradient(135deg, #d90429, #ef233c) !important;
+          background: #b00020 !important;
           color: white !important;
           border-color: transparent !important;
           box-shadow: 0 4px 12px rgba(217, 4, 41, 0.15) !important;
         }
 
         .cardActionBtn.actionBtnRecord:hover {
-          background: linear-gradient(135deg, #b00020, #d90429) !important;
+          background: #b00020 !important;
           box-shadow: 0 6px 16px rgba(217, 4, 41, 0.25) !important;
         }
 
@@ -1304,7 +1304,7 @@ function EmergencyDashboard() {
         }
 
         .secondaryBtn { background: #f3f3f3; color: #555;}
-        .primaryBtn { background: linear-gradient(90deg, #d90429, #ef233c); color: white;}
+        .primaryBtn { background: #b00020; color: white;}
 
         .alignedDetailsGrid {
           display: grid !important;
@@ -1406,7 +1406,7 @@ function EmergencyDashboard() {
         .realtimeVerifyFeedback.failed {
           background: #fdf2f2;
           color: #611a1a;
-          border-left: 3px solid #c62828;
+          border-left: 3px solid #b00020;
         }
 
         .requestTrackTabBar {
@@ -1446,7 +1446,7 @@ function EmergencyDashboard() {
         }
 
         .trackTabItem.activeTrack {
-          background: linear-gradient(135deg, #b00020, #d62839) !important;
+          background: #b00020 !important;
           color: white !important;
           border-color: transparent !important;
           box-shadow: 0 4px 15px rgba(176, 0, 32, 0.15) !important;
@@ -1638,7 +1638,7 @@ function EmergencyDashboard() {
         }
 
         .sectionToggleBtn.active {
-          background: linear-gradient(135deg, #b00020, #d62839);
+          background: #b00020;
           color: white;
           border-color: transparent;
           box-shadow: 0 4px 15px rgba(176, 0, 32, 0.15);
@@ -1978,7 +1978,7 @@ function EmergencyDashboard() {
       </div>
 
       {loading && <div className="loadingAlert"><FiLoader className="spinner" /> Updating database records...</div>}
-      {error && <div className="errorAlert"><FiAlertTriangle color="#c62828" /> System Error: {error}</div>}
+      {error && <div className="errorAlert"><FiAlertTriangle color="#b00020" /> System Error: {error}</div>}
 
       <div className="metricsGrid">
         <div className="metricTile">
@@ -1998,7 +1998,7 @@ function EmergencyDashboard() {
           className="metricTile critical activeConsoleCard"
           style={{ cursor: "default", ...buttonMotionStyle }}
         >
-          <span className="tileIcon"><GiSiren size={36} color="#d90429" /></span>
+          <span className="tileIcon"><GiSiren size={36} color="#b00020" /></span>
           <div className="tileData">
             <h3>{activeRequests.length}</h3>
             <p>{activeRequests.length === 1 ? "Active Live Request" : "Active Live Requests"}</p>

@@ -152,7 +152,7 @@ function EmergencyRequestPage() {
   if (!request) {
     return (
       <div className="stateContainer textCenter">
-        <div className="statusIcon error"><FiAlertTriangle color="#c62828" /></div>
+        <div className="statusIcon error"><FiAlertTriangle color="#b00020" /></div>
         <h1 className="statusHeading error">Request Invalid</h1>
         <p className="statusMessage">The active routing identifier could not find any active emergency parameters matching this digital key header.</p>
       </div>
