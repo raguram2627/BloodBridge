@@ -4031,3 +4031,35 @@ transform: translateY(-1px) !important;
     grid-template-columns: 1fr;
   }
 }
+
+
+/* Mobile Professional Layout Tweaks */
+@media (max-width: 480px) {
+  .availabilityHeaderBar,
+  .responseHeaderBar {
+    flex-wrap: nowrap !important;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 5px;
+    gap: 8px !important;
+  }
+  
+  .sectionToggleBtn {
+    flex: 0 0 auto !important;
+    white-space: nowrap;
+    padding: 10px 14px !important;
+    font-size: 13px !important;
+  }
+  
+  .trackTabItem {
+    padding: 10px 14px !important;
+  }
+  
+  .trackTabItem .tabBloodDrop {
+    font-size: 15px !important;
+  }
+  
+  .trackTabItem .tabHospitalLabel {
+    font-size: 12px !important;
+  }
+}

@@ -246,7 +246,7 @@ function EmergencyRequestPage() {
         {/* Unified Mobile Touch Control Footprint */}
         <div className="triageActionFootprint">
           <button onClick={respondWilling} className="triageBtn willing" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
-            <FiCheckCircle /> Confirm Immediate Deployment
+            <FiCheckCircle /> Confirm Deployment
           </button>
           <button onClick={respondUnavailable} className="triageBtn unavailable" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
             <FiXCircle /> Declare Out-of-Service Profile

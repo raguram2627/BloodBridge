@@ -290,3 +290,16 @@
 @keyframes cycleSpin { 100% { transform: rotate(360deg); } }
 .animateFadeIn { animation: fadeInAlpha 0.25s ease-out; }
 @keyframes fadeInAlpha { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Mobile Fixes */
+@media (max-width: 480px) {
+  .searchBarInline {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+  .verifyBtn {
+    padding: 14px;
+    width: 100%;
+  }
+}

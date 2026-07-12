@@ -2231,21 +2231,7 @@ function EmergencyDashboard() {
                         </div>
                       </div>
 
-                      <div className="bloodGroupResponseSummary">
-                        {(() => {
-                          const willingCounts = groupResponseCounts(currentRequest.willingDonors || []);
-                          const unavailableCounts = groupResponseCounts(currentRequest.unavailableDonors || []);
-                          return parseBloodGroupList(currentRequest.bloodGroup).map((group) => (
-                            <div key={group} className="responseGroupBadge">
-                              <span className="groupLabel">{group}</span>
-                              <div className="groupStats">
-                                <span className="statItem willingCount"><FiCheckCircle /> {willingCounts[group] || 0}</span>
-                                <span className="statItem unavailableCount"><FiXCircle /> {unavailableCounts[group] || 0}</span>
-                              </div>
-                            </div>
-                          ));
-                        })()}
-                      </div>
+                      
 
                       <div className="responseHeaderBar">
                         <button
