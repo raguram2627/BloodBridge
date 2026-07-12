@@ -669,6 +669,7 @@ app.get("/connect-telegram/:registerNumber", async (req, res) => {
 // Initialize Telegram Bot Service
 initTelegramBot();
 
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
     console.log(`🚀 Server running on port ${PORT}`);
 });

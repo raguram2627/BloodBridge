@@ -1,4 +1,5 @@
-const TelegramBot = require('node-telegram-bot-api');
+const tgModule = require('node-telegram-bot-api');
+const TelegramBot = tgModule.default || tgModule;
 const Donor = require('./models/Donor');
 
 function initTelegramBot() {
@@ -10,6 +11,10 @@ function initTelegramBot() {
   }
 
   const bot = new TelegramBot(token, { polling: true });
+
+  bot.on('polling_error', (error) => {
+    console.error("Telegram Polling Error:", error.message);
+  });
 
   console.log("🤖 Telegram Bot Service Started successfully.");
 
