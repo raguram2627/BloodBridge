@@ -713,8 +713,14 @@ app.post("/emergency-request/:id/notify", async (req, res) => {
       }
     }
 
+    let finalMessage = `Notification sent to ${sent} donors.`;
+    if (failed > 0) {
+      finalMessage += ` (${failed} failed)`;
+    }
+    finalMessage += ` [Debug: connected=${donors.length}, matchedGroups=${matchingDonors.length}, reqGroups=${requestedGroups}]`;
+
     res.json({
-      message: `Notification sent to ${sent} donors.`,
+      message: finalMessage,
       sent,
       failed
     });
