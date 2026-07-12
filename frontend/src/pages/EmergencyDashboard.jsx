@@ -357,9 +357,18 @@ function EmergencyDashboard() {
 
   const currentRequest = activeRequests.find(r => r._id === selectedRequestId);
 
-  const handleNotifyDonors = (id) => {
-    updateActiveRequest(id, { isNotified: true });
-    showToast("Dispatched active alert broadcasts to the matching donor pool!", "success");
+  const handleNotifyDonors = async (id) => {
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || "http://localhost:5000"}/emergency-request/${id}/notify`, { method: "POST" });
+      const data = await res.json();
+      
+      if (!res.ok) throw new Error(data.message || "Failed to notify donors");
+      
+      updateActiveRequest(id, { isNotified: true });
+      showToast(data.message, "success");
+    } catch (error) {
+      showToast(error.message, "error");
+    }
   };
 
   const handleRefreshResponses = async () => {

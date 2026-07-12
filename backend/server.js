@@ -304,6 +304,12 @@ app.post(
         if (requestedGroups && !requestedGroups.includes(d.bloodGroup)) {
           return false;
         }
+        if (!d.available) {
+          return false;
+        }
+        if (!d.telegramConnected || !d.telegramChatId) {
+          return false;
+        }
         return isDonorEligibleForEmergency(d, today);
       });
 
@@ -623,7 +629,7 @@ app.post("/test-whatsapp", async (req, res) => {
 
 
 // Import Telegram Bot Service
-const { initTelegramBot } = require('./telegramService');
+const { initTelegramBot, sendTelegramMessage } = require('./telegramService');
 
 
 app.post("/donor/login", async (req, res) => {
@@ -662,6 +668,59 @@ app.get("/connect-telegram/:registerNumber", async (req, res) => {
     }
     res.redirect(`https://t.me/Bloodbridgehq_bot?start=${req.params.registerNumber}`);
   } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+app.post("/emergency-request/:id/notify", async (req, res) => {
+  try {
+    const request = await EmergencyRequest.findById(req.params.id);
+    if (!request) {
+      return res.status(404).json({ message: "Emergency request not found" });
+    }
+
+    const requestedGroups = parseRequestBloodGroups(request.bloodGroup);
+    
+    // Find eligible donors
+    const donors = await Donor.find({ 
+      available: true, 
+      telegramConnected: true, 
+      telegramChatId: { $exists: true, $ne: "" } 
+    });
+
+    const matchingDonors = donors.filter(d => {
+      if (requestedGroups && !requestedGroups.includes(d.bloodGroup)) {
+        return false;
+      }
+      return true;
+    });
+
+    const base = process.env.VITE_PUBLIC_URL || "http://localhost:5173";
+    const publicResponseLink = `${base}/request/${request._id}`;
+
+    const messageText = `🩸 BLOODBRIDGE EMERGENCY ALERT\n\nBlood Required\n\nBlood Groups:\n${request.bloodGroup}\n\nHospital:\n${request.hospital}\n\nUnits Needed:\n${request.unitsNeeded}\n\nPlease respond immediately.\n\n👇 Public Response Link\n${publicResponseLink}`;
+
+    let sent = 0;
+    let failed = 0;
+
+    for (const donor of matchingDonors) {
+      try {
+        await sendTelegramMessage(donor.telegramChatId, messageText);
+        sent++;
+      } catch (err) {
+        console.error(`Failed to send to ${donor.telegramChatId}:`, err.message);
+        failed++;
+      }
+    }
+
+    res.json({
+      message: `Notification sent to ${sent} donors.`,
+      sent,
+      failed
+    });
+
+  } catch (error) {
+    console.error("Error in notify route:", error);
     res.status(500).json({ message: error.message });
   }
 });

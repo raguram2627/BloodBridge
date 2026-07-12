@@ -2,6 +2,8 @@ const tgModule = require('node-telegram-bot-api');
 const TelegramBot = tgModule.default || tgModule;
 const Donor = require('./models/Donor');
 
+let botInstance = null;
+
 function initTelegramBot() {
   const token = process.env.TELEGRAM_BOT_TOKEN;
   
@@ -51,7 +53,15 @@ function initTelegramBot() {
     bot.sendMessage(msg.chat.id, "Welcome to BloodBridge! To connect your account, please click the 'Connect Telegram' button from your profile page on the BloodBridge platform.");
   });
 
+  botInstance = bot;
   return bot;
 }
 
-module.exports = { initTelegramBot };
+async function sendTelegramMessage(chatId, text) {
+  if (!botInstance) {
+    throw new Error("Telegram bot is not initialized.");
+  }
+  return await botInstance.sendMessage(chatId, text);
+}
+
+module.exports = { initTelegramBot, sendTelegramMessage };
