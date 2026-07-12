@@ -657,7 +657,7 @@ app.get("/connect-telegram/:registerNumber", async (req, res) => {
     if (!donor) {
       return res.status(404).json({ message: "Donor not found" });
     }
-    res.redirect("https://t.me/Bloddbridgehq_bot");
+    res.redirect("https://t.me/Bloodbridgehq_bot");
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
