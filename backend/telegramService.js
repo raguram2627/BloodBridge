@@ -59,7 +59,11 @@ function initTelegramBot() {
 
 async function sendTelegramMessage(chatId, text) {
   if (!botInstance) {
-    throw new Error("Telegram bot is not initialized.");
+    console.warn("⚠️ botInstance was null inside sendTelegramMessage. Initializing now...");
+    initTelegramBot();
+    if (!botInstance) {
+      throw new Error("Telegram bot failed to initialize. Token might be missing.");
+    }
   }
   return await botInstance.sendMessage(chatId, text);
 }
