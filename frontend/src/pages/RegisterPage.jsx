@@ -115,14 +115,20 @@ function RegisterPage() {
             <p className="successSlogan">
               You're now part of BloodBridge — a lifeline that connects heroes with those who need them most.
             </p>
-            <p className="successSubtext">
-              Your registration helps save lives during emergencies. Every drop counts.
+            <p className="successSubtext" style={{ color: "#0088cc", fontWeight: "600", marginTop: "15px" }}>
+              Action Required: You must connect your Telegram account to receive emergency alerts.
             </p>
-            <button className="successBtn" onClick={() => {
+            <button className="successBtn" style={{ background: "#0088cc", marginTop: "15px" }} onClick={() => {
+              const donor = JSON.parse(localStorage.getItem("loggedInDonor"));
+              window.location.href = `${import.meta.env.VITE_API_URL || "http://localhost:5000"}/connect-telegram/${donor.registerNumber}`;
+            }}>
+              Connect Telegram Now
+            </button>
+            <button className="successBtn" style={{ background: "transparent", color: "#666", marginTop: "10px", padding: "5px" }} onClick={() => {
               setShowSuccess(false);
               navigate("/profile");
             }}>
-              Continue →
+              Skip for now
             </button>
           </div>
         </div>
