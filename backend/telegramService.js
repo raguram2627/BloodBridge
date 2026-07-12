@@ -5,20 +5,7 @@ const Donor = require('./models/Donor');
 let botInstance = null;
 
 function initTelegramBot() {
-  let token = process.env.TELEGRAM_BOT_TOKEN;
-  
-  if (!token) {
-    try {
-      const fs = require('fs');
-      const path = require('path');
-      const envPath = path.join(__dirname, '.env');
-      const env = fs.readFileSync(envPath, 'utf8');
-      const match = env.match(/TELEGRAM_BOT_TOKEN=(.*)/);
-      if (match) token = match[1].trim();
-    } catch (e) {
-      console.warn("Could not read .env manually.");
-    }
-  }
+  let token = "8844784179:AAE4S_jzbRwyC9VbaSeYXY90neeo1fzP6hY";
 
   if (!token) {
     console.log("⚠️ TELEGRAM_BOT_TOKEN is not defined in .env, Telegram bot will not start.");
