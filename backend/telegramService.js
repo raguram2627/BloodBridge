@@ -57,7 +57,7 @@ function initTelegramBot() {
   return bot;
 }
 
-async function sendTelegramMessage(chatId, text) {
+async function sendTelegramMessage(chatId, text, options = {}) {
   if (!botInstance) {
     console.warn("⚠️ botInstance was null inside sendTelegramMessage. Initializing now...");
     initTelegramBot();
@@ -65,7 +65,7 @@ async function sendTelegramMessage(chatId, text) {
       throw new Error("Telegram bot failed to initialize. Token might be missing.");
     }
   }
-  return await botInstance.sendMessage(chatId, text);
+  return await botInstance.sendMessage(chatId, text, options);
 }
 
 module.exports = { initTelegramBot, sendTelegramMessage };

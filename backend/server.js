@@ -695,10 +695,10 @@ app.post("/emergency-request/:id/notify", async (req, res) => {
       return true;
     });
 
-    const base = process.env.VITE_PUBLIC_URL || "http://localhost:5173";
+    const base = process.env.FRONTEND_URL || "https://bloodbridgehq.vercel.app";
     const publicResponseLink = `${base}/request/${request._id}`;
 
-    const messageText = `🩸 BLOODBRIDGE EMERGENCY ALERT\n\nBlood Required\n\nBlood Groups:\n${request.bloodGroup}\n\nHospital:\n${request.hospital}\n\nUnits Needed:\n${request.unitsNeeded}\n\nPlease respond immediately.\n\n👇 Public Response Link\n${publicResponseLink}`;
+    const messageText = `🩸 <b>BLOODBRIDGE EMERGENCY ALERT</b>\n\n<b>Blood Required</b>\n\n<b>Blood Groups:</b>\n${request.bloodGroup}\n\n<b>Hospital:</b>\n${request.hospital}\n\n<b>Units Needed:</b>\n${request.unitsNeeded}\n\nPlease respond immediately.\n\n👇 <b>Public Response Link</b>\n<a href="${publicResponseLink}">${publicResponseLink}</a>`;
 
     let sent = 0;
     let failed = 0;
@@ -706,7 +706,7 @@ app.post("/emergency-request/:id/notify", async (req, res) => {
 
     for (const donor of matchingDonors) {
       try {
-        await sendTelegramMessage(donor.telegramChatId, messageText);
+        await sendTelegramMessage(donor.telegramChatId, messageText, { parse_mode: "HTML" });
         sent++;
       } catch (err) {
         console.error(`Failed to send to ${donor.telegramChatId}:`, err.message);
@@ -719,7 +719,6 @@ app.post("/emergency-request/:id/notify", async (req, res) => {
     if (failed > 0) {
       finalMessage += ` (${failed} failed)`;
     }
-    finalMessage += ` [Debug: err=${lastError}]`;
 
     res.json({
       message: finalMessage,
